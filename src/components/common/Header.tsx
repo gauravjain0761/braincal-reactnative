@@ -1,13 +1,13 @@
-import React, {FC} from 'react';
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
-import {colors} from '../../helper/utils';
-import {wp} from '../../helper/constants';
+import React, { FC } from "react";
+import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import { colors } from "../../Theme/Utils";
+import { wp } from "../../Helper/Constants";
 
 interface Props {
   title?: String;
 }
 
-const Header: FC<Props> = ({title}) => {
+const Header: FC<Props> = ({ title }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
   titleText: {
     color: colors.white,
     fontSize: wp(4.5),
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: "600",
+    textAlign: "center",
   },
 });
 

@@ -1,14 +1,14 @@
-import React, {FC} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
-import Home from '../screen/Home';
-import Login from '../screen/Auth/Login';
+import React, { FC } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import Home from "../Screen/Home";
+import Login from "../Screen/Auth/Login";
 import {
   StackCardInterpolationProps,
   TransitionSpecs,
   createStackNavigator,
-} from '@react-navigation/stack';
-import {Animated} from 'react-native';
+} from "@react-navigation/stack";
+import { Animated } from "react-native";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -21,21 +21,21 @@ const cardStyleInterpolator: FC<StackCardInterpolationProps> = ({
   current,
   next,
   inverted,
-  layouts: {screen},
+  layouts: { screen },
 }) => {
   const progress = Animated.add(
     current.progress.interpolate({
       inputRange: [0, 1],
       outputRange: [0, 1],
-      extrapolate: 'clamp',
+      extrapolate: "clamp",
     }),
     next
       ? next.progress.interpolate({
           inputRange: [0, 1],
           outputRange: [0, 1],
-          extrapolate: 'clamp',
+          extrapolate: "clamp",
         })
-      : 0,
+      : 0
   );
 
   return {
@@ -52,9 +52,9 @@ const cardStyleInterpolator: FC<StackCardInterpolationProps> = ({
                 //screen.width * -0.3 // Fully unfocused
                 -screen.width,
               ],
-              extrapolate: 'clamp',
+              extrapolate: "clamp",
             }),
-            inverted,
+            inverted
           ),
         },
       ],
@@ -72,8 +72,9 @@ const Navigation: FC = () => {
 
           // cardStyleInterpolator:
           //   CardStyleInterpolators.forFadeFromBottomAndroid, //
-        }}>
-        <RootStack.Screen name={'Login'} component={Login} />
+        }}
+      >
+        <RootStack.Screen name={"Login"} component={Login} />
         <RootStack.Screen
           options={{
             transitionSpec: {
@@ -81,7 +82,7 @@ const Navigation: FC = () => {
               close: TransitionSpecs.TransitionIOSSpec,
             },
           }}
-          name={'Home'}
+          name={"Home"}
           component={Home}
         />
       </RootStack.Navigator>

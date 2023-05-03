@@ -1,27 +1,19 @@
-import React from 'react';
-import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {UniversalProps} from '../helper/navigationTypes';
-import {Header} from '../components';
-import {wp} from '../helper/constants';
+import React from "react";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { UniversalProps } from "../Helper/NavigationTypes";
+import { Header } from "../Components";
+import { hp, wp } from "../Helper/Constants";
+import { ApplicationStyles } from "../Theme/ApplicationStyles";
 
-const Home = ({navigation}: UniversalProps) => {
+const Home = ({ navigation }: UniversalProps) => {
   return (
-    <View style={styles.container}>
-      <Header title={'Signup'} />
-      <View style={styles.innerContainer}></View>
+    <View style={ApplicationStyles.container}>
+      <Header title={"Signup"} />
+      <View style={ApplicationStyles.innerContainer}></View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  innerContainer: {
-    paddingHorizontal: wp(4),
-    flex: 1,
-    backgroundColor: 'yellow',
-  },
-});
+const styles = StyleSheet.create({});
 
 export default Home;

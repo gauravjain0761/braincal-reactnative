@@ -1,4 +1,4 @@
-import Header from './common/Header';
-import CountrySelector from './common/CountrySelector';
+import Header from "./Common/Header";
+import CountrySelector from "./Common/CountrySelector";
 
-export {Header, CountrySelector};
+export { Header, CountrySelector };
