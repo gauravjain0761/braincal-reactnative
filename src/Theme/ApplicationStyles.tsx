@@ -11,4 +11,10 @@ export const ApplicationStyles = StyleSheet.create({
     paddingHorizontal: hp(2),
     flex: 1,
   },
+  favIcon: {
+    height: hp(2.5),
+    width: hp(2.5),
+    resizeMode: "contain",
+    tintColor: colors.black,
+  },
 });

@@ -17,6 +17,7 @@ interface props {
   onPressOk: () => void;
   otp: string;
   onSetOtp: any;
+  error: string;
 }
 
 const OtpEnterModal: FC<props> = ({
@@ -25,6 +26,7 @@ const OtpEnterModal: FC<props> = ({
   isVisible,
   onCancel,
   onPressOk,
+  error,
 }) => {
   return (
     <View>
@@ -38,6 +40,7 @@ const OtpEnterModal: FC<props> = ({
             value={otp}
             onChangeText={(text) => onSetOtp(text)}
           />
+          <Text style={styles.errorText}>{error}</Text>
           <View style={styles.buttonView}>
             <TouchableOpacity onPress={() => onCancel()} style={styles.buttons}>
               <Text style={styles.blueButtonText}>CANCEL</Text>
@@ -84,5 +87,8 @@ const styles = StyleSheet.create({
   },
   blueButtonText: {
     ...commonFont(500, 16, colors.primary),
+  },
+  errorText: {
+    ...commonFont(400, 16, colors.red),
   },
 });

@@ -5,9 +5,10 @@ import { Header } from "../Components";
 import { hp, wp } from "../Helper/Constants";
 import { ApplicationStyles } from "../Theme/ApplicationStyles";
 
-const Home = ({ navigation }: UniversalProps) => {
+const English = ({ navigation }: UniversalProps) => {
   return (
     <View style={ApplicationStyles.container}>
+      <Header title={"English"} />
       <View style={ApplicationStyles.innerContainer}></View>
     </View>
   );
@@ -15,4 +16,4 @@ const Home = ({ navigation }: UniversalProps) => {
 
 const styles = StyleSheet.create({});
 
-export default Home;
+export default English;

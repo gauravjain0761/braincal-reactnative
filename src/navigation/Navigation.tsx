@@ -9,9 +9,10 @@ import {
   createStackNavigator,
 } from "@react-navigation/stack";
 import { Animated } from "react-native";
+import DrawerNavigation from "./DrawerNavigation";
 
 export type RootStackParamList = {
-  Home: undefined;
+  DrawerHome: undefined;
   Login: undefined;
 };
 
@@ -69,9 +70,6 @@ const Navigation: FC = () => {
         screenOptions={{
           headerShown: false, //Optional
           cardStyleInterpolator,
-
-          // cardStyleInterpolator:
-          //   CardStyleInterpolators.forFadeFromBottomAndroid, //
         }}
       >
         <RootStack.Screen name={"Login"} component={Login} />
@@ -82,8 +80,8 @@ const Navigation: FC = () => {
               close: TransitionSpecs.TransitionIOSSpec,
             },
           }}
-          name={"Home"}
-          component={Home}
+          name={"DrawerHome"}
+          component={DrawerNavigation}
         />
       </RootStack.Navigator>
     </NavigationContainer>

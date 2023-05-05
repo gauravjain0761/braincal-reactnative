@@ -1,5 +1,7 @@
 const initialState = {
-  preLoader: false,
+  preLoader: true,
+  user: {},
+  tricksData: [],
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {
@@ -12,6 +14,12 @@ export default function (state = initialState, action: any) {
       } else {
         return { ...state, toast: action.payload, preLoader: false };
       }
+    }
+    case "SET_USER": {
+      return { ...state, user: action.payload, preLoader: false };
+    }
+    case "SET_TRICKS_DATA": {
+      return { ...state, tricksData: action.payload, preLoader: false };
     }
 
     default:
