@@ -10,10 +10,12 @@ import {
 } from "@react-navigation/stack";
 import { Animated } from "react-native";
 import DrawerNavigation from "./DrawerNavigation";
+import ReadMore from "../Screen/ReadMore";
 
 export type RootStackParamList = {
   DrawerHome: undefined;
   Login: undefined;
+  ReadMore: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -83,6 +85,7 @@ const Navigation: FC = () => {
           name={"DrawerHome"}
           component={DrawerNavigation}
         />
+        <RootStack.Screen name={"ReadMore"} component={ReadMore} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

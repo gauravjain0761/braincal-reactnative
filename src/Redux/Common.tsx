@@ -2,6 +2,7 @@ const initialState = {
   preLoader: true,
   user: {},
   tricksData: [],
+  reactMoreData: {},
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {
@@ -20,6 +21,9 @@ export default function (state = initialState, action: any) {
     }
     case "SET_TRICKS_DATA": {
       return { ...state, tricksData: action.payload, preLoader: false };
+    }
+    case "SET_READ_MORE_DATA": {
+      return { ...state, reactMoreData: action.payload, preLoader: false };
     }
 
     default:

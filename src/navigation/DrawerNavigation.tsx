@@ -18,6 +18,9 @@ import { colors } from "../Theme/Utils";
 import { setToken } from "../Helper/AsyncStorage";
 import { CommonActions } from "@react-navigation/native";
 import { icons } from "../Helper/IconConstant";
+import { RootStackParamList } from "./Navigation";
+import { createStackNavigator } from "@react-navigation/stack";
+import ReadMore from "../Screen/ReadMore";
 
 export type RootDrawerParamList = {
   Home: undefined;
@@ -27,6 +30,7 @@ export type RootDrawerParamList = {
   Maths: undefined;
   English: undefined;
   Science: undefined;
+  ReadMore: undefined;
 };
 
 let DrawerItemArray = [
@@ -163,6 +167,7 @@ const DrawerNavigation: FC = () => {
       <Drawer.Screen name={"Maths"} component={Maths} />
       <Drawer.Screen name={"English"} component={English} />
       <Drawer.Screen name={"Science"} component={Science} />
+      <Drawer.Screen name={"ReadMore"} component={ReadMore} />
     </Drawer.Navigator>
   );
 };
