@@ -18,9 +18,8 @@ import { colors } from "../Theme/Utils";
 import { setToken } from "../Helper/AsyncStorage";
 import { CommonActions } from "@react-navigation/native";
 import { icons } from "../Helper/IconConstant";
-import { RootStackParamList } from "./Navigation";
-import { createStackNavigator } from "@react-navigation/stack";
 import ReadMore from "../Screen/ReadMore";
+import Feedback from "../Screen/Feedback";
 
 export type RootDrawerParamList = {
   Home: undefined;
@@ -31,6 +30,7 @@ export type RootDrawerParamList = {
   English: undefined;
   Science: undefined;
   ReadMore: undefined;
+  Feedback: undefined;
 };
 
 let DrawerItemArray = [
@@ -75,7 +75,11 @@ let DrawerItemArray = [
     image: icons.profile,
     screen: "Profile",
   },
-
+  {
+    label: "Feedback",
+    image: icons.profile,
+    screen: "Feedback",
+  },
   {
     label: "Logout",
     image: icons.logout,
@@ -134,7 +138,11 @@ function CustomDrawerContent(props: any) {
                 alignItems: "center",
               }}
             >
-              <Image style={[styles.drawerItemIcon]} source={item.image} />
+              <Image
+                resizeMode="contain"
+                style={[styles.drawerItemIcon]}
+                source={item.image}
+              />
               <Text style={styles.labelStyle}>{item.label}</Text>
             </TouchableOpacity>
           );
@@ -168,6 +176,7 @@ const DrawerNavigation: FC = () => {
       <Drawer.Screen name={"English"} component={English} />
       <Drawer.Screen name={"Science"} component={Science} />
       <Drawer.Screen name={"ReadMore"} component={ReadMore} />
+      <Drawer.Screen name={"Feedback"} component={Feedback} />
     </Drawer.Navigator>
   );
 };

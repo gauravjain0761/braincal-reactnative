@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { UniversalProps } from "../Helper/NavigationTypes";
 import { Header } from "../Components";
-import { hp, wp } from "../Helper/Constants";
 import { ApplicationStyles } from "../Theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../Redux/Hooks";
 import { getTricks } from "../APIServices/ApiServices";
