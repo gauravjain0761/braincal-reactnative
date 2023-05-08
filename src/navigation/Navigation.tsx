@@ -1,21 +1,25 @@
 import React, { FC } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import Home from "../Screen/Home";
-import Login from "../Screen/Auth/Login";
 import {
   StackCardInterpolationProps,
   TransitionSpecs,
   createStackNavigator,
 } from "@react-navigation/stack";
-import { Animated } from "react-native";
-import DrawerNavigation from "./DrawerNavigation";
-import ReadMore from "../Screen/ReadMore";
+import { Animated, Image, TouchableOpacity, View } from "react-native";
+import Login from "../screens/auth/Login";
+import SelectLocation from "../screens/auth/SelectLocation";
+import VerifyOtp from "../screens/auth/VerifyOtp";
+import { colors } from "../theme/Utils";
+import { ApplicationStyles } from "../theme/ApplicationStyles";
+import { icons } from "../helper/IconConstant";
+import OtpSuccess from "../screens/auth/OtpSuccess";
 
 export type RootStackParamList = {
-  DrawerHome: undefined;
   Login: undefined;
-  ReadMore: undefined;
+  SelectLocation: undefined;
+  VerifyOtp: undefined;
+  OtpSuccess: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -70,22 +74,54 @@ const Navigation: FC = () => {
     <NavigationContainer>
       <RootStack.Navigator
         screenOptions={{
-          headerShown: false, //Optional
           cardStyleInterpolator,
         }}
       >
-        <RootStack.Screen name={"Login"} component={Login} />
         <RootStack.Screen
-          options={{
-            transitionSpec: {
-              open: TransitionSpecs.TransitionIOSSpec,
-              close: TransitionSpecs.TransitionIOSSpec,
-            },
-          }}
-          name={"DrawerHome"}
-          component={DrawerNavigation}
+          options={{ headerShown: false }}
+          name={"SelectLocation"}
+          component={SelectLocation}
         />
-        <RootStack.Screen name={"ReadMore"} component={ReadMore} />
+        <RootStack.Screen
+          options={{ headerShown: false }}
+          name={"Login"}
+          component={Login}
+        />
+        <RootStack.Screen
+          options={({ navigation }) => ({
+            headerTitle: "",
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={ApplicationStyles.headerLeftView}
+              >
+                <View style={ApplicationStyles.backCircleImage}>
+                  <Image
+                    source={icons.backArrow}
+                    style={{
+                      height: 18,
+                      width: 18,
+                      resizeMode: "contain",
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+            ),
+            headerStyle: {
+              backgroundColor: colors.white,
+              elevation: 0,
+              shadowOpacity: 0,
+              borderBottomWidth: 0,
+            },
+          })}
+          name={"VerifyOtp"}
+          component={VerifyOtp}
+        />
+        <RootStack.Screen
+          options={{ headerShown: false }}
+          name={"OtpSuccess"}
+          component={OtpSuccess}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );

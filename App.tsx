@@ -1,5 +1,4 @@
 import React from "react";
-import Navigation from "./src/Navigation/Navigation";
 import {
   ActivityIndicator,
   Dimensions,
@@ -9,8 +8,9 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { useAppSelector } from "./src/Redux/Hooks";
-import { colors } from "./src/Theme/Utils";
+import { colors } from "./srcOld/Theme/Utils";
+import { useAppSelector } from "./src/redux/Hooks";
+import Navigation from "./src/navigation/Navigation";
 
 const App = () => {
   const preLoader = useAppSelector((e) => e.common.preLoader);

@@ -21,8 +21,9 @@ export function commonFont(
   color: string
 ): TextStyle {
   return {
-    fontFamily: getFontType(fontWeight),
-    fontSize: actuatedNormalize(fontSize - 2.5),
+    // fontFamily: getFontType(fontWeight),
+    fontWeight: String(fontWeight),
+    fontSize: actuatedNormalize(fontSize - 4),
     color: color,
     includeFontPadding: false,
   };
