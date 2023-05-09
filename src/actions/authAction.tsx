@@ -4,7 +4,7 @@ import { makeAPIRequest } from "../helper/Global";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../redux";
 import { AnyAction } from "@reduxjs/toolkit";
-import { PRE_LOADER } from "./types";
+import { PRE_LOADER, SET_USER } from "./types";
 
 export const getNonce =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
@@ -39,7 +39,6 @@ export const userLogin =
         if (response.status === 200) {
           if (response?.data?.status) {
             dispatch({ type: PRE_LOADER, payload: false });
-            //   await AsyncStorage.setItem("@token", response.data.data?.auth_token);
           }
           if (request.onSuccess) request.onSuccess(response.data);
         }
@@ -48,4 +47,10 @@ export const userLogin =
         dispatch({ type: PRE_LOADER, payload: false });
         if (request.onFail) request.onFail(error.response.data.error);
       });
+  };
+
+export const setUserInfo =
+  (data: any): ThunkAction<void, RootState, unknown, AnyAction> =>
+  async (dispatch) => {
+    dispatch({ type: SET_USER, payload: data });
   };

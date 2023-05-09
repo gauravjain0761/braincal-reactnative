@@ -19,6 +19,7 @@ import { setToken } from "../helper/AsyncStorage";
 import { CommonActions } from "@react-navigation/native";
 import { icons } from "../helper/IconConstant";
 import Feedback from "../screens/Feedback";
+import { clearAsync } from "../helper/Global";
 
 export type RootDrawerParamList = {
   Home: undefined;
@@ -90,7 +91,7 @@ function CustomDrawerContent(props: any) {
   const dispatch = useAppDispatch();
 
   const onLogout = async () => {
-    await setToken({});
+    clearAsync();
     props.navigation.dispatch(
       CommonActions.reset({
         index: 1,

@@ -7,6 +7,7 @@ import { hp, wp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { colors } from "../theme/Utils";
 import { commonFont } from "../theme/Fonts";
+import Input from "../components/Input";
 
 const Feedback = ({ navigation }: UniversalProps) => {
   const [name, setName] = useState("");
@@ -16,12 +17,12 @@ const Feedback = ({ navigation }: UniversalProps) => {
       <KeyboardAwareScrollView>
         <View style={ApplicationStyles.innerContainer}>
           <View style={styles.inputBoxStyle}>
-            {/* <Input label={"Name"} value={name} onChangeText={setName} />
+            <Input label={"Name"} value={name} onChangeText={setName} />
             <Input
               label={"Message"}
               value={message}
               onChangeText={setMessage}
-            /> */}
+            />
           </View>
           <TouchableOpacity
             disabled={name?.length && message.length ? false : true}

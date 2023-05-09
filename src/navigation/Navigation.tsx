@@ -13,6 +13,7 @@ import { ApplicationStyles } from "../theme/ApplicationStyles";
 import OtpSuccess from "../screens/auth/OtpSuccess";
 import DrawerNavigation from "./DrawerNavigation";
 import { icons } from "../helper/IconConstant";
+import ReadMore from "../screens/ReadMore";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -20,6 +21,7 @@ export type RootStackParamList = {
   VerifyOtp: undefined;
   OtpSuccess: undefined;
   Dashboard: undefined;
+  ReadMore: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -130,6 +132,8 @@ const Navigation: FC = () => {
           name={"OtpSuccess"}
           component={OtpSuccess}
         />
+        <RootStack.Screen name={"ReadMore"} component={ReadMore} />
+
         <RootStack.Screen
           options={{}}
           name={"Dashboard"}

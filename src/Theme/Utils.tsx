@@ -9,4 +9,5 @@ export const colors = {
   red: "#ed4040",
   blue: "#544fe8",
   green: "#00D100",
+  primary: "#2888e7",
 };

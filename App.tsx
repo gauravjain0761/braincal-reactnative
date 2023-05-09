@@ -1,8 +1,8 @@
 import React from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import { colors } from "./srcOld/Theme/Utils";
 import { useAppSelector } from "./src/redux/Hooks";
 import Navigation from "./src/navigation/Navigation";
+import { colors } from "./src/theme/Utils";
 
 const App = () => {
   const preLoader = useAppSelector((e) => e.common.preLoader);
@@ -11,7 +11,7 @@ const App = () => {
       <Navigation />
       {preLoader && (
         <View style={styles.loaderView}>
-          <ActivityIndicator size={"large"} color={colors.black} />
+          <ActivityIndicator size={"large"} color={colors.darkBlue} />
         </View>
       )}
     </View>

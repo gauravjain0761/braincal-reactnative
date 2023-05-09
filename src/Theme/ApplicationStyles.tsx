@@ -24,4 +24,10 @@ export const ApplicationStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  favIcon: {
+    height: hp(2.5),
+    width: hp(2.5),
+    resizeMode: "contain",
+    tintColor: colors.black,
+  },
 });

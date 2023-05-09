@@ -16,13 +16,14 @@ import {
 import CommonButton from "../../components/CommonButton";
 import {
   dispatchErrorAction,
+  dispatchSuccessAction,
   setToken,
-  setUserInfo,
+  setUserInfoAsync,
 } from "../../helper/Global";
-import { userLogin } from "../../actions";
+import { setUserInfo, userLogin } from "../../actions";
 
 const VerifyOtp = ({ route }: UniversalProps) => {
-  const { otp_session, mobileno, countryCode } = route.params;
+  const { otp_session, mobileno, countryCode, nonce } = route.params;
   const dispatch = useAppDispatch();
   const { navigate } = useNavigation();
   const [value, setValue] = useState("");
@@ -50,7 +51,8 @@ const VerifyOtp = ({ route }: UniversalProps) => {
         onSuccess: (res: any) => {
           if (res.status === "ok") {
             setToken(res?.cookie);
-            setUserInfo(res);
+            setUserInfoAsync(res);
+            dispatch(setUserInfo(res));
             navigate("OtpSuccess");
           } else {
             dispatchErrorAction(dispatch, res?.error);
@@ -66,6 +68,30 @@ const VerifyOtp = ({ route }: UniversalProps) => {
     }
     // navigation.navigate("OtpSuccess");
   };
+
+  const resendCode = () => {
+    let login_data = {
+      mobile: mobileno,
+      countryCode: countryCode,
+      nonce: nonce,
+    };
+    let obj = {
+      params: login_data,
+      onSuccess: (res: any) => {
+        if (res.status === "ok") {
+          setSession(res?.otp_session);
+          dispatchSuccessAction(dispatch, "OTP send successfully");
+        } else {
+          dispatchErrorAction(dispatch, res?.error);
+        }
+      },
+      onFail: (error: string) => {
+        dispatchErrorAction(dispatch, error);
+      },
+    };
+    dispatch(userLogin(obj));
+  };
+
   return (
     <View style={ApplicationStyles.container}>
       <View style={ApplicationStyles.innerContainer}>
@@ -97,7 +123,10 @@ const VerifyOtp = ({ route }: UniversalProps) => {
         <CommonButton title={"Verify"} onPress={() => onPressVerify()} />
         <Text style={styles.resendCode}>
           Didn’t receive code?{" "}
-          <Text style={{ ...commonFont(600, 15, colors.skyBlue) }}>
+          <Text
+            onPress={resendCode}
+            style={{ ...commonFont(600, 15, colors.skyBlue) }}
+          >
             Resend Now
           </Text>
         </Text>

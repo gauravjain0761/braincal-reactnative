@@ -26,7 +26,7 @@ export const makeAPIRequest = ({ method, url, data, headers, params }: props) =>
     };
     axios(option)
       .then((response) => {
-        console.log("response", response);
+        // console.log("response", response);
         if (response.status === 200) {
           resolve(response);
         } else {
@@ -66,13 +66,16 @@ export const dispatchErrorAction = (dispatch: any, message: string) => {
 
 export const dispatchSuccessAction = (dispatch: any, message: string) => {
   dispatch({ type: PRE_LOADER, payload: false });
-  dispatch({
-    type: "TOAST",
-    payload: {
-      message: message,
-      type: "success",
-    },
-  });
+  Alert.alert("Success", message, [
+    { text: "OK", onPress: () => console.log("OK Pressed") },
+  ]);
+  // dispatch({
+  //   type: "TOAST",
+  //   payload: {
+  //     message: message,
+  //     type: "success",
+  //   },
+  // });
 };
 
 export const setToken = async (token: string) => {
@@ -88,7 +91,7 @@ export const getToken = async () => {
   }
 };
 
-export const setUserInfo = async (user: any) => {
+export const setUserInfoAsync = async (user: any) => {
   await AsyncStorage.setItem("@user_info", JSON.stringify(user));
 };
 

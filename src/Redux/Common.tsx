@@ -1,4 +1,9 @@
-import { PRE_LOADER } from "../actions/types";
+import {
+  PRE_LOADER,
+  SET_READ_MORE_DATA,
+  SET_TRICKS_DATA,
+  SET_USER,
+} from "../actions/types";
 
 const initialState = {
   preLoader: true,
@@ -18,13 +23,21 @@ export default function (state = initialState, action: any) {
         return { ...state, toast: action.payload, preLoader: false };
       }
     }
-    case "SET_USER": {
+    case SET_USER: {
       return { ...state, user: action.payload, preLoader: false };
     }
-    case "SET_TRICKS_DATA": {
-      return { ...state, tricksData: action.payload, preLoader: false };
+    case SET_TRICKS_DATA: {
+      if (action.payload.page === 1) {
+        return { ...state, tricksData: action.payload.data, preLoader: false };
+      } else {
+        return {
+          ...state,
+          tricksData: [...state.tricksData, ...action.payload.data],
+          preLoader: false,
+        };
+      }
     }
-    case "SET_READ_MORE_DATA": {
+    case SET_READ_MORE_DATA: {
       return { ...state, reactMoreData: action.payload, preLoader: false };
     }
     default:

@@ -7,12 +7,17 @@ import { commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Utils";
 import { hp } from "../../helper/Constants";
 import Lottie from "lottie-react-native";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 
 const OtpSuccess = ({}: UniversalProps) => {
   const navigation = useNavigation();
   const onPressGetin = () => {
-    navigation.navigate("Dashboard");
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "Dashboard" }],
+      })
+    );
   };
   return (
     <View style={ApplicationStyles.container}>

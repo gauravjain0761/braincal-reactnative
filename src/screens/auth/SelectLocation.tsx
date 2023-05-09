@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { UniversalProps } from "../../helper/NavigationTypes";
 import { useAppDispatch, useAppSelector } from "../../redux/Hooks";
@@ -11,6 +11,7 @@ import { commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Utils";
 import { Dropdown } from "react-native-element-dropdown";
 import CommonButton from "../../components/CommonButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const data = [
   { label: "Item 1", value: "1" },
   { label: "Item 2", value: "2" },
@@ -24,24 +25,25 @@ const data = [
 
 const SelectLocation = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const preLoader = useAppSelector((e) => e.common.preLoader);
   const navigation = useNavigation();
   const [locationValue, setLocationValue] = useState("");
 
   const getScreen = async () => {
-    // let user = await getToken();
-    // console.log("user--", user);
-    // if (user && Object.keys(user).length !== 0) {
-    //   dispatch({ type: "SET_USER", payload: user });
-    //   //   navigation.dispatch(
-    //   //     CommonActions.reset({
-    //   //       index: 1,
-    //   //       routes: [{ name: "DrawerHome" }],
-    //   //     })
-    //   //   );
-    // } else {
     dispatch({ type: "PRE_LOADER", payload: false });
-    // }
+    const token = await AsyncStorage.getItem("@token");
+    if (token) {
+      setIsLoading(false);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: "Dashboard" }],
+        })
+      );
+    } else {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -54,32 +56,38 @@ const SelectLocation = ({}: UniversalProps) => {
   if (preLoader == false) {
     return (
       <View style={ApplicationStyles.container}>
-        <View style={styles.innerContainer}>
-          <Image
-            source={icons.locationAnimation}
-            style={styles.locationAnimationImage}
-          />
-          <Text style={styles.titleText}>Choose Your Location</Text>
-          <Dropdown
-            value={locationValue}
-            onChange={(item) => {
-              setLocationValue(item.value);
-            }}
-            style={[styles.dropdown]}
-            placeholderStyle={{ ...commonFont(500, 15, colors.darkBlue) }}
-            labelField="label"
-            valueField="value"
-            data={data}
-            searchPlaceholder="Select Location"
-            placeholder="Select Location"
-            maxHeight={200}
-            itemTextStyle={{ ...commonFont(500, 15, colors.darkBlue) }}
-            selectedTextStyle={{ ...commonFont(500, 15, colors.darkBlue) }}
-          />
-          <View style={{ width: "100%" }}>
-            <CommonButton onPress={() => onPressSubmit()} title={"Submit"} />
+        {isLoading ? (
+          <View style={styles.centerConatiner}>
+            <ActivityIndicator size={"large"} color={colors.darkBlue} />
           </View>
-        </View>
+        ) : (
+          <View style={styles.innerContainer}>
+            <Image
+              source={icons.locationAnimation}
+              style={styles.locationAnimationImage}
+            />
+            <Text style={styles.titleText}>Choose Your Location</Text>
+            <Dropdown
+              value={locationValue}
+              onChange={(item) => {
+                setLocationValue(item.value);
+              }}
+              style={[styles.dropdown]}
+              placeholderStyle={{ ...commonFont(500, 15, colors.darkBlue) }}
+              labelField="label"
+              valueField="value"
+              data={data}
+              searchPlaceholder="Select Location"
+              placeholder="Select Location"
+              maxHeight={200}
+              itemTextStyle={{ ...commonFont(500, 15, colors.darkBlue) }}
+              selectedTextStyle={{ ...commonFont(500, 15, colors.darkBlue) }}
+            />
+            <View style={{ width: "100%" }}>
+              <CommonButton onPress={() => onPressSubmit()} title={"Submit"} />
+            </View>
+          </View>
+        )}
       </View>
     );
   } else {
@@ -113,5 +121,10 @@ const styles = StyleSheet.create({
     height: hp(7),
     paddingHorizontal: hp(2),
     marginBottom: hp(2),
+  },
+  centerConatiner: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
