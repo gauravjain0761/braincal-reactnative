@@ -12,15 +12,15 @@ import { UniversalProps } from "../../helper/NavigationTypes";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { useAppDispatch } from "../../redux/Hooks";
 import { useNavigation } from "@react-navigation/native";
-import { icons } from "../../helper/IconConstant";
 import { hp } from "../../helper/Constants";
 import { commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Utils";
 import CountryPicker from "rn-country-picker";
 import CommonButton from "../../components/CommonButton";
 import { getNonce, userLogin } from "../../actions";
-import { dispatchErrorAction } from "../../helper/global";
+import { dispatchErrorAction } from "../../helper/Global";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { icons } from "../../helper/IconConstant";
 interface container {
   title: String;
   image: ImageSourcePropType;

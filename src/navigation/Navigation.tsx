@@ -10,9 +10,9 @@ import SelectLocation from "../screens/auth/SelectLocation";
 import VerifyOtp from "../screens/auth/VerifyOtp";
 import { colors } from "../theme/Utils";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
-import { icons } from "../helper/IconConstant";
 import OtpSuccess from "../screens/auth/OtpSuccess";
 import DrawerNavigation from "./DrawerNavigation";
+import { icons } from "../helper/IconConstant";
 
 export type RootStackParamList = {
   Login: undefined;

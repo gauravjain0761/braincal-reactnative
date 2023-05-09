@@ -18,7 +18,7 @@ import {
   dispatchErrorAction,
   setToken,
   setUserInfo,
-} from "../../helper/global";
+} from "../../helper/Global";
 import { userLogin } from "../../actions";
 
 const VerifyOtp = ({ route }: UniversalProps) => {

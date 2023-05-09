@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { api, GET, POST } from "../helper/apiConstants";
-import { makeAPIRequest } from "../helper/global";
+import { api, GET, POST } from "../helper/ApiConstants";
+import { makeAPIRequest } from "../helper/Global";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../redux";
 import { AnyAction } from "@reduxjs/toolkit";
