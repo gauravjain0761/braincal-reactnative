@@ -12,12 +12,14 @@ import { colors } from "../theme/Utils";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { icons } from "../helper/IconConstant";
 import OtpSuccess from "../screens/auth/OtpSuccess";
+import DrawerNavigation from "./DrawerNavigation";
 
 export type RootStackParamList = {
   Login: undefined;
   SelectLocation: undefined;
   VerifyOtp: undefined;
   OtpSuccess: undefined;
+  Dashboard: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -72,21 +74,27 @@ const Navigation: FC = () => {
     <NavigationContainer>
       <RootStack.Navigator
         screenOptions={{
+          headerShown: false,
           cardStyleInterpolator,
         }}
       >
         <RootStack.Screen
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+          }}
           name={"SelectLocation"}
           component={SelectLocation}
         />
         <RootStack.Screen
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+          }}
           name={"Login"}
           component={Login}
         />
         <RootStack.Screen
           options={({ navigation }) => ({
+            headerShown: true,
             headerTitle: "",
             headerLeft: () => (
               <TouchableOpacity
@@ -116,9 +124,16 @@ const Navigation: FC = () => {
           component={VerifyOtp}
         />
         <RootStack.Screen
-          options={{ headerShown: false }}
+          options={{
+            headerShown: false,
+          }}
           name={"OtpSuccess"}
           component={OtpSuccess}
+        />
+        <RootStack.Screen
+          options={{}}
+          name={"Dashboard"}
+          component={DrawerNavigation}
         />
       </RootStack.Navigator>
     </NavigationContainer>

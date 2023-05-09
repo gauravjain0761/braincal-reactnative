@@ -29,19 +29,19 @@ const SelectLocation = ({}: UniversalProps) => {
   const [locationValue, setLocationValue] = useState("");
 
   const getScreen = async () => {
-    let user = await getToken();
-    console.log("user--", user);
-    if (user && Object.keys(user).length !== 0) {
-      dispatch({ type: "SET_USER", payload: user });
-      //   navigation.dispatch(
-      //     CommonActions.reset({
-      //       index: 1,
-      //       routes: [{ name: "DrawerHome" }],
-      //     })
-      //   );
-    } else {
-      dispatch({ type: "PRE_LOADER", payload: false });
-    }
+    // let user = await getToken();
+    // console.log("user--", user);
+    // if (user && Object.keys(user).length !== 0) {
+    //   dispatch({ type: "SET_USER", payload: user });
+    //   //   navigation.dispatch(
+    //   //     CommonActions.reset({
+    //   //       index: 1,
+    //   //       routes: [{ name: "DrawerHome" }],
+    //   //     })
+    //   //   );
+    // } else {
+    dispatch({ type: "PRE_LOADER", payload: false });
+    // }
   };
 
   useEffect(() => {

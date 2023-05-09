@@ -7,9 +7,13 @@ import { commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Utils";
 import { hp } from "../../helper/Constants";
 import Lottie from "lottie-react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const OtpSuccess = ({}: UniversalProps) => {
-  const onPressGetin = () => {};
+  const navigation = useNavigation();
+  const onPressGetin = () => {
+    navigation.navigate("Dashboard");
+  };
   return (
     <View style={ApplicationStyles.container}>
       <View style={ApplicationStyles.innerContainer}>

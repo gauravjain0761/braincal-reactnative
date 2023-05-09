@@ -70,7 +70,6 @@ const Navigation: FC = () => {
     <NavigationContainer>
       <RootStack.Navigator
         screenOptions={{
-          headerShown: false, //Optional
           cardStyleInterpolator,
         }}
       >
