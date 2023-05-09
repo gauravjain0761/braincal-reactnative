@@ -1,3 +1,5 @@
+import { PRE_LOADER } from "../actions/types";
+
 const initialState = {
   preLoader: true,
   user: {},
@@ -6,7 +8,7 @@ const initialState = {
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {
-    case "PRE_LOADER": {
+    case PRE_LOADER: {
       return { ...state, preLoader: action.payload };
     }
     case "TOAST": {
@@ -25,7 +27,6 @@ export default function (state = initialState, action: any) {
     case "SET_READ_MORE_DATA": {
       return { ...state, reactMoreData: action.payload, preLoader: false };
     }
-
     default:
       return state;
   }

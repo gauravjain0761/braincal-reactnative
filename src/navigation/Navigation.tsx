@@ -1,9 +1,7 @@
 import React, { FC } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   StackCardInterpolationProps,
-  TransitionSpecs,
   createStackNavigator,
 } from "@react-navigation/stack";
 import { Animated, Image, TouchableOpacity, View } from "react-native";

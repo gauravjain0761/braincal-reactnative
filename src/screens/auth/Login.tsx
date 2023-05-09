@@ -16,10 +16,11 @@ import { icons } from "../../helper/IconConstant";
 import { hp } from "../../helper/Constants";
 import { commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Utils";
-// import CountryPicker from "react-native-country-picker-modal";
-import CountrySelector from "../../components/CountrySelector";
 import CountryPicker from "rn-country-picker";
 import CommonButton from "../../components/CommonButton";
+import { getNonce, userLogin } from "../../actions";
+import { dispatchErrorAction } from "../../helper/global";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 interface container {
   title: String;
   image: ImageSourcePropType;
@@ -27,7 +28,7 @@ interface container {
 }
 const Login = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
   const [mobileno, setMobileno] = useState("");
   const [country, setCountry] = useState("");
   const [countryCode, setCountryCode] = useState<string>("91");
@@ -50,12 +51,57 @@ const Login = ({}: UniversalProps) => {
     );
   };
 
-  const onPressSubmit = () => {
-    navigation.navigate("VerifyOtp");
+  // const onPressSubmit = () => {
+  //   navigation.navigate("VerifyOtp");
+  // };
+
+  const loginApiCallback = (nonce: String) => {
+    let login_data = {
+      mobile: mobileno,
+      countryCode: "+" + countryCode,
+      nonce: nonce,
+    };
+    let obj = {
+      params: login_data,
+      onSuccess: (res: any) => {
+        if (res.status === "ok") {
+          navigate("VerifyOtp", {
+            otp_session: res?.otp_session,
+            mobileno: mobileno,
+            countryCode: "+" + countryCode,
+            nonce: nonce,
+          });
+        } else {
+          dispatchErrorAction(dispatch, res?.error);
+        }
+      },
+      onFail: (error: string) => {
+        dispatchErrorAction(dispatch, error);
+      },
+    };
+    dispatch(userLogin(obj));
+  };
+
+  const onPressSignIn = () => {
+    if (mobileno.trim().length !== 0) {
+      let nonce_data = {
+        controller: "user",
+        method: "register",
+      };
+      let obj = {
+        params: nonce_data,
+        onSuccess: (res: any) => {
+          loginApiCallback(res?.nonce);
+        },
+      };
+      dispatch(getNonce(obj));
+    } else {
+      dispatchErrorAction(dispatch, "Please enter mobile number");
+    }
   };
 
   return (
-    <View style={ApplicationStyles.container}>
+    <KeyboardAwareScrollView style={ApplicationStyles.container}>
       <View style={ApplicationStyles.innerContainer}>
         <Image style={styles.image} source={icons.brainCalImage} />
         <View>
@@ -97,7 +143,7 @@ const Login = ({}: UniversalProps) => {
               </TouchableOpacity>
             </View>
           </View>
-          <CommonButton onPress={() => onPressSubmit()} title={"Sign In"} />
+          <CommonButton onPress={onPressSignIn} title={"Sign In"} />
           <View style={styles.strokeView}></View>
           <RenderSocialButton
             title={"Connect with Google"}
@@ -116,8 +162,7 @@ const Login = ({}: UniversalProps) => {
           />
         </View>
       </View>
-      <Text>Login</Text>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

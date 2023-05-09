@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  ActivityIndicator,
-  Dimensions,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { colors } from "./srcOld/Theme/Utils";
 import { useAppSelector } from "./src/redux/Hooks";
 import Navigation from "./src/navigation/Navigation";

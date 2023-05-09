@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UniversalProps } from "../../helper/NavigationTypes";
 import { useAppDispatch } from "../../redux/Hooks";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { SCREEN_WIDTH, commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Utils";
@@ -14,19 +14,57 @@ import {
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
 import CommonButton from "../../components/CommonButton";
+import {
+  dispatchErrorAction,
+  setToken,
+  setUserInfo,
+} from "../../helper/global";
+import { userLogin } from "../../actions";
 
-const VerifyOtp = ({}: UniversalProps) => {
+const VerifyOtp = ({ route }: UniversalProps) => {
+  const { otp_session, mobileno, countryCode } = route.params;
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
   const [value, setValue] = useState("");
+  const [session, setSession] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: 6 });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
 
+  useEffect(() => {
+    setSession(otp_session);
+  }, [route.params]);
+
   const onPressVerify = () => {
-    navigation.navigate("OtpSuccess");
+    if (value.trim().length !== 0) {
+      let verify_data = {
+        mobile: mobileno,
+        countryCode: countryCode,
+        otp_session: session,
+        otp: value,
+      };
+      let obj = {
+        params: verify_data,
+        onSuccess: (res: any) => {
+          if (res.status === "ok") {
+            setToken(res?.cookie);
+            setUserInfo(res);
+            navigate("OtpSuccess");
+          } else {
+            dispatchErrorAction(dispatch, res?.error);
+          }
+        },
+        onFail: (error: string) => {
+          dispatchErrorAction(dispatch, error);
+        },
+      };
+      dispatch(userLogin(obj));
+    } else {
+      dispatchErrorAction(dispatch, "Please enter OTP");
+    }
+    // navigation.navigate("OtpSuccess");
   };
   return (
     <View style={ApplicationStyles.container}>
