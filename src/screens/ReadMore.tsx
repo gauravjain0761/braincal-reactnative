@@ -27,7 +27,7 @@ const ReadMore = ({ navigation }: UniversalProps) => {
   const [firstNumber, setfirstNumber] = useState("");
   const [secondNumber, setsecondNumber] = useState("");
   const [Answer, setAnswer] = useState("");
-  console.log(READ_MORE_DATA);
+  const [AnswerShow, setAnswerShow] = useState(false);
 
   const onPressShowResult = () => {
     if (firstNumber == "" || secondNumber == "") {
@@ -36,27 +36,29 @@ const ReadMore = ({ navigation }: UniversalProps) => {
     } else {
       setAnswer(eval(firstNumber + READ_MORE_DATA.expression + secondNumber));
     }
-    console.log("hereee");
   };
 
   return (
     <View style={ApplicationStyles.container}>
       <ScrollView>
         <View style={styles.titleView}>
-          <RenderHTML
-            tagsStyles={{
-              p: {
-                ...commonFont(500, 20, colors.white),
-                paddingLeft: hp(1),
-              },
-            }}
-            source={{
-              html: `
+          <View style={{ flex: 1 }}>
+            <RenderHTML
+              tagsStyles={{
+                p: {
+                  ...commonFont(500, 20, colors.white),
+                  paddingLeft: hp(1),
+                },
+              }}
+              source={{
+                html: `
       <p>
         ${READ_MORE_DATA.title.rendered}
       </p>`,
-            }}
-          />
+              }}
+            />
+          </View>
+
           <TouchableOpacity style={styles.favouriteView}>
             <Image
               source={icons.favourite}
@@ -64,6 +66,25 @@ const ReadMore = ({ navigation }: UniversalProps) => {
             />
           </TouchableOpacity>
         </View>
+        {READ_MORE_DATA.type &&
+          READ_MORE_DATA.type == "11_plus" &&
+          READ_MORE_DATA.answer &&
+          READ_MORE_DATA.answer !== "" && (
+            <View>
+              {AnswerShow == false ? (
+                <TouchableOpacity
+                  onPress={() => setAnswerShow(true)}
+                  style={styles.showAnswerView}
+                >
+                  <Text style={styles.showAnswer}>Show Answer</Text>
+                </TouchableOpacity>
+              ) : (
+                <Text style={styles.answerText}>
+                  Correct Answer is: {READ_MORE_DATA.answer}
+                </Text>
+              )}
+            </View>
+          )}
 
         {READ_MORE_DATA.cover_image && READ_MORE_DATA.cover_image !== "" && (
           <View>
@@ -73,21 +94,22 @@ const ReadMore = ({ navigation }: UniversalProps) => {
             />
           </View>
         )}
-
-        <RenderHTML
-          tagsStyles={{
-            p: {
-              color: colors.black,
-              paddingHorizontal: hp(2),
-            },
-          }}
-          source={{
-            html: READ_MORE_DATA.content.rendered,
-          }}
-        />
+        <View style={{ paddingHorizontal: hp(2) }}>
+          <RenderHTML
+            tagsStyles={{
+              p: {
+                color: colors.black,
+              },
+              div: {},
+            }}
+            source={{
+              html: READ_MORE_DATA.content.rendered,
+            }}
+          />
+        </View>
 
         {READ_MORE_DATA.expression && READ_MORE_DATA.expression !== "" && (
-          <View>
+          <View style={{ marginBottom: hp(5) }}>
             <Text style={styles.titleText}>Excersie Here</Text>
             <TextInput
               value={firstNumber}
@@ -161,6 +183,19 @@ const styles = StyleSheet.create({
     marginHorizontal: hp(2),
 
     alignItems: "flex-start",
+  },
+  showAnswerView: {
+    marginHorizontal: hp(2),
+
+    alignItems: "flex-start",
+  },
+  showAnswer: {
+    ...commonFont(400, 16, colors.black),
+    paddingVertical: hp(2),
+  },
+  answerText: {
+    ...commonFont(600, 20, colors.black),
+    margin: hp(2),
   },
 });
 

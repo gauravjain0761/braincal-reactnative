@@ -173,9 +173,21 @@ const DrawerNavigation: FC = () => {
       <Drawer.Screen name={"MathTricks"} component={MathTricks} />
       <Drawer.Screen name={"Languages"} component={Languages} />
       <Drawer.Screen name={"GeneralKnowledge"} component={GeneralKnowledge} />
-      <Drawer.Screen name={"Maths"} component={Maths} />
-      <Drawer.Screen name={"English"} component={English} />
-      <Drawer.Screen name={"Science"} component={Science} />
+      <Drawer.Screen
+        options={{ headerTitle: "11 Plus Maths" }}
+        name={"Maths"}
+        component={Maths}
+      />
+      <Drawer.Screen
+        options={{ headerTitle: "11 Plus English" }}
+        name={"English"}
+        component={English}
+      />
+      <Drawer.Screen
+        options={{ headerTitle: "11 Plus Science" }}
+        name={"Science"}
+        component={Science}
+      />
       <Drawer.Screen name={"Feedback"} component={Feedback} />
     </Drawer.Navigator>
   );

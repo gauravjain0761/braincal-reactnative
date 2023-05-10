@@ -14,6 +14,8 @@ import OtpSuccess from "../screens/auth/OtpSuccess";
 import DrawerNavigation from "./DrawerNavigation";
 import { icons } from "../helper/IconConstant";
 import ReadMore from "../screens/ReadMore";
+import LevelListData from "../screens/LevelListData";
+import LanguageListData from "../screens/LanguageListData";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -22,6 +24,8 @@ export type RootStackParamList = {
   OtpSuccess: undefined;
   Dashboard: undefined;
   ReadMore: undefined;
+  LevelListData: undefined;
+  LanguageListData: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -132,7 +136,21 @@ const Navigation: FC = () => {
           name={"OtpSuccess"}
           component={OtpSuccess}
         />
-        <RootStack.Screen name={"ReadMore"} component={ReadMore} />
+        <RootStack.Screen
+          name={"ReadMore"}
+          options={{ headerShown: true, headerBackTitle: "" }}
+          component={ReadMore}
+        />
+        <RootStack.Screen
+          name={"LevelListData"}
+          options={{ headerShown: true, headerBackTitle: "" }}
+          component={LevelListData}
+        />
+        <RootStack.Screen
+          name={"LanguageListData"}
+          options={{ headerShown: true, headerBackTitle: "" }}
+          component={LanguageListData}
+        />
 
         <RootStack.Screen
           options={{}}
