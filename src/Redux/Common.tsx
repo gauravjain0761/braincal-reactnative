@@ -1,6 +1,9 @@
 import {
+  ADD_FAVOURITE,
   FAVOURITES_ID,
   PRE_LOADER,
+  REMOVE_FAVOURITE,
+  SET_FAVOURITES_POSTS,
   SET_LANGUAGE_DATA,
   SET_LEVEL_DATA,
   SET_READ_MORE_DATA,
@@ -18,6 +21,7 @@ const initialState = {
   languageData: [],
   searchPostsList: [],
   favouritesId: [],
+  favouritesPosts: [],
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {
@@ -83,6 +87,47 @@ export default function (state = initialState, action: any) {
         favouritesId: action.payload,
         preLoader: false,
       };
+    }
+    case ADD_FAVOURITE: {
+      let favouritesId = Object.assign([], state.favouritesId);
+      favouritesId.push(action.payload);
+      return {
+        ...state,
+        favouritesId: favouritesId,
+        preLoader: false,
+      };
+    }
+    case REMOVE_FAVOURITE: {
+      let favouritesId = Object.assign([], state.favouritesId);
+      favouritesId = favouritesId.filter((obj) => obj !== action.payload);
+
+      let favouritesPosts = Object.assign([], state.favouritesPosts);
+      if (favouritesPosts.length !== 0) {
+        favouritesPosts = favouritesPosts.filter(
+          (obj) => obj.id !== action.payload
+        );
+      }
+      return {
+        ...state,
+        favouritesId: favouritesId,
+        favouritesPosts: favouritesPosts,
+        preLoader: false,
+      };
+    }
+    case SET_FAVOURITES_POSTS: {
+      if (action.payload.page === 1) {
+        return {
+          ...state,
+          favouritesPosts: action.payload.data,
+          preLoader: false,
+        };
+      } else {
+        return {
+          ...state,
+          favouritesPosts: [...state.favouritesPosts, ...action.payload.data],
+          preLoader: false,
+        };
+      }
     }
     default:
       return state;

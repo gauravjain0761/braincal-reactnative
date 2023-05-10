@@ -38,7 +38,6 @@ const Login = ({ navigation }: UniversalProps) => {
 
   const getScreen = async () => {
     let user = await getToken();
-    console.log("user--", user);
     if (user && Object.keys(user).length !== 0) {
       dispatch({ type: "SET_USER", payload: user });
       navigation.dispatch(

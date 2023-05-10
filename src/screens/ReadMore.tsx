@@ -20,6 +20,13 @@ import { commonFont } from "../theme/Fonts";
 import { hp } from "../helper/Constants";
 import { colors } from "../theme/Utils";
 import { icons } from "../helper/IconConstant";
+import {
+  dispatchErrorAction,
+  getToken,
+  setUserInfoAsync,
+} from "../helper/Global";
+import { setUserInfo, updateUser } from "../actions";
+import { ADD_FAVOURITE, REMOVE_FAVOURITE } from "../actions/types";
 
 const ReadMore = ({ navigation }: UniversalProps) => {
   const dispatch = useAppDispatch();
@@ -28,7 +35,65 @@ const ReadMore = ({ navigation }: UniversalProps) => {
   const [secondNumber, setsecondNumber] = useState("");
   const [Answer, setAnswer] = useState("");
   const [AnswerShow, setAnswerShow] = useState(false);
+  const favouritesId = useAppSelector((e) => e.common.favouritesId);
 
+  const onPressFavourite = () => {
+    if (favouritesId.indexOf(READ_MORE_DATA.id) == -1) {
+      addFavourite();
+    } else {
+      removeFavourite();
+    }
+  };
+
+  const addFavourite = async () => {
+    dispatch({ type: ADD_FAVOURITE, payload: READ_MORE_DATA.id });
+    let ids = Object.assign([], favouritesId);
+    ids.push(READ_MORE_DATA.id);
+    const cookie = await getToken();
+    let dataTemp = {
+      cookie: cookie,
+      meta_key: "favorites", //favorites
+      meta_value: ids.map(Number).toString(), //favorites.map(Number).toString()
+    };
+    let request = {
+      data: dataTemp,
+      onSuccess: (res: any) => {
+        if (res?.status === "ok") {
+          dispatch(setUserInfo(res?.user));
+          setUserInfoAsync(res?.user);
+        } else {
+          dispatchErrorAction(dispatch, res?.error);
+        }
+      },
+      onFail: () => {},
+    };
+    dispatch(updateUser(request));
+  };
+
+  const removeFavourite = async () => {
+    dispatch({ type: REMOVE_FAVOURITE, payload: READ_MORE_DATA.id });
+    let ids = Object.assign([], favouritesId);
+    ids = ids.filter((e) => e !== READ_MORE_DATA.id);
+    const cookie = await getToken();
+    let dataTemp = {
+      cookie: cookie,
+      meta_key: "favorites", //favorites
+      meta_value: ids.map(Number).toString(), //favorites.map(Number).toString()
+    };
+    let request = {
+      data: dataTemp,
+      onSuccess: (res: any) => {
+        if (res?.status === "ok") {
+          dispatch(setUserInfo(res?.user));
+          setUserInfoAsync(res?.user);
+        } else {
+          dispatchErrorAction(dispatch, res?.error);
+        }
+      },
+      onFail: () => {},
+    };
+    dispatch(updateUser(request));
+  };
   const onPressShowResult = () => {
     if (firstNumber == "" || secondNumber == "") {
       Alert.alert("Invalid Input");
@@ -59,9 +124,16 @@ const ReadMore = ({ navigation }: UniversalProps) => {
             />
           </View>
 
-          <TouchableOpacity style={styles.favouriteView}>
+          <TouchableOpacity
+            onPress={() => onPressFavourite()}
+            style={styles.favouriteView}
+          >
             <Image
-              source={icons.favourite}
+              source={
+                favouritesId.indexOf(READ_MORE_DATA.id) == -1
+                  ? icons.favourite
+                  : icons.favouriteFilled
+              }
               style={[ApplicationStyles.favIcon, { tintColor: colors.white }]}
             />
           </TouchableOpacity>

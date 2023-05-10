@@ -46,7 +46,6 @@ const LevelListData = ({ route }: UniversalProps) => {
     let obj = {
       params: dataTemp,
       onSuccess: (res) => {
-        console.log(res);
         setPage(page + 1);
       },
       onFail: () => {},

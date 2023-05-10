@@ -39,7 +39,6 @@ const ReadMore = ({ navigation }: UniversalProps) => {
     } else {
       setAnswer(eval(firstNumber + READ_MORE_DATA.expression + secondNumber));
     }
-    console.log("hereee");
   };
 
   return (

@@ -17,7 +17,6 @@ import TricksRow from "../Components/Common/TricksRow";
 const MathTricks = ({ navigation }: UniversalProps) => {
   const dispatch = useAppDispatch();
   const TRICKS_DATA = useAppSelector((e) => e.common.tricksData);
-  console.log("TRICKS_DATA--", TRICKS_DATA);
   useEffect(() => {
     let data = { page: 1 };
     dispatch(getTricks(data));

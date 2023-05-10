@@ -52,17 +52,12 @@ export const userLogin =
 export const setUserInfo =
   (data: any): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
-    console.log(
-      "data------",
-      data.user.favorites,
-      data.user.favorites.toString().split(",").map(Number)
-    );
     dispatch({ type: SET_USER, payload: data });
     dispatch({
       type: FAVOURITES_ID,
       payload:
-        data.user.favorites !== ""
-          ? data.user.favorites.toString().split(",").map(Number)
+        data.favorites !== ""
+          ? data.favorites.toString().split(",").map(Number)
           : [],
     });
   };

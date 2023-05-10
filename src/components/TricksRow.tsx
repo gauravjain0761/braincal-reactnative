@@ -12,12 +12,22 @@ import {
 import RenderHtml from "react-native-render-html";
 import { useNavigation } from "@react-navigation/native";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
-import { SET_READ_MORE_DATA } from "../actions/types";
+import {
+  ADD_FAVOURITE,
+  REMOVE_FAVOURITE,
+  SET_READ_MORE_DATA,
+} from "../actions/types";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { icons } from "../helper/IconConstant";
 import { commonFont } from "../theme/Fonts";
 import { hp, wp } from "../helper/Constants";
 import { colors } from "../theme/Utils";
+import {
+  dispatchErrorAction,
+  getToken,
+  setUserInfoAsync,
+} from "../helper/Global";
+import { setUserInfo, updateUser } from "../actions";
 
 interface Props {
   data?: any;
@@ -40,9 +50,55 @@ const TricksRow: FC<Props> = ({ data }) => {
     }
   };
 
-  const addFavourite = () => {};
+  const addFavourite = async () => {
+    dispatch({ type: ADD_FAVOURITE, payload: data.id });
+    let ids = Object.assign([], favouritesId);
+    ids.push(data.id);
+    const cookie = await getToken();
+    let dataTemp = {
+      cookie: cookie,
+      meta_key: "favorites", //favorites
+      meta_value: ids.map(Number).toString(), //favorites.map(Number).toString()
+    };
+    let request = {
+      data: dataTemp,
+      onSuccess: (res: any) => {
+        if (res?.status === "ok") {
+          dispatch(setUserInfo(res?.user));
+          setUserInfoAsync(res?.user);
+        } else {
+          dispatchErrorAction(dispatch, res?.error);
+        }
+      },
+      onFail: () => {},
+    };
+    dispatch(updateUser(request));
+  };
 
-  const removeFavourite = () => {};
+  const removeFavourite = async () => {
+    dispatch({ type: REMOVE_FAVOURITE, payload: data.id });
+    let ids = Object.assign([], favouritesId);
+    ids = ids.filter((e) => e !== data.id);
+    const cookie = await getToken();
+    let dataTemp = {
+      cookie: cookie,
+      meta_key: "favorites", //favorites
+      meta_value: ids.map(Number).toString(), //favorites.map(Number).toString()
+    };
+    let request = {
+      data: dataTemp,
+      onSuccess: (res: any) => {
+        if (res?.status === "ok") {
+          dispatch(setUserInfo(res?.user));
+          setUserInfoAsync(res?.user);
+        } else {
+          dispatchErrorAction(dispatch, res?.error);
+        }
+      },
+      onFail: () => {},
+    };
+    dispatch(updateUser(request));
+  };
 
   return (
     <View style={styles.row}>

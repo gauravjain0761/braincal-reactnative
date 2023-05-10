@@ -13,7 +13,6 @@ import {
 export const getLanguageData =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
-    console.log(request.params);
     return makeAPIRequest({
       method: GET,
       url: api.post_url + request.params.type,
@@ -21,7 +20,6 @@ export const getLanguageData =
     })
       .then(async (response: any) => {
         if (response.status === 200) {
-          console.log(response);
           dispatch({ type: PRE_LOADER, payload: false });
           let obj = {
             data: response.data,

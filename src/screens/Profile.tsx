@@ -13,6 +13,7 @@ import {
   setUserInfoAsync,
 } from "../helper/Global";
 import { setUserInfo, updateUser } from "../actions";
+import { PRE_LOADER } from "../actions/types";
 
 const Profile = ({ navigation }: UniversalProps) => {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ const Profile = ({ navigation }: UniversalProps) => {
   }, [user]);
 
   const onPressUpdate = async () => {
+    dispatch({ type: PRE_LOADER, payload: true });
     const cookie = await getToken();
     let data = {
       cookie: cookie,

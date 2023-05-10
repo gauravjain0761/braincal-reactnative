@@ -38,7 +38,6 @@ const SelectLocation = ({}: UniversalProps) => {
 
     if (token) {
       const user = await getUserInfo();
-      console.log("here user", user);
       dispatch(setUserInfo(user));
       setIsLoading(false);
       navigation.dispatch(

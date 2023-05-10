@@ -3,14 +3,21 @@ import { makeAPIRequest } from "../helper/Global";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../redux";
 import { AnyAction } from "@reduxjs/toolkit";
-import { PRE_LOADER, SET_LEVEL_DATA, SET_TRICKS_DATA } from "./types";
+import {
+  PRE_LOADER,
+  SET_FAVOURITES_POSTS,
+  SET_LEVEL_DATA,
+  SET_TRICKS_DATA,
+} from "./types";
 
-export const getLevelWiseData =
+export const getFavouritesData =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
     return makeAPIRequest({
       method: GET,
-      url: api.post_url + "11_plus",
+      url:
+        api.post_url +
+        "posts?type[]=spanish&type[]=english&type[]=hindi&type[]=french&type[]=tricks&type[]=general_knowledge&type[]=11_plus&cr=1",
       params: request.params,
     })
       .then(async (response: any) => {
@@ -20,7 +27,7 @@ export const getLevelWiseData =
             data: response.data,
             page: request.params.page,
           };
-          dispatch({ type: SET_LEVEL_DATA, payload: obj });
+          dispatch({ type: SET_FAVOURITES_POSTS, payload: obj });
           if (request.onSuccess) request.onSuccess(response.data);
         }
       })

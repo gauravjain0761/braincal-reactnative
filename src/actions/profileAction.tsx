@@ -29,7 +29,6 @@ export const sendFeedback =
 export const updateUser =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
-    dispatch({ type: PRE_LOADER, payload: true });
     return makeAPIRequest({
       method: POST,
       url: api.update_user,
