@@ -30,12 +30,12 @@ export const getMathTricks =
       });
   };
 
-export const serachPosts =
+export const searchPosts =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
     return makeAPIRequest({
       method: GET,
-      url: api.search_post + request.params.type,
+      url: api.search_post + request.type,
       params: request.params,
     })
       .then(async (response: any) => {

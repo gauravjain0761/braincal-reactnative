@@ -7,7 +7,6 @@ import { useAppSelector } from "../redux/Hooks";
 
 const Favourites = ({ navigation }: UniversalProps) => {
   const favouritesId = useAppSelector((e) => e.common.favouritesId);
-  console.log(favouritesId);
   return (
     <View style={ApplicationStyles.container}>
       <View style={ApplicationStyles.innerContainer}></View>

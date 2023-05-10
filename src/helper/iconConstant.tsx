@@ -22,4 +22,5 @@ export const icons = {
   apple: require("../assets/apple.png"),
   backArrow: require("../assets/backArrow.png"),
   search: require("../assets/icons/search.png"),
+  next: require("../assets/icons/next.png"),
 };

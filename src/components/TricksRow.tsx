@@ -31,7 +31,6 @@ const TricksRow: FC<Props> = ({ data }) => {
     navigation.navigate("ReadMore");
   };
   const favouritesId = useAppSelector((e) => e.common.favouritesId);
-  console.log("favouritesId", favouritesId);
 
   const onPressFavourite = () => {
     if (favouritesId.indexOf(data.id) == -1) {

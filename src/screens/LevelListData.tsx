@@ -11,12 +11,14 @@ import {
 import { UniversalProps } from "../helper/NavigationTypes";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
-import { getMathTricks } from "../actions";
+import { getMathTricks, searchPosts } from "../actions";
 import TricksRow from "../components/TricksRow";
 import { PRE_LOADER, SET_LEVEL_DATA } from "../actions/types";
 import { colors } from "../theme/Utils";
 import { useNavigation } from "@react-navigation/native";
 import { getLevelWiseData } from "../actions/levelAction";
+import SearchBar from "../components/SearchBar";
+import SearchItemView from "../components/SearchItemView";
 
 const LevelListData = ({ route }: UniversalProps) => {
   const [page, setPage] = useState(1);
@@ -25,6 +27,9 @@ const LevelListData = ({ route }: UniversalProps) => {
   const [footerLoading, setFooterLoading] = useState(false);
   const [onEndReachedCalled, setOnEndReachedCalled] = useState(true);
   const [isDataFound, setIsDataFound] = useState(false);
+  const [searchText, setSearchText] = useState<string>("");
+  const { searchPostsList } = useAppSelector((e) => e.common);
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -40,7 +45,6 @@ const LevelListData = ({ route }: UniversalProps) => {
     dataTemp[route.params.type] = route.params.typeValue;
     let obj = {
       params: dataTemp,
-
       onSuccess: (res) => {
         console.log(res);
         setPage(page + 1);
@@ -77,8 +81,40 @@ const LevelListData = ({ route }: UniversalProps) => {
     }
   };
 
+  useEffect(() => {
+    let obj = {
+      page: 1,
+      per_page: 20,
+      search: searchText?.trim().length === 0 ? "null" : searchText,
+      [route.params.type]: route.params.typeValue,
+    };
+    let request = {
+      type: "11_plus",
+      params: obj,
+      onSuccess: () => {},
+      onFail: () => {},
+    };
+    dispatch(searchPosts(request));
+  }, [searchText]);
+
+  const onSearchPosts = (text: string) => {
+    setSearchText(text);
+  };
+
   return (
     <View style={ApplicationStyles.container}>
+      <SearchBar
+        value={searchText}
+        onChangeText={(text) => onSearchPosts(text)}
+        onPressClose={() => setSearchText("")}
+      />
+      <FlatList
+        data={searchPostsList}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item, index }) => {
+          return <SearchItemView item={item} />;
+        }}
+      />
       <FlatList
         contentContainerStyle={{ flexGrow: 1 }}
         data={TRICKS_DATA}

@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Button,
   FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,7 +12,7 @@ import {
 import { UniversalProps } from "../helper/NavigationTypes";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
-import { getMathTricks, serachPosts } from "../actions";
+import { getMathTricks, searchPosts, serachPosts } from "../actions";
 import TricksRow from "../components/TricksRow";
 import { PRE_LOADER } from "../actions/types";
 import { colors } from "../theme/Utils";
@@ -58,15 +59,23 @@ const MathTricks = ({ navigation }: UniversalProps) => {
     }
   };
 
-  const onSearchPosts = (text: string) => {
-    setSearchText(text);
+  useEffect(() => {
     let obj = {
-      type: "tricks",
       page: 1,
       per_page: 20,
-      search: text,
+      search: searchText?.trim().length === 0 ? "null" : searchText,
     };
-    let request = {};
+    let request = {
+      type: "tricks",
+      params: obj,
+      onSuccess: () => {},
+      onFail: () => {},
+    };
+    dispatch(searchPosts(request));
+  }, [searchText]);
+
+  const onSearchPosts = (text: string) => {
+    setSearchText(text);
   };
 
   return (
@@ -84,7 +93,6 @@ const MathTricks = ({ navigation }: UniversalProps) => {
         }}
       />
       <FlatList
-        contentContainerStyle={{ flexGrow: 1 }}
         data={TRICKS_DATA}
         renderItem={({ item }) => <TricksRow data={item} />}
         onEndReached={loadMore}
