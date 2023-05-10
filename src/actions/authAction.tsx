@@ -4,7 +4,7 @@ import { makeAPIRequest } from "../helper/Global";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../redux";
 import { AnyAction } from "@reduxjs/toolkit";
-import { PRE_LOADER, SET_USER } from "./types";
+import { FAVOURITES_ID, PRE_LOADER, SET_USER } from "./types";
 
 export const getNonce =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
@@ -52,5 +52,17 @@ export const userLogin =
 export const setUserInfo =
   (data: any): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
+    console.log(
+      "data------",
+      data.user.favorites,
+      data.user.favorites.toString().split(",").map(Number)
+    );
     dispatch({ type: SET_USER, payload: data });
+    dispatch({
+      type: FAVOURITES_ID,
+      payload:
+        data.user.favorites !== ""
+          ? data.user.favorites.toString().split(",").map(Number)
+          : [],
+    });
   };

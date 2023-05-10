@@ -11,7 +11,7 @@ import {
 
 import RenderHtml from "react-native-render-html";
 import { useNavigation } from "@react-navigation/native";
-import { useAppDispatch } from "../redux/Hooks";
+import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { SET_READ_MORE_DATA } from "../actions/types";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { icons } from "../helper/IconConstant";
@@ -30,10 +30,35 @@ const TricksRow: FC<Props> = ({ data }) => {
     dispatch({ type: SET_READ_MORE_DATA, payload: data });
     navigation.navigate("ReadMore");
   };
+  const favouritesId = useAppSelector((e) => e.common.favouritesId);
+  console.log("favouritesId", favouritesId);
+
+  const onPressFavourite = () => {
+    if (favouritesId.indexOf(data.id) == -1) {
+      addFavourite();
+    } else {
+      removeFavourite();
+    }
+  };
+
+  const addFavourite = () => {};
+
+  const removeFavourite = () => {};
+
   return (
     <View style={styles.row}>
-      <TouchableOpacity style={styles.favouriteView}>
-        <Image source={icons.favourite} style={ApplicationStyles.favIcon} />
+      <TouchableOpacity
+        onPress={() => onPressFavourite()}
+        style={styles.favouriteView}
+      >
+        <Image
+          source={
+            favouritesId.indexOf(data.id) == -1
+              ? icons.favourite
+              : icons.favouriteFilled
+          }
+          style={ApplicationStyles.favIcon}
+        />
       </TouchableOpacity>
       <RenderHtml
         contentWidth={Dimensions.get("window").width - hp(4)}

@@ -21,6 +21,7 @@ import { icons } from "../helper/IconConstant";
 import Feedback from "../screens/Feedback";
 import { clearAsync } from "../helper/Global";
 import Profile from "../screens/Profile";
+import Favourites from "../screens/Favourites";
 
 export type RootDrawerParamList = {
   Home: undefined;
@@ -33,6 +34,7 @@ export type RootDrawerParamList = {
   ReadMore: undefined;
   Feedback: undefined;
   Profile: undefined;
+  Favourites: undefined;
 };
 
 let DrawerItemArray = [
@@ -76,6 +78,11 @@ let DrawerItemArray = [
     label: "Profile",
     image: icons.profile,
     screen: "Profile",
+  },
+  {
+    label: "Favourites",
+    image: icons.favouriteFilled,
+    screen: "Favourites",
   },
   {
     label: "Feedback",
@@ -193,6 +200,7 @@ const DrawerNavigation: FC = () => {
         component={Science}
       />
       <Drawer.Screen name={"Profile"} component={Profile} />
+      <Drawer.Screen name={"Favourites"} component={Favourites} />
       <Drawer.Screen name={"Feedback"} component={Feedback} />
     </Drawer.Navigator>
   );

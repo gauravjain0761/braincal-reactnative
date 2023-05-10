@@ -35,9 +35,11 @@ const SelectLocation = ({}: UniversalProps) => {
   const getScreen = async () => {
     dispatch({ type: "PRE_LOADER", payload: false });
     const token = await AsyncStorage.getItem("@token");
+
     if (token) {
-      const data = await getUserInfo();
-      dispatch(setUserInfo(data));
+      const user = await getUserInfo();
+      console.log("here user", user);
+      dispatch(setUserInfo(user));
       setIsLoading(false);
       navigation.dispatch(
         CommonActions.reset({

@@ -1,4 +1,5 @@
 import {
+  FAVOURITES_ID,
   PRE_LOADER,
   SET_LANGUAGE_DATA,
   SET_LEVEL_DATA,
@@ -16,6 +17,7 @@ const initialState = {
   levelData: [],
   languageData: [],
   searchPostsList: [],
+  favouritesId: [],
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {
@@ -74,6 +76,13 @@ export default function (state = initialState, action: any) {
     }
     case SET_SEARCH_POSTS: {
       return { ...state, searchPostsList: action.payload, preLoader: false };
+    }
+    case FAVOURITES_ID: {
+      return {
+        ...state,
+        favouritesId: action.payload,
+        preLoader: false,
+      };
     }
     default:
       return state;
