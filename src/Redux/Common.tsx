@@ -3,6 +3,7 @@ import {
   SET_LANGUAGE_DATA,
   SET_LEVEL_DATA,
   SET_READ_MORE_DATA,
+  SET_SEARCH_POSTS,
   SET_TRICKS_DATA,
   SET_USER,
 } from "../actions/types";
@@ -14,6 +15,7 @@ const initialState = {
   reactMoreData: {},
   levelData: [],
   languageData: [],
+  searchPostsList: [],
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {
@@ -69,6 +71,9 @@ export default function (state = initialState, action: any) {
           preLoader: false,
         };
       }
+    }
+    case SET_SEARCH_POSTS: {
+      return { ...state, searchPostsList: action.payload, preLoader: false };
     }
     default:
       return state;

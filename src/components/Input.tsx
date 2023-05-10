@@ -35,11 +35,11 @@ const Input: FC<Props> = ({ value, onChangeText, label }) => {
           ? value?.trim()?.length
             ? colors.green
             : colors.red
-          : colors.grey,
+          : colors.whiteGrey,
       }}
     >
       <Text
-        style={{ ...commonFont(700, 18, colors.primary), marginRight: wp(3) }}
+        style={{ ...commonFont(500, 16, colors.primary), marginRight: wp(3) }}
       >
         {label}
       </Text>

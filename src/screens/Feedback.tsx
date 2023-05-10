@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -8,34 +8,70 @@ import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { colors } from "../theme/Utils";
 import { commonFont } from "../theme/Fonts";
 import Input from "../components/Input";
+import { useAppDispatch, useAppSelector } from "../redux/Hooks";
+import { sendFeedback } from "../actions";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import CommonButton from "../components/CommonButton";
 
 const Feedback = ({ navigation }: UniversalProps) => {
+  const dispatch = useAppDispatch();
+  const { goBack } = useNavigation();
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const { user } = useAppSelector((state) => state.common);
+
+  useEffect(() => {
+    setName(user?.firstname);
+  }, [user]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setMessage("");
+    }, [])
+  );
+
+  const onPressSend = () => {
+    let obj = {
+      name: name,
+      message: message,
+      mobile: user?.mobile,
+    };
+    let request = {
+      data: obj,
+      onSuccess: () => goBack(),
+      onFail: () => {},
+    };
+    dispatch(sendFeedback(request));
+  };
+
   return (
-    <View style={ApplicationStyles.container}>
-      <KeyboardAwareScrollView>
-        <View style={ApplicationStyles.innerContainer}>
-          <View style={styles.inputBoxStyle}>
-            <Input label={"Name"} value={name} onChangeText={setName} />
-            <Input
-              label={"Message"}
-              value={message}
-              onChangeText={setMessage}
-            />
-          </View>
-          <TouchableOpacity
-            disabled={name?.length && message.length ? false : true}
-            style={{
-              ...styles.loginButton,
-              opacity: name?.length && message.length ? 1 : 0.6,
-            }}
-          >
-            <Text style={styles.buttonText}>{"SEND"}</Text>
-          </TouchableOpacity>
+    <KeyboardAwareScrollView style={ApplicationStyles.container}>
+      <View style={ApplicationStyles.innerContainer}>
+        <View style={styles.inputBoxStyle}>
+          <Input label={"Name"} value={name} onChangeText={setName} />
+          <Input label={"Message"} value={message} onChangeText={setMessage} />
         </View>
-      </KeyboardAwareScrollView>
-    </View>
+        {/* <TouchableOpacity
+          onPress={onPressSend}
+          disabled={name?.length && message.length ? false : true}
+          style={{
+            ...styles.loginButton,
+            opacity: name?.length && message.length ? 1 : 0.6,
+          }}
+        >
+          <Text style={styles.buttonText}>{"SEND"}</Text>
+        </TouchableOpacity> */}
+        <CommonButton
+          disabled={name?.length && message.length ? false : true}
+          title={"SEND"}
+          onPress={onPressSend}
+          style={{
+            ...styles.buttonStyle,
+            // opacity: name?.length && message.length ? 1 : 0.6,
+          }}
+        />
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -54,6 +90,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     ...commonFont(500, 18, colors.white),
+  },
+  buttonStyle: {
+    width: wp(90),
+    alignSelf: "center",
+    marginVertical: hp(2),
   },
 });
 

@@ -11,18 +11,21 @@ import {
 import { UniversalProps } from "../helper/NavigationTypes";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
-import { getMathTricks } from "../actions";
+import { getMathTricks, serachPosts } from "../actions";
 import TricksRow from "../components/TricksRow";
 import { PRE_LOADER } from "../actions/types";
 import { colors } from "../theme/Utils";
+import SearchBar from "../components/SearchBar";
+import SearchItemView from "../components/SearchItemView";
 
 const MathTricks = ({ navigation }: UniversalProps) => {
   const [page, setPage] = useState(1);
   const dispatch = useAppDispatch();
   const TRICKS_DATA = useAppSelector((e) => e.common.tricksData);
+  const { searchPostsList } = useAppSelector((e) => e.common);
   const [footerLoading, setFooterLoading] = useState(false);
   const [onEndReachedCalled, setOnEndReachedCalled] = useState(true);
-  const [isDataFound, setIsDataFound] = useState(false);
+  const [searchText, setSearchText] = useState<string>("");
 
   useEffect(() => {
     dispatch({ type: PRE_LOADER, payload: true });
@@ -35,7 +38,6 @@ const MathTricks = ({ navigation }: UniversalProps) => {
     };
     dispatch(getMathTricks(obj));
   }, []);
-  console.log("onEndReachedCalled", onEndReachedCalled);
 
   const loadMore = () => {
     if (!onEndReachedCalled && !footerLoading) {
@@ -56,8 +58,31 @@ const MathTricks = ({ navigation }: UniversalProps) => {
     }
   };
 
+  const onSearchPosts = (text: string) => {
+    setSearchText(text);
+    let obj = {
+      type: "tricks",
+      page: 1,
+      per_page: 20,
+      search: text,
+    };
+    let request = {};
+  };
+
   return (
     <View style={ApplicationStyles.container}>
+      <SearchBar
+        value={searchText}
+        onChangeText={(text) => onSearchPosts(text)}
+        onPressClose={() => setSearchText("")}
+      />
+      <FlatList
+        data={searchPostsList}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item, index }) => {
+          return <SearchItemView item={item} />;
+        }}
+      />
       <FlatList
         contentContainerStyle={{ flexGrow: 1 }}
         data={TRICKS_DATA}

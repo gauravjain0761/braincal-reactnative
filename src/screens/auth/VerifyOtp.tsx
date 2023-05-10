@@ -51,8 +51,8 @@ const VerifyOtp = ({ route }: UniversalProps) => {
         onSuccess: (res: any) => {
           if (res.status === "ok") {
             setToken(res?.cookie);
-            setUserInfoAsync(res);
-            dispatch(setUserInfo(res));
+            setUserInfoAsync(res?.user);
+            dispatch(setUserInfo(res?.user));
             navigate("OtpSuccess");
           } else {
             dispatchErrorAction(dispatch, res?.error);

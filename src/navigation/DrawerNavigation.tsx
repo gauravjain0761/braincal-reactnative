@@ -10,7 +10,7 @@ import GeneralKnowledge from "../screens/GeneralKnowledge";
 import Maths from "../screens/Maths";
 import English from "../screens/English";
 import Science from "../screens/Science";
-import { useAppDispatch } from "../redux/Hooks";
+import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { commonFont } from "../theme/Fonts";
 import { hp, wp } from "../helper/Constants";
@@ -20,6 +20,7 @@ import { CommonActions } from "@react-navigation/native";
 import { icons } from "../helper/IconConstant";
 import Feedback from "../screens/Feedback";
 import { clearAsync } from "../helper/Global";
+import Profile from "../screens/Profile";
 
 export type RootDrawerParamList = {
   Home: undefined;
@@ -31,6 +32,7 @@ export type RootDrawerParamList = {
   Science: undefined;
   ReadMore: undefined;
   Feedback: undefined;
+  Profile: undefined;
 };
 
 let DrawerItemArray = [
@@ -89,6 +91,7 @@ let DrawerItemArray = [
 
 function CustomDrawerContent(props: any) {
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.common);
 
   const onLogout = async () => {
     clearAsync();
@@ -111,6 +114,7 @@ function CustomDrawerContent(props: any) {
     >
       <View style={styles.drawerMain}>
         <Text style={styles.titleDrawer}>Welcome</Text>
+        <Text style={styles.nameTextStyle}>{user.firstname}</Text>
         {DrawerItemArray.map((item, index) => {
           return (
             <TouchableOpacity
@@ -188,6 +192,7 @@ const DrawerNavigation: FC = () => {
         name={"Science"}
         component={Science}
       />
+      <Drawer.Screen name={"Profile"} component={Profile} />
       <Drawer.Screen name={"Feedback"} component={Feedback} />
     </Drawer.Navigator>
   );
@@ -198,7 +203,11 @@ export default DrawerNavigation;
 const styles = StyleSheet.create({
   titleDrawer: {
     ...commonFont(700, hp(3), colors.black),
-    marginVertical: hp(3),
+    marginTop: hp(3),
+  },
+  nameTextStyle: {
+    ...commonFont(500, wp(4), colors.black),
+    marginBottom: hp(3),
   },
   labelStyle: {
     ...commonFont(500, wp(4.5), colors.black),

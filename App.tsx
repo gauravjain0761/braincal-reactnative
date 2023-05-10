@@ -29,3 +29,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
   },
 });
+
+// trickstype: {
+//   science_11, english_11, maths_11;
+// }

@@ -21,4 +21,5 @@ export const icons = {
   facebook: require("../assets/facebook.png"),
   apple: require("../assets/apple.png"),
   backArrow: require("../assets/backArrow.png"),
+  search: require("../assets/icons/search.png"),
 };

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { UniversalProps } from "../../helper/NavigationTypes";
 import { useAppDispatch, useAppSelector } from "../../redux/Hooks";
 import { CommonActions, useNavigation } from "@react-navigation/native";
-import { getToken } from "../../helper/AsyncStorage";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { hp } from "../../helper/Constants";
 import { icons } from "../../helper/IconConstant";
@@ -12,6 +11,9 @@ import { colors } from "../../theme/Utils";
 import { Dropdown } from "react-native-element-dropdown";
 import CommonButton from "../../components/CommonButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUserInfo } from "../../helper/Global";
+import { setUserInfo } from "../../actions";
+
 const data = [
   { label: "Item 1", value: "1" },
   { label: "Item 2", value: "2" },
@@ -34,6 +36,8 @@ const SelectLocation = ({}: UniversalProps) => {
     dispatch({ type: "PRE_LOADER", payload: false });
     const token = await AsyncStorage.getItem("@token");
     if (token) {
+      const data = await getUserInfo();
+      dispatch(setUserInfo(data));
       setIsLoading(false);
       navigation.dispatch(
         CommonActions.reset({

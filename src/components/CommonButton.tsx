@@ -9,10 +9,12 @@ interface Props {
   title?: String;
   onPress: () => void;
   style?: any;
+  disabled?: boolean;
 }
-const CommonButton: FC<Props> = ({ title, onPress, style }) => {
+const CommonButton: FC<Props> = ({ title, onPress, style, disabled }) => {
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={() => onPress()}
       style={[styles.buttonView, style]}
     >
