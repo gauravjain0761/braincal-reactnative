@@ -60,7 +60,7 @@ const Favourites = ({ navigation }: UniversalProps) => {
         });
       }
     }
-  }, [isFocused]);
+  }, [isFocused, favouritesId]);
   const loadMore = () => {
     if (!onEndReachedCalled && !footerLoading) {
       setFooterLoading(true);
