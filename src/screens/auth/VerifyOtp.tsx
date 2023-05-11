@@ -21,13 +21,17 @@ import {
   setUserInfoAsync,
 } from "../../helper/Global";
 import { setUserInfo, userLogin } from "../../actions";
+import { RootStackParamList } from "../../navigation/Navigation";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+type VerifyOtpProp = StackNavigationProp<RootStackParamList, "VerifyOtp">;
 
 const VerifyOtp = ({ route }: UniversalProps) => {
-  const { otp_session, mobileno, countryCode, nonce } = route.params;
+  const { otp_session, mobileno, countryCode, nonce } = route.params || {};
   const dispatch = useAppDispatch();
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<VerifyOtpProp>();
   const [value, setValue] = useState("");
-  const [session, setSession] = useState("");
+  const [session, setSession] = useState<string>("");
   const ref = useBlurOnFulfill({ value, cellCount: 6 });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
@@ -35,7 +39,7 @@ const VerifyOtp = ({ route }: UniversalProps) => {
   });
 
   useEffect(() => {
-    setSession(otp_session);
+    setSession(otp_session || "");
   }, [route.params]);
 
   const onPressVerify = () => {

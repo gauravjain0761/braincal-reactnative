@@ -13,6 +13,13 @@ import CommonButton from "../../components/CommonButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserInfo } from "../../helper/Global";
 import { setUserInfo } from "../../actions";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../navigation/Navigation";
+
+type SelectLocationProp = StackNavigationProp<
+  RootStackParamList,
+  "SelectLocation"
+>;
 
 const data = [
   { label: "Item 1", value: "1" },
@@ -29,13 +36,12 @@ const SelectLocation = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const preLoader = useAppSelector((e) => e.common.preLoader);
-  const navigation = useNavigation();
+  const navigation = useNavigation<SelectLocationProp>();
   const [locationValue, setLocationValue] = useState("");
 
   const getScreen = async () => {
     dispatch({ type: "PRE_LOADER", payload: false });
     const token = await AsyncStorage.getItem("@token");
-
     if (token) {
       const user = await getUserInfo();
       dispatch(setUserInfo(user));

@@ -20,7 +20,12 @@ import LanguageListData from "../screens/LanguageListData";
 export type RootStackParamList = {
   Login: undefined;
   SelectLocation: undefined;
-  VerifyOtp: undefined;
+  VerifyOtp: {
+    otp_session: string;
+    mobileno: string;
+    countryCode: string;
+    nonce: string;
+  };
   OtpSuccess: undefined;
   Dashboard: undefined;
   ReadMore: undefined;

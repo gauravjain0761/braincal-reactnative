@@ -21,16 +21,20 @@ import { getNonce, userLogin } from "../../actions";
 import { dispatchErrorAction } from "../../helper/Global";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { icons } from "../../helper/IconConstant";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../navigation/Navigation";
 interface container {
   title: String;
   image: ImageSourcePropType;
   onPress: () => void;
 }
+
+type LoginProp = StackNavigationProp<RootStackParamList, "Login">;
+
 const Login = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<LoginProp>();
   const [mobileno, setMobileno] = useState("");
-  const [country, setCountry] = useState("");
   const [countryCode, setCountryCode] = useState<string>("91");
 
   const selectedValue = (value: string) => {
@@ -51,11 +55,7 @@ const Login = ({}: UniversalProps) => {
     );
   };
 
-  // const onPressSubmit = () => {
-  //   navigation.navigate("VerifyOtp");
-  // };
-
-  const loginApiCallback = (nonce: String) => {
+  const loginApiCallback = (nonce: string) => {
     let login_data = {
       mobile: mobileno,
       countryCode: "+" + countryCode,

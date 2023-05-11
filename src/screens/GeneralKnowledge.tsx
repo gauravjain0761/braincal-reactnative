@@ -23,7 +23,6 @@ const GeneralKnowledge = ({}: UniversalProps) => {
   const togglerTimer = () => setRunTimer((t) => !t);
   useEffect(() => {
     let timerId;
-
     if (runTimer) {
       setCountDown(60 * 5);
       timerId = setInterval(() => {
@@ -35,6 +34,12 @@ const GeneralKnowledge = ({}: UniversalProps) => {
 
     return () => clearInterval(timerId);
   }, [runTimer]);
+
+  let now = new Date().getTime();
+  let countDowntime = new Date().getTime() + 1000 * 60 * 30;
+  let distance = countDowntime - now;
+  console.log("xvxcv", distance);
+
   useEffect(() => {
     if (countDown < 0 && runTimer) {
       console.log("expired");
