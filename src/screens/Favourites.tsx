@@ -29,6 +29,9 @@ const Favourites = ({ navigation }: UniversalProps) => {
 
   useEffect(() => {
     if (isFocused == true) {
+      setPage(1);
+      setOnEndReachedCalled(true);
+      setFooterLoading(false);
       dispatch({ type: PRE_LOADER, payload: true });
       let ids = Object.assign([], favouritesId);
       if (ids.length !== 0) {
@@ -46,7 +49,7 @@ const Favourites = ({ navigation }: UniversalProps) => {
         }
 
         let obj = {
-          params: { page: page, per_page: 10, include: ids },
+          params: { page: 1, per_page: 10, include: ids },
           onSuccess: () => {
             setPage(page + 1);
           },
@@ -60,7 +63,7 @@ const Favourites = ({ navigation }: UniversalProps) => {
         });
       }
     }
-  }, [isFocused, favouritesId]);
+  }, [isFocused]);
   const loadMore = () => {
     if (!onEndReachedCalled && !footerLoading) {
       setFooterLoading(true);
@@ -103,26 +106,22 @@ const Favourites = ({ navigation }: UniversalProps) => {
 
   return (
     <View style={ApplicationStyles.container}>
-      <View style={ApplicationStyles.innerContainer}>
-        <FlatList
-          contentContainerStyle={{ flexGrow: 1 }}
-          data={favouritesPosts}
-          renderItem={({ item }) => <TricksRow data={item} />}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.2}
-          onMomentumScrollBegin={() => setOnEndReachedCalled(false)}
-          ListFooterComponent={() => {
-            if (footerLoading) {
-              return (
-                <ActivityIndicator color={colors.darkBlue} size={"large"} />
-              );
-            } else {
-              return null;
-            }
-          }}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
+      <FlatList
+        contentContainerStyle={{ flexGrow: 1 }}
+        data={favouritesPosts}
+        renderItem={({ item }) => <TricksRow data={item} />}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.2}
+        onMomentumScrollBegin={() => setOnEndReachedCalled(false)}
+        ListFooterComponent={() => {
+          if (footerLoading) {
+            return <ActivityIndicator color={colors.darkBlue} size={"large"} />;
+          } else {
+            return null;
+          }
+        }}
+        keyExtractor={(item, index) => index.toString()}
+      />
     </View>
   );
 };

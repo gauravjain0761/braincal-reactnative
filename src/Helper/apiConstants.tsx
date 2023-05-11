@@ -8,6 +8,7 @@ export const api = {
   search_post: "wp-json/wp/v2/",
   feedback: "wp-json/send_fb/email/",
   update_user: "api/user/update_user_meta/",
+  quiz_url: "wp-json/watu/",
 };
 
 export const POST = "POST";
