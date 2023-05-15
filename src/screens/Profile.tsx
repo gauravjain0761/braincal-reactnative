@@ -60,17 +60,29 @@ const Profile = ({ navigation }: UniversalProps) => {
       <View style={ApplicationStyles.innerContainer}>
         <View style={{ height: hp(2) }} />
         <Input
+          placeholder={"Enter First Name"}
           label={"First Name"}
           value={firstname}
           onChangeText={setFirstName}
         />
         <Input
+          placeholder={"Enter Last Name"}
           label={"Last Name"}
           value={lastName}
           onChangeText={setLastName}
         />
-        <Input label={"Email"} value={email} onChangeText={setEmail} />
-        <Input label={"Mobile"} value={mobile} onChangeText={setMobile} />
+        <Input
+          placeholder={"Enter Email"}
+          label={"Email"}
+          value={email}
+          onChangeText={setEmail}
+        />
+        <Input
+          placeholder={"Enter Mobile No"}
+          label={"Mobile"}
+          value={mobile}
+          onChangeText={setMobile}
+        />
       </View>
       <CommonButton
         title={"Update"}

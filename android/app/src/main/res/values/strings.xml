@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Braincal</string>
+    <string name="facebook_app_id">1251277305734974</string>
+    <string name="fb_login_protocol_scheme">fb1251277305734974</string>
+    <string name="facebook_client_token">8448bde42229ffc47bd23c6ed1a81fbc</string>
+
 </resources>

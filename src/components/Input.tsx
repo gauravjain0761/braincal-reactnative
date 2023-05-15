@@ -10,9 +10,10 @@ interface Props {
   value: any;
   onChangeText: any;
   label: String;
+  placeholder: string;
 }
 
-const Input: FC<Props> = ({ value, onChangeText, label }) => {
+const Input: FC<Props> = ({ value, onChangeText, label, placeholder }) => {
   const [isFocus, setIsFocus] = useState(false);
 
   const onFocus = () => {
@@ -25,35 +26,48 @@ const Input: FC<Props> = ({ value, onChangeText, label }) => {
 
   return (
     <View
-      style={{
-        borderBottomWidth: 2,
-        height: hp(7),
-        flexDirection: "row",
-        alignItems: "center",
-        paddingHorizontal: wp(4),
-        borderBottomColor: isFocus
-          ? value?.trim()?.length
-            ? colors.green
-            : colors.red
-          : colors.whiteGrey,
-      }}
+      style={[
+        styles.row,
+        {
+          borderBottomColor: isFocus
+            ? value?.trim()?.length
+              ? colors.green
+              : colors.red
+            : colors.whiteGrey,
+        },
+      ]}
     >
-      <Text
-        style={{ ...commonFont(500, 16, colors.primary), marginRight: wp(3) }}
-      >
-        {label}
-      </Text>
+      <Text style={styles.textStyle}>{label}</Text>
       <TextInput
         value={value}
         onChangeText={onChangeText}
         onFocus={onFocus}
         onBlur={onBlur}
-        style={{ flex: 1, paddingVertical: 0 }}
+        style={styles.input}
+        placeholder={placeholder}
+        placeholderTextColor={colors.grey}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  textStyle: {
+    ...commonFont(500, 16, colors.primary),
+    marginRight: wp(3),
+  },
+  row: {
+    borderBottomWidth: 2,
+    height: hp(7),
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: wp(4),
+  },
+  input: {
+    flex: 1,
+    paddingVertical: 0,
+    ...commonFont(500, 16, colors.black),
+  },
+});
 
 export default Input;

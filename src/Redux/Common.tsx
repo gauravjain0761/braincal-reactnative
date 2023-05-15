@@ -1,11 +1,13 @@
 import {
   ADD_FAVOURITE,
   FAVOURITES_ID,
+  ON_SELECT_ANS,
   PRE_LOADER,
   REMOVE_FAVOURITE,
   SET_FAVOURITES_POSTS,
   SET_LANGUAGE_DATA,
   SET_LEVEL_DATA,
+  SET_QUESTIONS,
   SET_READ_MORE_DATA,
   SET_SEARCH_POSTS,
   SET_TRICKS_DATA,
@@ -22,6 +24,7 @@ const initialState = {
   searchPostsList: [],
   favouritesId: [],
   favouritesPosts: [],
+  questions: {},
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {
@@ -128,6 +131,16 @@ export default function (state = initialState, action: any) {
           preLoader: false,
         };
       }
+    }
+    case SET_QUESTIONS: {
+      return { ...state, questions: action.payload, preLoader: false };
+    }
+    case ON_SELECT_ANS: {
+      console.log(action.payload);
+      let questions = Object.assign({}, state.questions);
+      questions.questions[action.payload.index].selected_answer_index =
+        action.payload.optionIndex;
+      return { ...state, questions: questions, preLoader: false };
     }
     default:
       return state;

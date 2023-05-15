@@ -16,6 +16,7 @@ import { icons } from "../helper/IconConstant";
 import ReadMore from "../screens/ReadMore";
 import LevelListData from "../screens/LevelListData";
 import LanguageListData from "../screens/LanguageListData";
+import QuizAnswer from "../screens/QuizAnswer";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -31,6 +32,7 @@ export type RootStackParamList = {
   ReadMore: undefined;
   LevelListData: undefined;
   LanguageListData: undefined;
+  QuizAnswer: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -155,6 +157,11 @@ const Navigation: FC = () => {
           name={"LanguageListData"}
           options={{ headerShown: true, headerBackTitle: "" }}
           component={LanguageListData}
+        />
+        <RootStack.Screen
+          name={"QuizAnswer"}
+          options={{ headerShown: true, headerBackTitle: "" }}
+          component={QuizAnswer}
         />
 
         <RootStack.Screen

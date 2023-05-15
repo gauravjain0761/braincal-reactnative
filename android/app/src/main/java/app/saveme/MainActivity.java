@@ -1,4 +1,4 @@
-package com.braincal;
+package app.saveme;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

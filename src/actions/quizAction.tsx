@@ -3,7 +3,12 @@ import { makeAPIRequest } from "../helper/Global";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../redux";
 import { AnyAction } from "@reduxjs/toolkit";
-import { PRE_LOADER, SET_LEVEL_DATA, SET_TRICKS_DATA } from "./types";
+import {
+  PRE_LOADER,
+  SET_LEVEL_DATA,
+  SET_QUESTIONS,
+  SET_TRICKS_DATA,
+} from "./types";
 
 export const getQuiz =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
@@ -36,18 +41,14 @@ export const getQuestions =
   async (dispatch) => {
     return makeAPIRequest({
       method: GET,
-      url: api.quiz_url + "questions/",
+      url: api.quiz_url + "questions/1",
       params: {},
     })
       .then(async (response: any) => {
         if (response.status === 200) {
           console.log(response);
-          dispatch({ type: PRE_LOADER, payload: false });
-          //   let obj = {
-          //     data: response.data,
-          //     page: request.params.page,
-          //   };
-          //   dispatch({ type: SET_LEVEL_DATA, payload: obj });
+
+          dispatch({ type: SET_QUESTIONS, payload: response.data });
           if (request.onSuccess) request.onSuccess(response.data);
         }
       })

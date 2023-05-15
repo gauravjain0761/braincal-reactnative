@@ -20,8 +20,32 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.762334124212-tmliov4iq3nit03sa8tek24coanrill3</string>
+				<string>fb1251277305734974</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>1251277305734974</string>
+	<key>FacebookClientToken</key>
+	<string>8448bde42229ffc47bd23c6ed1a81fbc</string>
+	<key>FacebookDisplayName</key>
+	<string>BrainCal</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>comgooglemaps</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -37,14 +61,14 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-  <key>UIAppFonts</key>
-  <array>
-    <string>Inter-Medium.ttf</string>
-    <string>Inter-Light.ttf</string>
-    <string>Inter-Bold.ttf</string>
-    <string>Inter-SemiBold.ttf</string>
-    <string>Inter-Regular.ttf</string>
-  </array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Inter-Medium.ttf</string>
+		<string>Inter-Light.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Inter-Regular.ttf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

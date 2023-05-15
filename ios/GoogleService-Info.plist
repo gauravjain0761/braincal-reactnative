@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>762334124212-tmliov4iq3nit03sa8tek24coanrill3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.762334124212-tmliov4iq3nit03sa8tek24coanrill3</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>762334124212-mo01s8uu7fc2m483qs67s008turr129g.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyANOaaj2HoBv6LC-80TkvOJMjuQOLfyzQY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>762334124212</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.devicebee.SaveMe</string>
+	<key>PROJECT_ID</key>
+	<string>saveme-2e30e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>saveme-2e30e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:762334124212:ios:cc94f6dcf0d427971ddfe1</string>
+</dict>
+</plist>

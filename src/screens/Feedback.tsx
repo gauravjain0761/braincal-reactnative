@@ -48,19 +48,19 @@ const Feedback = ({ navigation }: UniversalProps) => {
     <KeyboardAwareScrollView style={ApplicationStyles.container}>
       <View style={ApplicationStyles.innerContainer}>
         <View style={styles.inputBoxStyle}>
-          <Input label={"Name"} value={name} onChangeText={setName} />
-          <Input label={"Message"} value={message} onChangeText={setMessage} />
+          <Input
+            placeholder="Enter Name"
+            label={"Name"}
+            value={name}
+            onChangeText={setName}
+          />
+          <Input
+            placeholder="Enter Message"
+            label={"Message"}
+            value={message}
+            onChangeText={setMessage}
+          />
         </View>
-        {/* <TouchableOpacity
-          onPress={onPressSend}
-          disabled={name?.length && message.length ? false : true}
-          style={{
-            ...styles.loginButton,
-            opacity: name?.length && message.length ? 1 : 0.6,
-          }}
-        >
-          <Text style={styles.buttonText}>{"SEND"}</Text>
-        </TouchableOpacity> */}
         <CommonButton
           disabled={name?.length && message.length ? false : true}
           title={"SEND"}

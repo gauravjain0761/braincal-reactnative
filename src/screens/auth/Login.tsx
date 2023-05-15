@@ -6,13 +6,14 @@ import {
   TextInput,
   TouchableOpacity,
   ImageSourcePropType,
+  Platform,
 } from "react-native";
 import React, { FC, useState } from "react";
 import { UniversalProps } from "../../helper/NavigationTypes";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { useAppDispatch } from "../../redux/Hooks";
 import { useNavigation } from "@react-navigation/native";
-import { hp } from "../../helper/Constants";
+import { WEB_CLIENT_ID, hp } from "../../helper/Constants";
 import { commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Utils";
 import CountryPicker from "rn-country-picker";
@@ -23,6 +24,25 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { icons } from "../../helper/IconConstant";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../navigation/Navigation";
+import jwt_decode from "jwt-decode";
+import {
+  appleAuth,
+  AppleButton,
+} from "@invertase/react-native-apple-authentication";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
+import {
+  AccessToken,
+  AuthenticationToken,
+  LoginManager,
+  Profile,
+  GraphRequestManager,
+  GraphRequest,
+} from "react-native-fbsdk-next";
+
 interface container {
   title: String;
   image: ImageSourcePropType;
@@ -30,7 +50,6 @@ interface container {
 }
 
 type LoginProp = StackNavigationProp<RootStackParamList, "Login">;
-
 const Login = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();
   const { navigate } = useNavigation<LoginProp>();
@@ -43,7 +62,7 @@ const Login = ({}: UniversalProps) => {
 
   const RenderSocialButton: FC<container> = ({ title, image, onPress }) => {
     return (
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={() => onPress()} style={styles.button}>
         <Image style={styles.socialImage} source={image} />
         <View>
           <Text style={[styles.socialButtonText, { height: 0 }]}>
@@ -100,6 +119,122 @@ const Login = ({}: UniversalProps) => {
     }
   };
 
+  const onGoogleLogin = async () => {
+    try {
+      await GoogleSignin.configure({ webClientId: WEB_CLIENT_ID });
+
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      let data = {
+        name: userInfo?.user?.name,
+        email: userInfo?.user.email,
+        googleId: userInfo?.user?.id,
+      };
+      console.log("userInfo", userInfo);
+      // dispatch(googleSignIn(data));
+    } catch (error) {
+      console.log(error);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
+  const onFacebookButtonPress = async () => {
+    LoginManager.logOut();
+    try {
+      const result = await LoginManager.logInWithPermissions(
+        ["public_profile", "email", "user_friends"],
+        "limited",
+        "my_nonce"
+      );
+
+      if (Platform.OS === "ios") {
+        const result = await AuthenticationToken.getAuthenticationTokenIOS();
+        const currentProfile = Profile.getCurrentProfile().then(function (
+          currentProfile
+        ) {
+          console.log("currentProfile--", currentProfile);
+          // if (currentProfile) {
+          //   onFacebookLogin(
+          //     currentProfile.name,
+          //     currentProfile.email,
+          //     currentProfile.userID
+          //   );
+          // }
+        });
+      } else {
+        const result1 = await AccessToken.getCurrentAccessToken();
+        getInfoFromToken(result1.accessToken);
+      }
+    } catch (error) {}
+  };
+  const getInfoFromToken = (token: any) => {
+    const PROFILE_REQUEST_PARAMS = {
+      fields: {
+        string: "id, name, first_name, last_name, birthday, email",
+      },
+    };
+    const profileRequest = new GraphRequest(
+      "/me",
+      { token, parameters: PROFILE_REQUEST_PARAMS },
+      (error, result) => {
+        if (error) {
+        } else {
+          if (result.isCancelled) {
+          }
+          if (result.email === undefined) {
+            Alert.alert(
+              strings("validationString.error"),
+              strings("validationString.to_continuw_myapp_please_allow_email"),
+              strings("validationString.ok")
+            );
+          } else {
+            console.log("currentProfile--", result);
+            // onFacebookLogin(result.name, result.email, result.id);
+          }
+        }
+      }
+    );
+    new GraphRequestManager().addRequest(profileRequest).start();
+  };
+
+  const onAppleButtonPress = async () => {
+    // Start the sign-in request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+
+    // Ensure Apple returned a user identityToken
+    if (!appleAuthRequestResponse.identityToken) {
+      throw new Error("Apple Sign-In failed - no identify token returned");
+    }
+
+    // Create a Firebase credential from the response
+    const { identityToken, nonce } = appleAuthRequestResponse;
+    if (identityToken) {
+      // const appleCredential = auth.AppleAuthProvider.credential(
+      //   identityToken,
+      //   nonce
+      // );
+      const { email, email_verified, is_private_email, sub } = jwt_decode(
+        appleAuthRequestResponse.identityToken
+      );
+      console.log(email, email_verified, is_private_email, sub);
+      var str = email;
+      str = str.split("@");
+
+      console.log("appleCredential--", identityToken);
+    }
+  };
+
   return (
     <KeyboardAwareScrollView style={ApplicationStyles.container}>
       <View style={ApplicationStyles.innerContainer}>
@@ -148,18 +283,29 @@ const Login = ({}: UniversalProps) => {
           <RenderSocialButton
             title={"Connect with Google"}
             image={icons.google}
-            onPress={() => {}}
+            onPress={() => {
+              onGoogleLogin();
+            }}
           />
           <RenderSocialButton
             title={"Connect with Facebook"}
             image={icons.facebook}
-            onPress={() => {}}
+            onPress={() => {
+              onFacebookButtonPress();
+            }}
           />
-          <RenderSocialButton
-            title={"Connect with Apple"}
-            image={icons.apple}
-            onPress={() => {}}
-          />
+          {Platform.OS == "ios" && (
+            <AppleButton
+              buttonStyle={AppleButton.Style.WHITE_OUTLINE}
+              buttonType={AppleButton.Type.SIGN_IN}
+              style={{
+                width: "100%", // You must specify a width
+                height: hp(8),
+                alignSelf: "center", // You must specify a height
+              }}
+              onPress={() => onAppleButtonPress()}
+            />
+          )}
         </View>
       </View>
     </KeyboardAwareScrollView>
@@ -205,6 +351,7 @@ const styles = StyleSheet.create({
   },
   searchBarStyle: {
     flex: 1,
+    ...commonFont(500, 14, colors.darkBlue),
   },
   textInput: {
     height: hp(7),
