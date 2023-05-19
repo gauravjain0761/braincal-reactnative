@@ -11,14 +11,20 @@ import {
 import { UniversalProps } from "../helper/NavigationTypes";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
-import { getMathTricks } from "../actions";
+import { getMathTricks, searchPosts } from "../actions";
 import TricksRow from "../components/TricksRow";
-import { PRE_LOADER, SET_LANGUAGE_DATA } from "../actions/types";
+import {
+  PRE_LOADER,
+  SET_LANGUAGE_DATA,
+  SET_SEARCH_POSTS,
+} from "../actions/types";
 import { colors } from "../theme/Utils";
 import { useNavigation } from "@react-navigation/native";
 import { getLevelWiseData } from "../actions/levelAction";
 import { getLanguageData } from "../actions/languageAction";
-
+import SearchBar from "../components/SearchBar";
+import SearchItemView from "../components/SearchItemView";
+import { hp } from "../helper/Constants";
 const LanguageListData = ({ route }: UniversalProps) => {
   const [page, setPage] = useState(1);
   const dispatch = useAppDispatch();
@@ -27,8 +33,14 @@ const LanguageListData = ({ route }: UniversalProps) => {
   const [onEndReachedCalled, setOnEndReachedCalled] = useState(true);
   const [isDataFound, setIsDataFound] = useState(false);
   const navigation = useNavigation();
+  const [searchText, setSearchText] = useState<string>("");
+  const { searchPostsList } = useAppSelector((e) => e.common);
 
   useEffect(() => {
+    navigation.setOptions({
+      title: route.params.heading,
+    });
+    dispatch({ type: SET_SEARCH_POSTS, payload: [] });
     dispatch({ type: SET_LANGUAGE_DATA, payload: { data: [], page: 1 } });
     dispatch({ type: PRE_LOADER, payload: true });
     let dataTemp = {
@@ -72,24 +84,65 @@ const LanguageListData = ({ route }: UniversalProps) => {
     }
   };
 
+  useEffect(() => {
+    let obj = {
+      page: 1,
+      per_page: 20,
+      search: searchText?.trim().length === 0 ? "null" : searchText,
+    };
+    let request = {
+      type: route.params.type,
+      params: obj,
+      onSuccess: () => {},
+      onFail: () => {},
+    };
+    dispatch(searchPosts(request));
+  }, [searchText]);
+
+  const onSearchPosts = (text: string) => {
+    setSearchText(text);
+  };
+
   return (
     <View style={ApplicationStyles.container}>
-      <FlatList
-        contentContainerStyle={{ flexGrow: 1 }}
-        data={TRICKS_DATA}
-        renderItem={({ item }) => <TricksRow data={item} />}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.2}
-        onMomentumScrollBegin={() => setOnEndReachedCalled(false)}
-        ListFooterComponent={() => {
-          if (footerLoading) {
-            return <ActivityIndicator color={colors.darkBlue} size={"large"} />;
-          } else {
-            return null;
-          }
-        }}
-        keyExtractor={(item, index) => index.toString()}
+      <SearchBar
+        value={searchText}
+        onChangeText={(text) => onSearchPosts(text)}
+        onPressClose={() => setSearchText("")}
       />
+      <View style={ApplicationStyles.container2}>
+        <FlatList
+          data={searchPostsList}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => {
+            return <SearchItemView item={item} />;
+          }}
+          // scrollEnabled={false}
+          style={{
+            marginBottom: searchPostsList.length !== 0 ? hp(2) : 0,
+          }}
+        />
+        <FlatList
+          contentContainerStyle={{ flexGrow: 1 }}
+          data={TRICKS_DATA}
+          renderItem={({ item, index }) => (
+            <TricksRow index={index} data={item} />
+          )}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.2}
+          onMomentumScrollBegin={() => setOnEndReachedCalled(false)}
+          ListFooterComponent={() => {
+            if (footerLoading) {
+              return (
+                <ActivityIndicator color={colors.darkBlue} size={"large"} />
+              );
+            } else {
+              return null;
+            }
+          }}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
     </View>
   );
 };

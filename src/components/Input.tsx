@@ -1,5 +1,11 @@
 import React, { FC, useState } from "react";
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TextInputProps,
+} from "react-native";
 
 import { TextInput } from "react-native-gesture-handler";
 import { colors } from "../theme/Utils";
@@ -11,9 +17,18 @@ interface Props {
   onChangeText: any;
   label: String;
   placeholder: string;
+  maxLength?: number;
+  keyboardType?: any;
 }
 
-const Input: FC<Props> = ({ value, onChangeText, label, placeholder }) => {
+const Input: FC<Props> = ({
+  value,
+  onChangeText,
+  label,
+  placeholder,
+  maxLength,
+  keyboardType,
+}) => {
   const [isFocus, setIsFocus] = useState(false);
 
   const onFocus = () => {
@@ -46,6 +61,8 @@ const Input: FC<Props> = ({ value, onChangeText, label, placeholder }) => {
         style={styles.input}
         placeholder={placeholder}
         placeholderTextColor={colors.grey}
+        maxLength={maxLength}
+        keyboardType={keyboardType ? keyboardType : "default"}
       />
     </View>
   );
@@ -53,7 +70,7 @@ const Input: FC<Props> = ({ value, onChangeText, label, placeholder }) => {
 
 const styles = StyleSheet.create({
   textStyle: {
-    ...commonFont(500, 16, colors.primary),
+    ...commonFont(500, 16, colors.skyBlue1),
     marginRight: wp(3),
   },
   row: {

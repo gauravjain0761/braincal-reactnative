@@ -39,7 +39,7 @@ const Home = ({ navigation }: UniversalProps) => {
     return (
       <View key={index.toString()} style={styles.itemContainer}>
         <Image
-          resizeMode="stretch"
+          resizeMode="cover"
           source={{ uri: item.url }}
           style={styles.itemImgStyle}
         />

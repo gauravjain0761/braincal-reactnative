@@ -31,7 +31,7 @@ const OtpSuccess = ({}: UniversalProps) => {
           />
         </View>
         <Text style={styles.title}>Success, You’re In</Text>
-        <Text style={styles.des}>You account has been created</Text>
+        <Text style={styles.des}>Your account has been created</Text>
         <CommonButton title={"Get In"} onPress={() => onPressGetin()} />
       </View>
     </View>

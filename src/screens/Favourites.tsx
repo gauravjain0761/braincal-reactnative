@@ -105,11 +105,19 @@ const Favourites = ({ navigation }: UniversalProps) => {
   };
 
   return (
-    <View style={ApplicationStyles.container}>
+    <View
+      style={[
+        ApplicationStyles.container,
+        ApplicationStyles.container2,
+        { marginTop: hp(3) },
+      ]}
+    >
       <FlatList
         contentContainerStyle={{ flexGrow: 1 }}
         data={favouritesPosts}
-        renderItem={({ item }) => <TricksRow data={item} />}
+        renderItem={({ item, index }) => (
+          <TricksRow index={index} data={item} />
+        )}
         onEndReached={loadMore}
         onEndReachedThreshold={0.2}
         onMomentumScrollBegin={() => setOnEndReachedCalled(false)}

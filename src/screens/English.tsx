@@ -24,26 +24,26 @@ const English = ({}: UniversalProps) => {
           onPressLevel={() => {
             onPressLevel(27, "11 Plus English Level 1");
           }}
-          bgColor={colors.primary}
+          bgColor={colors.skyBlue1}
         />
         <LevelsBlock
           title={"Level 2"}
           onPressLevel={() => {
             onPressLevel(28, "11 Plus English Level 2");
           }}
-          bgColor={colors.darkBlue}
+          bgColor={colors.pink}
         />
         <LevelsBlock
           title={"Level 3"}
           onPressLevel={() => {
             onPressLevel(29, "11 Plus English Level 3");
           }}
-          bgColor={colors.primary}
+          bgColor={colors.skyBlue1}
         />
         <LevelsBlock
           title={"11+English Marathon Test"}
           onPressLevel={() => {}}
-          bgColor={colors.darkBlue}
+          bgColor={colors.pink}
         />
       </View>
     </View>

@@ -17,8 +17,10 @@ import ReadMore from "../screens/ReadMore";
 import LevelListData from "../screens/LevelListData";
 import LanguageListData from "../screens/LanguageListData";
 import QuizAnswer from "../screens/QuizAnswer";
+import SplashScreen from "../screens/auth/SplashScreen";
 
 export type RootStackParamList = {
+  SplashScreen: undefined;
   Login: undefined;
   SelectLocation: undefined;
   VerifyOtp: {
@@ -95,8 +97,8 @@ const Navigation: FC = () => {
           options={{
             headerShown: false,
           }}
-          name={"SelectLocation"}
-          component={SelectLocation}
+          name={"SplashScreen"}
+          component={SplashScreen}
         />
         <RootStack.Screen
           options={{
@@ -145,22 +147,47 @@ const Navigation: FC = () => {
         />
         <RootStack.Screen
           name={"ReadMore"}
-          options={{ headerShown: true, headerBackTitle: "" }}
+          options={{
+            headerShown: true,
+            headerBackTitle: "",
+            headerStyle: { backgroundColor: colors.skyBlue },
+            headerTitleStyle: { color: colors.white },
+            headerTintColor: colors.white,
+          }}
           component={ReadMore}
         />
         <RootStack.Screen
           name={"LevelListData"}
-          options={{ headerShown: true, headerBackTitle: "" }}
+          options={{
+            headerShown: true,
+            headerBackTitle: "",
+            headerStyle: { backgroundColor: colors.skyBlue },
+            headerTitleStyle: { color: colors.white },
+            headerTintColor: colors.white,
+          }}
           component={LevelListData}
         />
         <RootStack.Screen
           name={"LanguageListData"}
-          options={{ headerShown: true, headerBackTitle: "" }}
+          options={{
+            headerShown: true,
+            headerBackTitle: "",
+            headerStyle: { backgroundColor: colors.skyBlue },
+            headerTitleStyle: { color: colors.white },
+            headerTintColor: colors.white,
+          }}
           component={LanguageListData}
         />
         <RootStack.Screen
           name={"QuizAnswer"}
-          options={{ headerShown: true, headerBackTitle: "" }}
+          options={{
+            headerShown: true,
+            headerBackTitle: "",
+            headerStyle: { backgroundColor: colors.skyBlue },
+            headerTitleStyle: { color: colors.white },
+            headerTintColor: colors.white,
+            headerTitle: "Answer",
+          }}
           component={QuizAnswer}
         />
 

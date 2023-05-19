@@ -10,4 +10,8 @@ export const colors = {
   blue: "#544fe8",
   green: "#00D100",
   primary: "#2888e7",
+
+  skyBlue1: "#0088e8",
+  pink: "#EC407A",
+  searchBackground: "#19B5FE",
 };

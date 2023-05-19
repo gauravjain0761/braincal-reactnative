@@ -15,7 +15,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  preLoader: true,
+  preLoader: false,
   user: {},
   tricksData: [],
   reactMoreData: {},
@@ -25,6 +25,7 @@ const initialState = {
   favouritesId: [],
   favouritesPosts: [],
   questions: {},
+  toast: {},
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {

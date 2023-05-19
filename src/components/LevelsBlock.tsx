@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { colors } from "../theme/Utils";
 import { hp, wp } from "../helper/Constants";
+import { commonFont } from "../theme/Fonts";
 
 interface Props {
   title?: String;
@@ -28,16 +29,14 @@ const LevelsBlock: FC<Props> = ({ title, bgColor, onPressLevel }) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: hp(10),
+    height: hp(13),
     justifyContent: "center",
     marginTop: hp(2),
   },
 
   titleText: {
-    color: colors.white,
-    fontSize: wp(4.5),
-    fontWeight: "600",
     textAlign: "center",
+    ...commonFont(400, 17, colors.white),
   },
 });
 

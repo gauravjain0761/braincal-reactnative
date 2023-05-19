@@ -94,13 +94,14 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "app.saveme"
+    namespace "com.braincal.apps"
     defaultConfig {
-        applicationId "app.saveme"
+        applicationId "com.braincal.apps"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        missingDimensionStrategy "store", "play"
     }
 
     splits {

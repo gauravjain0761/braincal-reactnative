@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     width: wp(90),
     alignSelf: "center",
     marginVertical: hp(2),
+    backgroundColor: colors.searchBackground,
   },
 });
 

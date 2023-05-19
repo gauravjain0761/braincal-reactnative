@@ -36,6 +36,32 @@ const ReadMore = ({ navigation }: UniversalProps) => {
   const [Answer, setAnswer] = useState("");
   const [AnswerShow, setAnswerShow] = useState(false);
   const favouritesId = useAppSelector((e) => e.common.favouritesId);
+  useEffect(() => {
+    // navigation.setOptions({
+    //   headerTitle: () => (
+    //     <View>
+    //       <RenderHTML
+    //         tagsStyles={{
+    //           p: {
+    //             ...commonFont(500, 20, colors.white),
+    //             // paddingLeft: hp(1),
+    //             // margin: 0,
+    //           },
+    //         }}
+    //         source={{
+    //           html: `
+    //   <p>
+    //     ${READ_MORE_DATA.title.rendered}
+    //   </p>`,
+    //         }}
+    //       />
+    //     </View>
+    //   ),
+    // });
+    navigation.setOptions({
+      headerTitle: "Read More",
+    });
+  }, []);
 
   const onPressFavourite = () => {
     if (favouritesId.indexOf(READ_MORE_DATA.id) == -1) {
@@ -111,8 +137,9 @@ const ReadMore = ({ navigation }: UniversalProps) => {
             <RenderHTML
               tagsStyles={{
                 p: {
-                  ...commonFont(500, 20, colors.white),
+                  ...commonFont(500, 18, colors.white),
                   paddingLeft: hp(1),
+                  margin: 0,
                 },
               }}
               source={{
@@ -151,8 +178,9 @@ const ReadMore = ({ navigation }: UniversalProps) => {
                   <Text style={styles.showAnswer}>Show Answer</Text>
                 </TouchableOpacity>
               ) : (
-                <Text style={styles.answerText}>
-                  Correct Answer is: {READ_MORE_DATA.answer}
+                <Text style={styles.answerText1}>
+                  Correct Answer is:{" "}
+                  <Text style={styles.answerText}>{READ_MORE_DATA.answer}</Text>
                 </Text>
               )}
             </View>
@@ -172,7 +200,12 @@ const ReadMore = ({ navigation }: UniversalProps) => {
               p: {
                 color: colors.black,
               },
+              h3: {
+                color: colors.black,
+              },
+              strong: { color: colors.black },
               div: {},
+              td: { color: colors.black },
             }}
             source={{
               html: READ_MORE_DATA.content.rendered,
@@ -218,12 +251,13 @@ const ReadMore = ({ navigation }: UniversalProps) => {
 
 const styles = StyleSheet.create({
   titleView: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.skyBlue1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: hp(2),
     marginHorizontal: hp(2),
+    paddingVertical: hp(1),
   },
   favouriteView: {
     paddingHorizontal: hp(1),
@@ -266,7 +300,11 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
   },
   answerText: {
-    ...commonFont(600, 20, colors.black),
+    ...commonFont(600, 17, colors.black),
+    margin: hp(2),
+  },
+  answerText1: {
+    ...commonFont(400, 17, colors.black),
     margin: hp(2),
   },
 });

@@ -27,28 +27,28 @@ const Languages = ({}: UniversalProps) => {
           onPressLevel={() => {
             onPressLevel("english", "English");
           }}
-          bgColor={colors.primary}
+          bgColor={colors.skyBlue1}
         />
         <LevelsBlock
           title={"French"}
           onPressLevel={() => {
             onPressLevel("french", "French");
           }}
-          bgColor={colors.darkBlue}
+          bgColor={colors.pink}
         />
         <LevelsBlock
           title={"Spanish"}
           onPressLevel={() => {
             onPressLevel("spanish", "Spanish");
           }}
-          bgColor={colors.primary}
+          bgColor={colors.skyBlue1}
         />
         <LevelsBlock
           title={"Hindi"}
           onPressLevel={() => {
             onPressLevel("hindi", "Hindi");
           }}
-          bgColor={colors.darkBlue}
+          bgColor={colors.pink}
         />
       </View>
     </View>

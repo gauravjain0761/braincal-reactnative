@@ -2,7 +2,12 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { UniversalProps } from "../../helper/NavigationTypes";
 import { useAppDispatch } from "../../redux/Hooks";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  CommonActions,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { SCREEN_WIDTH, commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Utils";
@@ -23,13 +28,20 @@ import {
 import { setUserInfo, userLogin } from "../../actions";
 import { RootStackParamList } from "../../navigation/Navigation";
 import { StackNavigationProp } from "@react-navigation/stack";
+import {
+  getHash,
+  requestHint,
+  startOtpListener,
+  useOtpVerify,
+  removeListener,
+} from "react-native-otp-verify";
 
 type VerifyOtpProp = StackNavigationProp<RootStackParamList, "VerifyOtp">;
 
 const VerifyOtp = ({ route }: UniversalProps) => {
   const { otp_session, mobileno, countryCode, nonce } = route.params || {};
   const dispatch = useAppDispatch();
-  const { navigate } = useNavigation<VerifyOtpProp>();
+  const navigation = useNavigation<VerifyOtpProp>();
   const [value, setValue] = useState("");
   const [session, setSession] = useState<string>("");
   const ref = useBlurOnFulfill({ value, cellCount: 6 });
@@ -37,6 +49,21 @@ const VerifyOtp = ({ route }: UniversalProps) => {
     value,
     setValue,
   });
+
+  React.useEffect(() => {
+    getHash()
+      .then((hash) => {
+        // use this hash in the message.
+      })
+      .catch(console.log);
+
+    startOtpListener((message) => {
+      // extract the otp using regex e.g. the below regex extracts 4 digit otp from message
+      const otp = /(\d{6})/g.exec(message)[1];
+      console.log(otp);
+    });
+    return () => removeListener();
+  }, []);
 
   useEffect(() => {
     setSession(otp_session || "");
@@ -57,7 +84,13 @@ const VerifyOtp = ({ route }: UniversalProps) => {
             setToken(res?.cookie);
             setUserInfoAsync(res?.user);
             dispatch(setUserInfo(res?.user));
-            navigate("OtpSuccess");
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [{ name: "OtpSuccess" }],
+              })
+            );
+            // navigate("OtpSuccess");
           } else {
             dispatchErrorAction(dispatch, res?.error);
           }

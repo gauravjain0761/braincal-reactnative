@@ -25,21 +25,21 @@ const Science = ({}: UniversalProps) => {
           onPressLevel={() => {
             onPressLevel(39, "11 Plus Biology");
           }}
-          bgColor={colors.primary}
+          bgColor={colors.skyBlue1}
         />
         <LevelsBlock
           title={"Chemistry"}
           onPressLevel={() => {
             onPressLevel(38, "11 Plus Chemistry");
           }}
-          bgColor={colors.darkBlue}
+          bgColor={colors.pink}
         />
         <LevelsBlock
           title={"Physics"}
           onPressLevel={() => {
             onPressLevel(37, "11 Plus Physics");
           }}
-          bgColor={colors.primary}
+          bgColor={colors.skyBlue1}
         />
       </View>
     </View>

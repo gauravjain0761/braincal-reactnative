@@ -174,16 +174,24 @@ const DrawerNavigation: FC = () => {
           borderRadius: 0,
           marginLeft: 0,
         },
-        headerStyle: { backgroundColor: colors.white },
-        headerTitleStyle: { color: colors.darkBlue },
-        headerTintColor: colors.darkBlue,
+        headerStyle: { backgroundColor: colors.skyBlue },
+        headerTitleStyle: { color: colors.white },
+        headerTintColor: colors.white,
       })}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name={"Home"} component={Home} />
-      <Drawer.Screen name={"MathTricks"} component={MathTricks} />
+      <Drawer.Screen
+        options={{ headerTitle: "Math Tricks" }}
+        name={"MathTricks"}
+        component={MathTricks}
+      />
       <Drawer.Screen name={"Languages"} component={Languages} />
-      <Drawer.Screen name={"GeneralKnowledge"} component={GeneralKnowledge} />
+      <Drawer.Screen
+        options={{ headerTitle: "General Knowledge" }}
+        name={"GeneralKnowledge"}
+        component={GeneralKnowledge}
+      />
       <Drawer.Screen
         options={{ headerTitle: "11 Plus Maths" }}
         name={"Maths"}
@@ -199,7 +207,11 @@ const DrawerNavigation: FC = () => {
         name={"Science"}
         component={Science}
       />
-      <Drawer.Screen name={"Profile"} component={Profile} />
+      <Drawer.Screen
+        options={{ headerTitle: "Edit Profile" }}
+        name={"Profile"}
+        component={Profile}
+      />
       <Drawer.Screen name={"Favourites"} component={Favourites} />
       <Drawer.Screen name={"Feedback"} component={Feedback} />
     </Drawer.Navigator>

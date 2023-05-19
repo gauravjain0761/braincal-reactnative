@@ -27,19 +27,26 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.762334124212-tmliov4iq3nit03sa8tek24coanrill3</string>
-				<string>fb1251277305734974</string>
+				<string>com.googleusercontent.apps.355295706725-6dn8ha65clg1r6di6vouaq12kqlvc3c1</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb231818520982008</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
-	<string>1251277305734974</string>
+	<string>231818520982008</string>
 	<key>FacebookClientToken</key>
 	<string>8448bde42229ffc47bd23c6ed1a81fbc</string>
 	<key>FacebookDisplayName</key>
-	<string>BrainCal</string>
+	<string>Braincal</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

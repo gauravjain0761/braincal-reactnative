@@ -1,95 +1,39 @@
 {
   "project_info": {
-    "project_number": "762334124212",
-    "project_id": "saveme-2e30e",
-    "storage_bucket": "saveme-2e30e.appspot.com"
+    "project_number": "355295706725",
+    "firebase_url": "https://braincal-6cecd.firebaseio.com",
+    "project_id": "braincal-6cecd",
+    "storage_bucket": "braincal-6cecd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:762334124212:android:a3ccc9438b9f1f591ddfe1",
+        "mobilesdk_app_id": "1:355295706725:android:83da56735c5c4203",
         "android_client_info": {
-          "package_name": "app.saveme"
+          "package_name": "com.braincal.apps"
         }
       },
       "oauth_client": [
         {
-          "client_id": "762334124212-1584elba49uuncfilkho7lk2vqnhqp12.apps.googleusercontent.com",
+          "client_id": "355295706725-jju0h51dqmnabbddljlnvr9nkegki8c2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAtk3SwozHlQ6woEAmS8ge0RWYgIKbkiEc"
+          "current_key": "AIzaSyCQ4y0QOud7l1YBm9hWO0hh4vqWWon7mww"
         }
       ],
       "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "762334124212-1584elba49uuncfilkho7lk2vqnhqp12.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "762334124212-tmliov4iq3nit03sa8tek24coanrill3.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.devicebee.SaveMe"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:762334124212:android:d86e3bc21867eba41ddfe1",
-        "android_client_info": {
-          "package_name": "com.saveme"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "762334124212-mo01s8uu7fc2m483qs67s008turr129g.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.saveme",
-            "certificate_hash": "df66c3110d2acd92c4a66b8c990fab2df23a417d"
-          }
+        "analytics_service": {
+          "status": 1
         },
-        {
-          "client_id": "762334124212-r7c5hkobndh896o4j2g0glvmeegl8cne.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.saveme",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "762334124212-1584elba49uuncfilkho7lk2vqnhqp12.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAtk3SwozHlQ6woEAmS8ge0RWYgIKbkiEc"
-        }
-      ],
-      "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "762334124212-1584elba49uuncfilkho7lk2vqnhqp12.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "762334124212-tmliov4iq3nit03sa8tek24coanrill3.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.devicebee.SaveMe"
-              }
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
         }
       }
     }

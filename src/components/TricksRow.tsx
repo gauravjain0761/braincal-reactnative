@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -31,9 +31,10 @@ import { setUserInfo, updateUser } from "../actions";
 
 interface Props {
   data?: any;
+  index?: any;
 }
 
-const TricksRow: FC<Props> = ({ data }) => {
+const TricksRow: FC<Props> = ({ data, index }) => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const onPressRow = () => {
@@ -41,6 +42,12 @@ const TricksRow: FC<Props> = ({ data }) => {
     navigation.navigate("ReadMore");
   };
   const favouritesId = useAppSelector((e) => e.common.favouritesId);
+  const [bgColor, setBgColor] = useState("");
+
+  useEffect(() => {
+    if (index % 2 == 0) setBgColor(colors.skyBlue1);
+    else setBgColor(colors.pink);
+  }, []);
 
   const onPressFavourite = () => {
     if (favouritesId.indexOf(data.id) == -1) {
@@ -101,7 +108,7 @@ const TricksRow: FC<Props> = ({ data }) => {
   };
 
   return (
-    <View style={styles.row}>
+    <View style={[styles.row, { backgroundColor: bgColor }]}>
       <TouchableOpacity
         onPress={() => onPressFavourite()}
         style={styles.favouriteView}
@@ -119,7 +126,7 @@ const TricksRow: FC<Props> = ({ data }) => {
         contentWidth={Dimensions.get("window").width - hp(4)}
         tagsStyles={{
           p: {
-            ...commonFont(500, 20, colors.black),
+            ...commonFont(500, 20, colors.white),
             paddingHorizontal: hp(2),
           },
         }}
@@ -150,8 +157,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: hp(2),
   },
   row: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.whiteGrey,
+    // borderBottomWidth: 1,
+    // borderBottomColor: colors.whiteGrey,
   },
   favouriteView: {
     paddingTop: hp(2),
@@ -159,7 +166,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: hp(2),
   },
   readMoreText: {
-    ...commonFont(400, 16, colors.black),
+    ...commonFont(400, 16, colors.white),
     textAlign: "center",
     paddingVertical: hp(2),
   },

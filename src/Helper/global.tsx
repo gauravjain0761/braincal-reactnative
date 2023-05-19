@@ -52,30 +52,30 @@ export const clearAsync = async () => {
 
 export const dispatchErrorAction = (dispatch: any, message: string) => {
   dispatch({ type: PRE_LOADER, payload: false });
-  Alert.alert("Error", message, [
-    { text: "OK", onPress: () => console.log("OK Pressed") },
-  ]);
-  // dispatch({
-  //   type: "TOAST",
-  //   payload: {
-  //     message: message,
-  //     type: "error",
-  //   },
-  // });
+  // Alert.alert("Error", message, [
+  //   { text: "OK", onPress: () => console.log("OK Pressed") },
+  // ]);
+  dispatch({
+    type: "TOAST",
+    payload: {
+      message: message,
+      type: "error",
+    },
+  });
 };
 
 export const dispatchSuccessAction = (dispatch: any, message: string) => {
   dispatch({ type: PRE_LOADER, payload: false });
-  Alert.alert("Success", message, [
-    { text: "OK", onPress: () => console.log("OK Pressed") },
-  ]);
-  // dispatch({
-  //   type: "TOAST",
-  //   payload: {
-  //     message: message,
-  //     type: "success",
-  //   },
-  // });
+  // Alert.alert("Success", message, [
+  //   { text: "OK", onPress: () => console.log("OK Pressed") },
+  // ]);
+  dispatch({
+    type: "TOAST",
+    payload: {
+      message: message,
+      type: "success",
+    },
+  });
 };
 
 export const setToken = async (token: string) => {

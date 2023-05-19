@@ -17,6 +17,7 @@
 		1F57C58C2A08B09000FEEBA5 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F57C5872A08B09000FEEBA5 /* Inter-Bold.ttf */; };
 		1F57C58D2A08B09000FEEBA5 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F57C5882A08B09000FEEBA5 /* Inter-Regular.ttf */; };
 		1F57C58E2A08B09000FEEBA5 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F57C5892A08B09000FEEBA5 /* Inter-SemiBold.ttf */; };
+		1F9AF0392A136B7B00C6ADBF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9AF0382A136B7B00C6ADBF /* StoreKit.framework */; };
 		1FECFB3A2A121AB100379739 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FECFB392A121AB100379739 /* GoogleService-Info.plist */; };
 		7699B88040F8A987B510C191 /* libPods-Braincal-BraincalTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Braincal-BraincalTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -48,6 +49,7 @@
 		1F57C5872A08B09000FEEBA5 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
 		1F57C5882A08B09000FEEBA5 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
 		1F57C5892A08B09000FEEBA5 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		1F9AF0382A136B7B00C6ADBF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1FECFB392A121AB100379739 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1FECFB3B2A1241B800379739 /* Braincal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Braincal.entitlements; path = Braincal/Braincal.entitlements; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Braincal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Braincal.debug.xcconfig"; path = "Target Support Files/Pods-Braincal/Pods-Braincal.debug.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C80B921A6F3F58F76C31292 /* libPods-Braincal.a in Frameworks */,
+				1F9AF0392A136B7B00C6ADBF /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +129,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F9AF0382A136B7B00C6ADBF /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-Braincal.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-Braincal-BraincalTests.a */,
@@ -535,7 +539,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Braincal/Braincal.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DGB65FCA99;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Braincal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -548,7 +552,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.devicebee.SaveMe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.braincal.apps;
 				PRODUCT_NAME = Braincal;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -564,7 +568,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Braincal/Braincal.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DGB65FCA99;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Braincal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -576,7 +580,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.devicebee.SaveMe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.braincal.apps;
 				PRODUCT_NAME = Braincal;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

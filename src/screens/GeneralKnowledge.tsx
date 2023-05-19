@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   Button,
@@ -21,6 +21,8 @@ import PagerView from "react-native-pager-view";
 import { colors } from "../theme/Utils";
 import RenderHtml from "react-native-render-html";
 import { commonFont } from "../theme/Fonts";
+import ReactNativeModal from "react-native-modal";
+import { dispatchErrorAction } from "../helper/Global";
 
 const GeneralKnowledge = ({}: UniversalProps) => {
   const navigation = useNavigation();
@@ -32,6 +34,9 @@ const GeneralKnowledge = ({}: UniversalProps) => {
   const togglerTimer = () => setRunTimer((t) => !t);
   const [selectedQue, setSelectedQue] = React.useState(0);
   const viewPager = useRef(null);
+  const [startUpModal, setStartUpModal] = useState(false);
+
+  console.log("question----", question);
 
   useEffect(() => {
     let timerId;
@@ -60,28 +65,30 @@ const GeneralKnowledge = ({}: UniversalProps) => {
       setCountDown(0);
       setSelectedQue(0);
       dispatch({ type: SET_QUESTIONS, payload: {} });
+
       let obj = {
         params: {},
         onSuccess: (res: any) => {
-          Alert.alert(
-            "Confirmation",
-            `Click start button to begin the test.\nThere are ${res.questions.length} questions.\nYou have ${res.q_time} minutes`,
-            [
-              {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel",
-              },
-              {
-                text: "OK",
-                onPress: () => {
-                  togglerTimer();
-                  setSelectedQue(0);
-                  viewPager.current.setPage(0);
-                },
-              },
-            ]
-          );
+          setStartUpModal(true);
+          // Alert.alert(
+          //   "Confirmation",
+          //   `Click start button to begin the test.\nThere are ${res.questions.length} questions.\nYou have ${res.q_time} minutes`,
+          //   [
+          //     {
+          //       text: "Cancel",
+          //       onPress: () => console.log("Cancel Pressed"),
+          //       style: "cancel",
+          //     },
+          //     {
+          //       text: "OK",
+          //       onPress: () => {
+          //         togglerTimer();
+          //         setSelectedQue(0);
+          //         viewPager.current.setPage(0);
+          //       },
+          //     },
+          //   ]
+          // );
         },
         onFail: () => {},
       };
@@ -95,7 +102,7 @@ const GeneralKnowledge = ({}: UniversalProps) => {
 
   const onPressNext = (ans: any) => {
     if (ans == null) {
-      Alert.alert("PLease select any ans");
+      dispatchErrorAction(dispatch, "Please select any ans");
     } else {
       if (selectedQue + 1 == question.questions.length) {
         togglerTimer();
@@ -106,118 +113,174 @@ const GeneralKnowledge = ({}: UniversalProps) => {
     }
   };
 
+  const onPressOK = () => {
+    togglerTimer();
+    setSelectedQue(0);
+    setStartUpModal(false);
+  };
+
   return (
     <View style={ApplicationStyles.container}>
-      <View style={styles.headerView}>
-        <View>
-          <Text style={styles.title}>Question:{selectedQue + 1}</Text>
-        </View>
-        <View style={styles.timeView}>
-          <Text style={styles.timeText}>
-            {String(Math.floor(countDown / 60)).padStart(1, 0) +
-              "m " +
-              String(countDown % 60).padStart(2, 0) +
-              "s"}
+      {countDown == 0 && (
+        <View style={ApplicationStyles.innerContainer}>
+          <Text style={styles.titleText2}>
+            This test series has no question yet.
           </Text>
         </View>
-      </View>
-      {countDown !== 0 && (
-        <PagerView
-          onPageSelected={(e) => {
-            console.log("Current page index", e.nativeEvent.position);
-            setSelectedQue(e.nativeEvent.position);
-          }}
-          ref={viewPager}
-          scrollEnabled={false}
-          style={styles.pagerView}
-          initialPage={0}
-        >
-          {question?.questions?.map((item, index) => {
-            return (
-              <View style={styles.rowView} key={item.id}>
-                {/* <Text style={styles.questionTitle}>{item.question}</Text> */}
-                <RenderHtml
-                  contentWidth={Dimensions.get("window").width - hp(4)}
-                  tagsStyles={{
-                    p: {
-                      ...commonFont(500, 20, colors.black),
-                    },
-                  }}
-                  source={{
-                    html: `
-<p >
-${item.questionText}
-</p>`,
-                  }}
-                />
-                {item.answers.map((ans, i) => {
-                  if (item.type == "radio") {
-                    return (
-                      <View style={styles.optionView}>
-                        <TouchableOpacity
-                          onPress={() => onClickOption(i, index)}
-                          style={styles.clickView}
-                          key={i}
-                        >
-                          <View style={{ flex: 1 }}>
-                            <Text style={styles.optionText}>
-                              {i + 1}. {ans.text}
-                            </Text>
-                          </View>
-                          <View>
-                            {item.selected_answer_index == i ? (
-                              <Image
-                                source={require("../assets/selected.png")}
-                                style={styles.radioImage}
-                              />
-                            ) : (
-                              <Image
-                                source={require("../assets/unselected.png")}
-                                style={styles.radioImage}
-                              />
-                            )}
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    );
-                  }
-                })}
-                <View style={{ alignItems: "center", marginTop: 30 }}>
-                  <TouchableOpacity
-                    onPress={() => onPressNext(item.selected_answer_index)}
-                    style={styles.timeView}
-                  >
-                    <Text style={styles.timeText}>{"NEXT"}</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            );
-          })}
-        </PagerView>
       )}
+      {countDown !== 0 && (
+        <View style={{ flex: 1 }}>
+          <View style={styles.headerView}>
+            <View>
+              <Text style={styles.title}>Question {selectedQue + 1}.</Text>
+            </View>
+            <View style={styles.timeView}>
+              <Text style={styles.timeText}>
+                {String(Math.floor(countDown / 60)).padStart(1, 0) +
+                  "m " +
+                  String(countDown % 60).padStart(2, 0) +
+                  "s"}
+              </Text>
+            </View>
+          </View>
+          <PagerView
+            onPageSelected={(e) => {
+              setSelectedQue(e.nativeEvent.position);
+            }}
+            ref={viewPager}
+            scrollEnabled={false}
+            style={styles.pagerView}
+            initialPage={0}
+          >
+            {Object.keys(question).length !== 0 &&
+              question?.questions?.map((item, index) => {
+                return (
+                  <View style={styles.rowView} key={item.id}>
+                    {/* <Text style={styles.questionTitle}>{item.question}</Text> */}
+                    <RenderHtml
+                      contentWidth={Dimensions.get("window").width - hp(4)}
+                      tagsStyles={{
+                        p: {
+                          ...commonFont(500, 20, colors.black),
+                        },
+                      }}
+                      source={{
+                        html: `
+                            <p >
+                              ${item.questionText}
+                            </p>`,
+                      }}
+                    />
+                    {item.answers.map((ans, i) => {
+                      if (item.type == "radio") {
+                        return (
+                          <View style={styles.optionView}>
+                            <TouchableOpacity
+                              onPress={() => onClickOption(i, index)}
+                              style={styles.clickView}
+                              key={i}
+                            >
+                              <View style={{ flex: 1 }}>
+                                <Text style={styles.optionText}>
+                                  {i + 1}. {ans.text}
+                                </Text>
+                              </View>
+                              <View>
+                                {item.selected_answer_index == i ? (
+                                  <Image
+                                    source={require("../assets/selected.png")}
+                                    style={[
+                                      styles.radioImage,
+                                      { tintColor: colors.skyBlue1 },
+                                    ]}
+                                  />
+                                ) : (
+                                  <Image
+                                    source={require("../assets/unselected.png")}
+                                    style={styles.radioImage}
+                                  />
+                                )}
+                              </View>
+                            </TouchableOpacity>
+                          </View>
+                        );
+                      }
+                    })}
+                    <View style={{ alignItems: "center", marginTop: 30 }}>
+                      <TouchableOpacity
+                        onPress={() => onPressNext(item.selected_answer_index)}
+                        style={styles.nextButton}
+                      >
+                        <Text style={styles.timeText}>{"NEXT"}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                );
+              })}
+          </PagerView>
+        </View>
+      )}
+      <ReactNativeModal isVisible={startUpModal}>
+        <View style={styles.modalView}>
+          <Text style={[styles.titleMOdal2, { marginHorizontal: hp(3) }]}>
+            Confirmation
+          </Text>
+          <Text
+            style={styles.titleModal}
+          >{`Click start button to begin the test.\nThere are ${question?.questions?.length} questions.\nYou have ${question?.q_time} minutes.`}</Text>
+
+          <View style={styles.button}>
+            <TouchableOpacity
+              onPress={() => {
+                onPressOK();
+              }}
+            >
+              <Text style={styles.btnText}>START</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setStartUpModal(false)}>
+              <Text style={styles.btnText}>CANCEL</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ReactNativeModal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  modalView: {
+    backgroundColor: colors.white,
+    paddingTop: hp(3),
+    borderRadius: 10,
+  },
   questionTitle: {
-    color: colors.black,
-    fontWeight: "bold",
-    fontSize: 18,
+    ...commonFont(700, 18, colors.black),
     paddingHorizontal: 10,
     paddingVertical: 20,
   },
   optionText: {
-    color: "grey",
-    fontSize: 18,
+    ...commonFont(400, 17, colors.black),
+    // fontSsize: 18,
+    paddingVertical: 7,
   },
   title: {
-    color: colors.black,
-    fontWeight: "bold",
-    fontSize: 18,
+    ...commonFont(700, 18, colors.black),
+  },
+  titleText2: {
+    ...commonFont(400, 18, colors.black),
+  },
+  titleMOdal2: {
+    ...commonFont(700, 20, colors.black),
+    marginBottom: hp(1),
+  },
+  titleModal: {
+    ...commonFont(400, 17, colors.grey),
+    paddingHorizontal: hp(3),
+    lineHeight: 25,
   },
   rowView: {
     paddingHorizontal: 20,
+    borderBottomWidth: 1,
   },
   clickView: {
     paddingVertical: 8,
@@ -233,14 +296,22 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     resizeMode: "contain",
-    tintColor: colors.skyBlue,
+    tintColor: colors.grey,
   },
   timeView: {
     backgroundColor: colors.skyBlue,
     paddingHorizontal: hp(1.5),
     paddingVertical: hp(0.7),
-    borderRadius: 8,
+    // borderRadius: 8,
     width: "30%",
+    alignItems: "center",
+  },
+  nextButton: {
+    backgroundColor: colors.skyBlue,
+    paddingHorizontal: hp(1.5),
+    paddingVertical: hp(1),
+    borderRadius: 5,
+    width: "25%",
     alignItems: "center",
   },
   timeText: { color: colors.white, fontWeight: "bold", fontSize: 18 },
@@ -252,6 +323,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  button: {
+    // padding: hp(2),
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  btnText: {
+    ...commonFont(600, 18, colors.skyBlue),
+    paddingHorizontal: hp(3),
+    paddingVertical: hp(3),
   },
 });
 

@@ -22,31 +22,46 @@ interface Props {
 
 const SearchBar: FC<Props> = ({ value, onChangeText, onPressClose }) => {
   return (
-    <View style={styles.container}>
-      <Image source={icons.search} style={styles.iconStyle} />
-      <TextInput
-        value={value}
-        style={styles.inputStyle}
-        placeholder={"Search"}
-        onChangeText={onChangeText}
-      />
-      {value?.length ? (
-        <TouchableOpacity onPress={onPressClose}>
-          <Image source={icons.closeRound} style={styles.iconStyle} />
-        </TouchableOpacity>
-      ) : null}
+    <View style={styles.con}>
+      <View style={styles.container}>
+        <Image source={icons.search} style={styles.iconStyle} />
+        <TextInput
+          value={value}
+          style={styles.inputStyle}
+          placeholder={"Search"}
+          onChangeText={onChangeText}
+        />
+        {value?.length ? (
+          <TouchableOpacity onPress={onPressClose}>
+            <Image source={icons.closeRound} style={styles.iconStyle} />
+          </TouchableOpacity>
+        ) : null}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  con: {
+    padding: hp(1),
+    borderBottomWidth: 1,
+    borderBottomColor: colors.grey,
+  },
   container: {
     flexDirection: "row",
     alignItems: "center",
-    height: hp(6.5),
+    height: hp(6),
     paddingHorizontal: wp(4.5),
-    borderBottomWidth: 1,
-    borderBottomColor: colors.whiteGrey,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+    // borderWidth: 1,
   },
   iconStyle: {
     height: wp(5),

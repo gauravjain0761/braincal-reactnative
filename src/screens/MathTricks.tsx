@@ -14,10 +14,12 @@ import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { getMathTricks, searchPosts, serachPosts } from "../actions";
 import TricksRow from "../components/TricksRow";
-import { PRE_LOADER } from "../actions/types";
+import { PRE_LOADER, SET_SEARCH_POSTS } from "../actions/types";
 import { colors } from "../theme/Utils";
 import SearchBar from "../components/SearchBar";
 import SearchItemView from "../components/SearchItemView";
+import { hp } from "../helper/Constants";
+import { useIsFocused } from "@react-navigation/native";
 
 const MathTricks = ({ navigation }: UniversalProps) => {
   const [page, setPage] = useState(1);
@@ -27,18 +29,23 @@ const MathTricks = ({ navigation }: UniversalProps) => {
   const [footerLoading, setFooterLoading] = useState(false);
   const [onEndReachedCalled, setOnEndReachedCalled] = useState(true);
   const [searchText, setSearchText] = useState<string>("");
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    dispatch({ type: PRE_LOADER, payload: true });
-    let obj = {
-      params: { page: page },
-      onSuccess: () => {
-        setPage(page + 1);
-      },
-      onFail: () => {},
-    };
-    dispatch(getMathTricks(obj));
-  }, []);
+    // dispatch({ type: PRE_LOADER, payload: true });
+    if (isFocused == true) {
+      dispatch({ type: PRE_LOADER, payload: true });
+      dispatch({ type: SET_SEARCH_POSTS, payload: [] });
+      let obj = {
+        params: { page: page },
+        onSuccess: () => {
+          setPage(page + 1);
+        },
+        onFail: () => {},
+      };
+      dispatch(getMathTricks(obj));
+    }
+  }, [isFocused]);
 
   const loadMore = () => {
     if (!onEndReachedCalled && !footerLoading) {
@@ -85,28 +92,38 @@ const MathTricks = ({ navigation }: UniversalProps) => {
         onChangeText={(text) => onSearchPosts(text)}
         onPressClose={() => setSearchText("")}
       />
-      <FlatList
-        data={searchPostsList}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => {
-          return <SearchItemView item={item} />;
-        }}
-      />
-      <FlatList
-        data={TRICKS_DATA}
-        renderItem={({ item }) => <TricksRow data={item} />}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.2}
-        onMomentumScrollBegin={() => setOnEndReachedCalled(false)}
-        ListFooterComponent={() => {
-          if (footerLoading) {
-            return <ActivityIndicator color={colors.darkBlue} size={"large"} />;
-          } else {
-            return null;
-          }
-        }}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      <View style={ApplicationStyles.container2}>
+        <FlatList
+          data={searchPostsList}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => {
+            return <SearchItemView item={item} />;
+          }}
+          // scrollEnabled={false}
+          style={{
+            marginBottom: searchPostsList.length !== 0 ? hp(2) : 0,
+          }}
+        />
+        <FlatList
+          data={TRICKS_DATA}
+          renderItem={({ item, index }) => (
+            <TricksRow index={index} data={item} />
+          )}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.2}
+          onMomentumScrollBegin={() => setOnEndReachedCalled(false)}
+          ListFooterComponent={() => {
+            if (footerLoading) {
+              return (
+                <ActivityIndicator color={colors.darkBlue} size={"large"} />
+              );
+            } else {
+              return null;
+            }
+          }}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
     </View>
   );
 };

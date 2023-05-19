@@ -2,35 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>762334124212-tmliov4iq3nit03sa8tek24coanrill3.apps.googleusercontent.com</string>
+	<string>355295706725-6dn8ha65clg1r6di6vouaq12kqlvc3c1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.762334124212-tmliov4iq3nit03sa8tek24coanrill3</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>762334124212-mo01s8uu7fc2m483qs67s008turr129g.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.355295706725-6dn8ha65clg1r6di6vouaq12kqlvc3c1</string>
 	<key>API_KEY</key>
-	<string>AIzaSyANOaaj2HoBv6LC-80TkvOJMjuQOLfyzQY</string>
+	<string>AIzaSyClHrcL8qpj3-lcbH0YG43Nh58fiQ-O958</string>
 	<key>GCM_SENDER_ID</key>
-	<string>762334124212</string>
+	<string>355295706725</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.devicebee.SaveMe</string>
+	<string>com.braincal.apps</string>
 	<key>PROJECT_ID</key>
-	<string>saveme-2e30e</string>
+	<string>braincal-6cecd</string>
 	<key>STORAGE_BUCKET</key>
-	<string>saveme-2e30e.appspot.com</string>
+	<string>braincal-6cecd.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
 	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<false></false>
 	<key>IS_GCM_ENABLED</key>
 	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:762334124212:ios:cc94f6dcf0d427971ddfe1</string>
+	<string>1:355295706725:ios:83da56735c5c4203</string>
+	<key>DATABASE_URL</key>
+	<string>https://braincal-6cecd.firebaseio.com</string>
 </dict>
 </plist>

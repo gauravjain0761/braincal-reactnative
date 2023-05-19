@@ -8,23 +8,24 @@ import {
   ImageSourcePropType,
   Platform,
 } from "react-native";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { UniversalProps } from "../../helper/NavigationTypes";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
-import { useAppDispatch } from "../../redux/Hooks";
-import { useNavigation } from "@react-navigation/native";
+import { useAppDispatch, useAppSelector } from "../../redux/Hooks";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { WEB_CLIENT_ID, hp } from "../../helper/Constants";
 import { commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Utils";
 import CountryPicker from "rn-country-picker";
 import CommonButton from "../../components/CommonButton";
-import { getNonce, userLogin } from "../../actions";
-import { dispatchErrorAction } from "../../helper/Global";
+import { getNonce, setUserInfo, userLogin } from "../../actions";
+import { dispatchErrorAction, getUserInfo } from "../../helper/Global";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { icons } from "../../helper/IconConstant";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../navigation/Navigation";
 import jwt_decode from "jwt-decode";
+import { getCurrencies, getLocales } from "react-native-localize";
 import {
   appleAuth,
   AppleButton,
@@ -42,6 +43,8 @@ import {
   GraphRequestManager,
   GraphRequest,
 } from "react-native-fbsdk-next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { country } from "../../helper/CountryData";
 
 interface container {
   title: String;
@@ -52,9 +55,17 @@ interface container {
 type LoginProp = StackNavigationProp<RootStackParamList, "Login">;
 const Login = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();
-  const { navigate } = useNavigation<LoginProp>();
+  const navigation = useNavigation<LoginProp>();
   const [mobileno, setMobileno] = useState("");
   const [countryCode, setCountryCode] = useState<string>("91");
+  const preLoader = useAppSelector((e) => e.common.preLoader);
+
+  useEffect(() => {
+    let locals = getLocales();
+    let temp = country.filter((e) => e.iso == locals[0].countryCode);
+    if (temp.length !== 0) setCountryCode(temp[0].code);
+    else setCountryCode("91");
+  }, []);
 
   const selectedValue = (value: string) => {
     setCountryCode(value);
@@ -84,7 +95,7 @@ const Login = ({}: UniversalProps) => {
       params: login_data,
       onSuccess: (res: any) => {
         if (res.status === "ok") {
-          navigate("VerifyOtp", {
+          navigation.navigate("VerifyOtp", {
             otp_session: res?.otp_session,
             mobileno: mobileno,
             countryCode: "+" + countryCode,
@@ -115,8 +126,37 @@ const Login = ({}: UniversalProps) => {
       };
       dispatch(getNonce(obj));
     } else {
-      dispatchErrorAction(dispatch, "Please enter mobile number");
+      dispatchErrorAction(dispatch, "Please enter valid mobile number");
     }
+  };
+
+  const onRegisterUser = (email: any, name: any, username: any) => {
+    // console.log("data--", data);
+    let login_data = {
+      email: email,
+      first_name: name,
+      username: username,
+      hash: "EB46F14D6E44B1472AA818248116FF65",
+    };
+    let obj = {
+      params: login_data,
+      onSuccess: (res: any) => {
+        if (res.status === "ok") {
+          navigation.navigate("VerifyOtp", {
+            otp_session: res?.otp_session,
+            mobileno: mobileno,
+            countryCode: "+" + countryCode,
+            nonce: nonce,
+          });
+        } else {
+          dispatchErrorAction(dispatch, res?.error);
+        }
+      },
+      onFail: (error: string) => {
+        dispatchErrorAction(dispatch, error);
+      },
+    };
+    dispatch(userLogin(obj));
   };
 
   const onGoogleLogin = async () => {
@@ -125,11 +165,16 @@ const Login = ({}: UniversalProps) => {
 
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      let data = {
-        name: userInfo?.user?.name,
-        email: userInfo?.user.email,
-        googleId: userInfo?.user?.id,
-      };
+      // let data = {
+      //   name: userInfo?.user?.name,
+      //   email: userInfo?.user.email,
+      //   googleId: userInfo?.user?.id,
+      // };
+      onRegisterUser(
+        userInfo?.user.email,
+        userInfo?.user.email,
+        userInfo?.user?.name
+      );
       console.log("userInfo", userInfo);
       // dispatch(googleSignIn(data));
     } catch (error) {
@@ -161,13 +206,13 @@ const Login = ({}: UniversalProps) => {
           currentProfile
         ) {
           console.log("currentProfile--", currentProfile);
-          // if (currentProfile) {
-          //   onFacebookLogin(
-          //     currentProfile.name,
-          //     currentProfile.email,
-          //     currentProfile.userID
-          //   );
-          // }
+          if (currentProfile) {
+            onRegisterUser(
+              currentProfile.email,
+              currentProfile.email,
+              currentProfile.name
+            );
+          }
         });
       } else {
         const result1 = await AccessToken.getCurrentAccessToken();
@@ -230,86 +275,92 @@ const Login = ({}: UniversalProps) => {
       console.log(email, email_verified, is_private_email, sub);
       var str = email;
       str = str.split("@");
+      onRegisterUser(email, email, str[0]);
 
       console.log("appleCredential--", identityToken);
     }
   };
-
-  return (
-    <KeyboardAwareScrollView style={ApplicationStyles.container}>
-      <View style={ApplicationStyles.innerContainer}>
-        <Image style={styles.image} source={icons.brainCalImage} />
-        <View>
-          <Text style={styles.heading}>Mobile Number</Text>
-          <View style={styles.imputMainView}>
-            <View style={{ width: "28%" }}>
-              <CountryPicker
-                disable={false}
-                animationType={"slide"}
-                language="en"
-                containerStyle={styles.pickerStyle}
-                selectedCountryTextStyle={styles.selectedCountryTextStyle}
-                countryNameTextStyle={styles.countryNameTextStyle}
-                pickerTitle={"Country Picker"}
-                searchBarPlaceHolder={"Search......"}
-                hideCountryFlag={false}
-                hideCountryCode={false}
-                searchBarStyle={styles.searchBarStyle}
-                countryCode={"91"}
-                countryFlagStyle={styles.flagImage}
-                selectedValue={selectedValue}
-                dropDownImageStyle={styles.dropDownImage}
-              />
-            </View>
-            <View style={styles.inputView}>
-              <TextInput
-                value={mobileno}
-                onChangeText={(text) => setMobileno(text)}
-                style={styles.textInput}
-                placeholder="Enter Number"
-                keyboardType="numeric"
-                placeholderTextColor={colors.grey}
-              />
-              <TouchableOpacity onPress={() => setMobileno("")}>
-                <Image
-                  source={icons.closeRound}
-                  style={styles.roundCloseImage}
+  if (preLoader == false) {
+    return (
+      <KeyboardAwareScrollView style={ApplicationStyles.container}>
+        <View style={ApplicationStyles.innerContainer}>
+          <Image style={styles.image} source={icons.brainCalImage} />
+          <View>
+            <Text style={styles.heading}>Mobile Number</Text>
+            <View style={styles.imputMainView}>
+              <View style={{ width: "28%" }}>
+                <CountryPicker
+                  disable={false}
+                  animationType={"slide"}
+                  language="en"
+                  containerStyle={styles.pickerStyle}
+                  selectedCountryTextStyle={styles.selectedCountryTextStyle}
+                  countryNameTextStyle={styles.countryNameTextStyle}
+                  pickerTitle={"Country Picker"}
+                  searchBarPlaceHolder={"Search......"}
+                  hideCountryFlag={false}
+                  hideCountryCode={false}
+                  searchBarStyle={styles.searchBarStyle}
+                  countryCode={countryCode}
+                  countryFlagStyle={styles.flagImage}
+                  selectedValue={selectedValue}
+                  dropDownImageStyle={styles.dropDownImage}
                 />
-              </TouchableOpacity>
+              </View>
+              <View style={styles.inputView}>
+                <TextInput
+                  value={mobileno}
+                  onChangeText={(text) => setMobileno(text)}
+                  style={styles.textInput}
+                  placeholder="Enter Number"
+                  keyboardType="numeric"
+                  placeholderTextColor={colors.grey}
+                />
+                {mobileno.length > 0 && (
+                  <TouchableOpacity onPress={() => setMobileno("")}>
+                    <Image
+                      source={icons.closeRound}
+                      style={styles.roundCloseImage}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
-          </View>
-          <CommonButton onPress={onPressSignIn} title={"Sign In"} />
-          <View style={styles.strokeView}></View>
-          <RenderSocialButton
-            title={"Connect with Google"}
-            image={icons.google}
-            onPress={() => {
-              onGoogleLogin();
-            }}
-          />
-          <RenderSocialButton
-            title={"Connect with Facebook"}
-            image={icons.facebook}
-            onPress={() => {
-              onFacebookButtonPress();
-            }}
-          />
-          {Platform.OS == "ios" && (
-            <AppleButton
-              buttonStyle={AppleButton.Style.WHITE_OUTLINE}
-              buttonType={AppleButton.Type.SIGN_IN}
-              style={{
-                width: "100%", // You must specify a width
-                height: hp(8),
-                alignSelf: "center", // You must specify a height
+            <CommonButton onPress={onPressSignIn} title={"Sign In"} />
+            <View style={styles.strokeView}></View>
+            {/* <RenderSocialButton
+              title={"Connect with Google"}
+              image={icons.google}
+              onPress={() => {
+                onGoogleLogin();
               }}
-              onPress={() => onAppleButtonPress()}
             />
-          )}
+            <RenderSocialButton
+              title={"Connect with Facebook"}
+              image={icons.facebook}
+              onPress={() => {
+                onFacebookButtonPress();
+              }}
+            />
+            {Platform.OS == "ios" && (
+              <AppleButton
+                buttonStyle={AppleButton.Style.WHITE_OUTLINE}
+                buttonType={AppleButton.Type.SIGN_IN}
+                style={{
+                  width: "100%", // You must specify a width
+                  height: hp(8),
+                  alignSelf: "center", // You must specify a height
+                }}
+                onPress={() => onAppleButtonPress()}
+              />
+            )} */}
+          </View>
         </View>
-      </View>
-    </KeyboardAwareScrollView>
-  );
+      </KeyboardAwareScrollView>
+    );
+  } else {
+    <View></View>;
+  }
 };
 
 export default Login;

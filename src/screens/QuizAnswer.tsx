@@ -55,70 +55,79 @@ const QuizAnswer = ({}: UniversalProps) => {
               Congratulation - you have complete{" "}
               <Text style={styles.title}>General Knowledge</Text>. You scored{" "}
               <Text style={styles.title}>{score}</Text> point(s) out of{" "}
-              <Text style={styles.title}>{question.questions.length}</Text>{" "}
+              <Text style={styles.title}>
+                {Object.keys(question).length !== 0
+                  ? question.questions.length
+                  : 0}
+              </Text>{" "}
               points total. Here are the details for incorrect answers:
             </Text>
           </View>
         </View>
 
         <View>
-          {question.questions.map((item, index) => {
-            return (
-              <View style={styles.rowView}>
-                <Text style={[styles.title, { textAlign: "center" }]}>
-                  Question:{index + 1}
-                </Text>
-                <RenderHtml
-                  contentWidth={Dimensions.get("window").width - hp(4)}
-                  tagsStyles={{
-                    p: {
-                      ...commonFont(500, 20, colors.black),
-                    },
-                  }}
-                  source={{
-                    html: `
+          {Object.keys(question).length !== 0 &&
+            question.questions.map((item, index) => {
+              return (
+                <View style={styles.rowView}>
+                  <Text style={[styles.title, { textAlign: "center" }]}>
+                    Question {index + 1}
+                  </Text>
+                  <RenderHtml
+                    contentWidth={Dimensions.get("window").width - hp(4)}
+                    tagsStyles={{
+                      p: {
+                        ...commonFont(500, 18, colors.black),
+                      },
+                    }}
+                    source={{
+                      html: `
 <p >
 ${item.questionText}
 </p>`,
-                  }}
-                />
-                {item.answers.map((ans, i) => {
-                  return (
-                    <View style={styles.optionView}>
-                      <View style={styles.clickView} key={i}>
-                        <View style={{ flex: 1 }}>
-                          <Text style={styles.optionText}>
-                            {i + 1}. {ans.text}
-                          </Text>
-                        </View>
-                        <View>
-                          {i == item.selected_answer_index && !ans.correct && (
-                            <Image
-                              source={require("../assets/cancel.png")}
-                              style={[styles.radioImage, { tintColor: "red" }]}
-                            />
-                          )}
+                    }}
+                  />
+                  {item.answers.map((ans, i) => {
+                    return (
+                      <View style={styles.optionView}>
+                        <View style={styles.clickView} key={i}>
+                          <View style={{ flex: 1 }}>
+                            <Text style={styles.optionText}>
+                              {i + 1}. {ans.text}
+                            </Text>
+                          </View>
+                          <View>
+                            {i == item.selected_answer_index &&
+                              !ans.correct && (
+                                <Image
+                                  source={require("../assets/cancel.png")}
+                                  style={[
+                                    styles.radioImage,
+                                    { tintColor: "red" },
+                                  ]}
+                                />
+                              )}
 
-                          {i == item.selected_answer_index && ans.correct && (
-                            <Image
-                              source={require("../assets/correct.png")}
-                              style={[
-                                styles.radioImage,
-                                { tintColor: "green" },
-                              ]}
-                            />
-                          )}
-                          {i != item.selected_answer_index && ans.correct && (
-                            <Image
-                              source={require("../assets/correct.png")}
-                              style={[
-                                styles.radioImage,
-                                { tintColor: "green" },
-                              ]}
-                            />
-                          )}
+                            {i == item.selected_answer_index && ans.correct && (
+                              <Image
+                                source={require("../assets/correct.png")}
+                                style={[
+                                  styles.radioImage,
+                                  { tintColor: "green" },
+                                ]}
+                              />
+                            )}
+                            {i != item.selected_answer_index && ans.correct && (
+                              <Image
+                                source={require("../assets/correct.png")}
+                                style={[
+                                  styles.radioImage,
+                                  { tintColor: "green" },
+                                ]}
+                              />
+                            )}
 
-                          {/* {item.answer == option ? (
+                            {/* {item.answer == option ? (
                             <Image
                               source={require("../../Assets/correct.png")}
                               style={[
@@ -141,14 +150,14 @@ ${item.questionText}
                               ]}
                             />
                           )} */}
+                          </View>
                         </View>
                       </View>
-                    </View>
-                  );
-                })}
-              </View>
-            );
-          })}
+                    );
+                  })}
+                </View>
+              );
+            })}
         </View>
       </ScrollView>
     </View>
@@ -157,14 +166,13 @@ ${item.questionText}
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.black,
-    fontWeight: "bold",
-    fontSize: 18,
+    ...commonFont(700, 18, colors.black),
   },
   title1: {
     color: "grey",
     // fontWeight: 'bold',
     fontSize: 18,
+    ...commonFont(400, 18, colors.black),
   },
   headerView: {
     padding: hp(2),
@@ -189,8 +197,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   optionText: {
-    color: colors.black,
-    fontSize: 16,
+    ...commonFont(400, 17, colors.black),
+    // fontSsize: 18,
+    paddingVertical: 7,
   },
   rowView: {
     paddingHorizontal: 20,
@@ -205,12 +214,14 @@ const styles = StyleSheet.create({
   optionView: {
     borderBottomWidth: 1,
     borderBottomColor: "#d8d8d8",
+    marginLeft: hp(2),
   },
   radioImage: {
-    height: 20,
-    width: 20,
+    height: 15,
+    width: 15,
     resizeMode: "contain",
     tintColor: colors.skyBlue,
+    marginRight: hp(1.5),
   },
 });
 

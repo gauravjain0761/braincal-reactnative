@@ -28,6 +28,11 @@ export const ApplicationStyles = StyleSheet.create({
     height: hp(2.5),
     width: hp(2.5),
     resizeMode: "contain",
-    tintColor: colors.black,
+    tintColor: colors.white,
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: colors.white,
+    paddingHorizontal: hp(2),
   },
 });
