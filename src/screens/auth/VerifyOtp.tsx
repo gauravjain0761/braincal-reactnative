@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { UniversalProps } from "../../helper/NavigationTypes";
+import { UniversalProps } from "../../navigation/NavigationTypes";
 import { useAppDispatch } from "../../redux/Hooks";
 import {
   CommonActions,
@@ -10,7 +10,7 @@ import {
 } from "@react-navigation/native";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { SCREEN_WIDTH, commonFont } from "../../theme/Fonts";
-import { colors } from "../../theme/Utils";
+import { colors } from "../../theme/Colors";
 import { hp } from "../../helper/Constants";
 import {
   CodeField,

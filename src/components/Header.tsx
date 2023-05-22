@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { wp } from "../helper/Constants";
 
 interface Props {

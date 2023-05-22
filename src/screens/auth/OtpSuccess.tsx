@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { UniversalProps } from "../../helper/NavigationTypes";
+import { UniversalProps } from "../../navigation/NavigationTypes";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import CommonButton from "../../components/CommonButton";
 import { commonFont } from "../../theme/Fonts";
-import { colors } from "../../theme/Utils";
+import { colors } from "../../theme/Colors";
 import { hp } from "../../helper/Constants";
 import Lottie from "lottie-react-native";
 import { CommonActions, useNavigation } from "@react-navigation/native";

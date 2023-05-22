@@ -539,7 +539,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Braincal/Braincal.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6V368UDNP6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Braincal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -568,7 +568,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Braincal/Braincal.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6V368UDNP6;
 				INFOPLIST_FILE = Braincal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

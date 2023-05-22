@@ -9,17 +9,27 @@ import {
   Platform,
 } from "react-native";
 import React, { FC, useEffect, useState } from "react";
-import { UniversalProps } from "../../helper/NavigationTypes";
+import { UniversalProps } from "../../navigation/NavigationTypes";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../../redux/Hooks";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { WEB_CLIENT_ID, hp } from "../../helper/Constants";
 import { commonFont } from "../../theme/Fonts";
-import { colors } from "../../theme/Utils";
+import { colors } from "../../theme/Colors";
 import CountryPicker from "rn-country-picker";
 import CommonButton from "../../components/CommonButton";
-import { getNonce, setUserInfo, userLogin } from "../../actions";
-import { dispatchErrorAction, getUserInfo } from "../../helper/Global";
+import {
+  getNonce,
+  newUserRegister,
+  setUserInfo,
+  userLogin,
+} from "../../actions";
+import {
+  dispatchErrorAction,
+  getUserInfo,
+  setToken,
+  setUserInfoAsync,
+} from "../../helper/Global";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { icons } from "../../helper/IconConstant";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -131,7 +141,6 @@ const Login = ({}: UniversalProps) => {
   };
 
   const onRegisterUser = (email: any, name: any, username: any) => {
-    // console.log("data--", data);
     let login_data = {
       email: email,
       first_name: name,
@@ -141,38 +150,44 @@ const Login = ({}: UniversalProps) => {
     let obj = {
       params: login_data,
       onSuccess: (res: any) => {
-        if (res.status === "ok") {
-          navigation.navigate("VerifyOtp", {
-            otp_session: res?.otp_session,
-            mobileno: mobileno,
-            countryCode: "+" + countryCode,
-            nonce: nonce,
-          });
+        console.log("here res--->>", res);
+        if (res.success === true) {
+          setToken(res?.data.cookie);
+          setUserInfoAsync(res?.data);
+          dispatch(setUserInfo(res?.data));
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [{ name: "OtpSuccess" }],
+            })
+          );
         } else {
+          console.log("error1--", res.error);
           dispatchErrorAction(dispatch, res?.error);
         }
       },
       onFail: (error: string) => {
+        console.log("error--", error);
         dispatchErrorAction(dispatch, error);
       },
     };
-    dispatch(userLogin(obj));
+    dispatch(newUserRegister(obj));
   };
 
   const onGoogleLogin = async () => {
     try {
       await GoogleSignin.configure({ webClientId: WEB_CLIENT_ID });
-
+      console.log(await GoogleSignin.getCurrentUser());
+      const result = await GoogleSignin.getCurrentUser();
+      if (result) {
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+      }
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      // let data = {
-      //   name: userInfo?.user?.name,
-      //   email: userInfo?.user.email,
-      //   googleId: userInfo?.user?.id,
-      // };
       onRegisterUser(
         userInfo?.user.email,
-        userInfo?.user.email,
+        userInfo?.user.givenName,
         userInfo?.user?.name
       );
       console.log("userInfo", userInfo);
@@ -202,14 +217,14 @@ const Login = ({}: UniversalProps) => {
 
       if (Platform.OS === "ios") {
         const result = await AuthenticationToken.getAuthenticationTokenIOS();
-        const currentProfile = Profile.getCurrentProfile().then(function (
+        const currentProfile1 = Profile.getCurrentProfile().then(function (
           currentProfile
         ) {
           console.log("currentProfile--", currentProfile);
-          if (currentProfile) {
+          if (currentProfile?.email) {
             onRegisterUser(
               currentProfile.email,
-              currentProfile.email,
+              currentProfile.firstName,
               currentProfile.name
             );
           }
@@ -242,6 +257,9 @@ const Login = ({}: UniversalProps) => {
             );
           } else {
             console.log("currentProfile--", result);
+            if (result?.email) {
+              onRegisterUser(result.email, result.first_name, result.name);
+            }
             // onFacebookLogin(result.name, result.email, result.id);
           }
         }
@@ -328,7 +346,7 @@ const Login = ({}: UniversalProps) => {
             </View>
             <CommonButton onPress={onPressSignIn} title={"Sign In"} />
             <View style={styles.strokeView}></View>
-            {/* <RenderSocialButton
+            <RenderSocialButton
               title={"Connect with Google"}
               image={icons.google}
               onPress={() => {
@@ -347,13 +365,13 @@ const Login = ({}: UniversalProps) => {
                 buttonStyle={AppleButton.Style.WHITE_OUTLINE}
                 buttonType={AppleButton.Type.SIGN_IN}
                 style={{
-                  width: "100%", // You must specify a width
+                  width: "100%",
                   height: hp(8),
-                  alignSelf: "center", // You must specify a height
+                  alignSelf: "center",
                 }}
                 onPress={() => onAppleButtonPress()}
               />
-            )} */}
+            )}
           </View>
         </View>
       </KeyboardAwareScrollView>

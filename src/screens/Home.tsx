@@ -2,10 +2,10 @@ import React from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { commonFont } from "../theme/Fonts";
 import { hp, wp } from "../helper/Constants";
-import { UniversalProps } from "../helper/NavigationTypes";
+import { UniversalProps } from "../navigation/NavigationTypes";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 
 const Home = ({ navigation }: UniversalProps) => {

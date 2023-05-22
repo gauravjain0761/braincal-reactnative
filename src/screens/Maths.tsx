@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Platform,
@@ -7,72 +7,49 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { UniversalProps } from "../helper/NavigationTypes";
+import { UniversalProps } from "../navigation/NavigationTypes";
 import { hp, wp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import LevelsBlock from "../components/LevelsBlock";
-import { colors } from "../theme/Utils";
-import { useAppDispatch } from "../redux/Hooks";
-import { useNavigation } from "@react-navigation/native";
-import * as RNIap from "react-native-iap";
+import { colors } from "../theme/Colors";
+import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import {
-  purchaseErrorListener,
-  purchaseUpdatedListener,
-  requestPurchase,
-} from "react-native-iap";
-
-const itemSkus = Platform.select({
-  ios: ["com.prod1"],
-  android: ["com.prod1"],
-});
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+} from "@react-navigation/native";
+import { getMyPlan } from "../actions";
+import SubscribeModal from "../components/SubscribeModal";
 
 const Maths = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  const [isSubscribe, setIsSubscribe] = useState(false);
+  const { user } = useAppSelector((state) => state.common);
+  const [subscribeModal, setSubscribeModal] = useState(false);
 
-  React.useEffect(() => {
-    if (Platform.OS == "ios") {
-      RNIap.initConnection().then(() => {
-        RNIap.getProducts({ skus: itemSkus })
-          .then((res) => {
-            console.log("res--", res);
-            // console.log("res---", res);
-            // product1 = res;
-            // setproduct(res);
-            // setLoader(false);
-          })
-          .catch((err) => {
-            console.log("err--", err);
-            // setLoader(false);
-          });
-        // RNIap.requestSubscription("com.dematade.basic_plan");
-      });
-    } else {
-      console.log("android");
-      // setLoader(false);
+  useEffect(() => {
+    if (isFocused == true) {
+      let obj = {
+        userid: user.id,
+        hash: "EB46F14D6E44B1472AA818248116FF65",
+      };
+      let request = {
+        type: "plan/details",
+        params: obj,
+        onSuccess: (res: any) => {
+          if (res?.data?.is_plan_active) {
+            setIsSubscribe(res?.data?.is_plan_active);
+          }
+        },
+        onFail: (err: any) => {
+          console.log(err);
+        },
+      };
+      dispatch(getMyPlan(request));
     }
-
-    const subscription = purchaseUpdatedListener((purchase: Purchase) => {
-      console.log(purchase);
-      const receipt = purchase.transactionReceipt;
-      if (receipt) {
-        console.log("receipt==>", receipt);
-        // setIsLoading(false);
-        // velidateReceipt(receipt);
-        // RNIap.finishTransactionIOS(purchase.transactionId);
-      }
-    });
-    const subscriptionError = purchaseErrorListener((error: PurchaseError) => {
-      console.log("error==>", error);
-      // setIsLoading(false);
-      // setLoader(false);
-    });
-    return () => {
-      subscription.remove();
-      subscriptionError.remove();
-      RNIap.endConnection();
-    };
-  }, []);
+  }, [isFocused]);
 
   const onPressLevel = (typeValue: number, heading: string) => {
     navigation.navigate("LevelListData", {
@@ -80,6 +57,13 @@ const Maths = ({}: UniversalProps) => {
       typeValue: typeValue,
       heading: heading,
     });
+  };
+
+  const onPressTest = () => {
+    if (isSubscribe) {
+    } else {
+      setSubscribeModal(true);
+    }
   };
 
   return (
@@ -108,10 +92,16 @@ const Maths = ({}: UniversalProps) => {
         />
         <LevelsBlock
           title={"11+Maths Marathon Test"}
-          onPressLevel={() => {}}
+          onPressLevel={() => onPressTest()}
           bgColor={colors.pink}
         />
       </View>
+      <SubscribeModal
+        isVisible={subscribeModal}
+        onClose={() => {
+          setSubscribeModal(false), console.log("hereeeeee");
+        }}
+      />
     </View>
   );
 };

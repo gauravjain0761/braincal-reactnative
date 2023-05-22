@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { UniversalProps } from "../helper/NavigationTypes";
+import { UniversalProps } from "../navigation/NavigationTypes";
 import { hp, wp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import Input from "../components/Input";
@@ -15,7 +15,7 @@ import {
 import { setUserInfo, updateUser } from "../actions";
 import { PRE_LOADER } from "../actions/types";
 import { useIsFocused } from "@react-navigation/native";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 
 const Profile = ({ navigation }: UniversalProps) => {
   const dispatch = useAppDispatch();

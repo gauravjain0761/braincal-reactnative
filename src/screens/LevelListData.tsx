@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { UniversalProps } from "../helper/NavigationTypes";
+import { UniversalProps } from "../navigation/NavigationTypes";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { getMathTricks, searchPosts } from "../actions";
 import TricksRow from "../components/TricksRow";
 import { PRE_LOADER, SET_LEVEL_DATA } from "../actions/types";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { useNavigation } from "@react-navigation/native";
 import { getLevelWiseData } from "../actions/levelAction";
 import SearchBar from "../components/SearchBar";

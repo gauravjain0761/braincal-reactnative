@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { hp, wp } from "../helper/Constants";
 import { commonFont } from "../theme/Fonts";
 import { icons } from "../helper/IconConstant";

@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { hp, wp } from "../helper/Constants";
 import { commonFont } from "../theme/Fonts";
 import { SET_READ_MORE_DATA } from "../actions/types";

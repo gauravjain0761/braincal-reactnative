@@ -13,12 +13,12 @@ import {
   TextInput,
 } from "react-native";
 import RenderHTML from "react-native-render-html";
-import { UniversalProps } from "../helper/NavigationTypes";
+import { UniversalProps } from "../navigation/NavigationTypes";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { commonFont } from "../theme/Fonts";
 import { hp } from "../helper/Constants";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { icons } from "../helper/IconConstant";
 import {
   dispatchErrorAction,

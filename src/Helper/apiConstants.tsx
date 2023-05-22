@@ -9,6 +9,8 @@ export const api = {
   feedback: "wp-json/send_fb/email/",
   update_user: "api/user/update_user_meta/",
   quiz_url: "wp-json/watu/",
+  user_register: "wp-json/users/create_new_user",
+  plan_url: "/wp-json/",
 };
 
 export const POST = "POST";

@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { FC } from "react";
-import { UniversalProps } from "../helper/NavigationTypes";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { colors } from "../theme/Utils";
+import { UniversalProps } from "../navigation/NavigationTypes";
+import { colors } from "../theme/Colors";
 import { commonFont } from "../theme/Fonts";
 import { hp } from "../helper/Constants";
 interface Props {

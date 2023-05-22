@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { UniversalProps } from "../helper/NavigationTypes";
+import { UniversalProps } from "../navigation/NavigationTypes";
 import { hp, wp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { PRE_LOADER, SET_FAVOURITES_POSTS } from "../actions/types";
 import TricksRow from "../components/TricksRow";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { getFavouritesData } from "../actions/favouriteAction";
 import { useIsFocused } from "@react-navigation/native";
 

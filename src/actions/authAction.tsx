@@ -26,6 +26,29 @@ export const getNonce =
       });
   };
 
+export const newUserRegister =
+  (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
+  async (dispatch) => {
+    dispatch({ type: PRE_LOADER, payload: true });
+    return makeAPIRequest({
+      method: POST,
+      url: api.user_register,
+      data: request.params,
+    })
+      .then(async (response: any) => {
+        if (response.status === 200) {
+          if (response?.data?.status) {
+            dispatch({ type: PRE_LOADER, payload: false });
+          }
+          if (request.onSuccess) request.onSuccess(response.data);
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: PRE_LOADER, payload: false });
+        if (request.onFail) request.onFail(error.response.data.error);
+      });
+  };
+
 export const userLogin =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {

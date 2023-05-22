@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { UniversalProps } from "../helper/NavigationTypes";
+import { UniversalProps } from "../navigation/NavigationTypes";
 import { hp, wp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { commonFont } from "../theme/Fonts";
 import Input from "../components/Input";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";

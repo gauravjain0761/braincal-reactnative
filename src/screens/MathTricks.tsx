@@ -9,13 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { UniversalProps } from "../helper/NavigationTypes";
+import { UniversalProps } from "../navigation/NavigationTypes";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { getMathTricks, searchPosts, serachPosts } from "../actions";
 import TricksRow from "../components/TricksRow";
 import { PRE_LOADER, SET_SEARCH_POSTS } from "../actions/types";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import SearchBar from "../components/SearchBar";
 import SearchItemView from "../components/SearchItemView";
 import { hp } from "../helper/Constants";

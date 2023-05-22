@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { UniversalProps } from "../helper/NavigationTypes";
+import { UniversalProps } from "../navigation/NavigationTypes";
 import { hp, wp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import LevelsBlock from "../components/LevelsBlock";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 const English = ({}: UniversalProps) => {

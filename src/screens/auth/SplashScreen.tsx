@@ -1,6 +1,6 @@
 import { View, StyleSheet, Image } from "react-native";
 import React, { useEffect } from "react";
-import { UniversalProps } from "../../helper/NavigationTypes";
+import { UniversalProps } from "../../navigation/NavigationTypes";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { useAppDispatch } from "../../redux/Hooks";
 import { CommonActions, useNavigation } from "@react-navigation/native";

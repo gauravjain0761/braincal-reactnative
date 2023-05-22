@@ -21,7 +21,7 @@ import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { icons } from "../helper/IconConstant";
 import { commonFont } from "../theme/Fonts";
 import { hp, wp } from "../helper/Constants";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import {
   dispatchErrorAction,
   getToken,

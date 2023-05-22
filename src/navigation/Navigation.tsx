@@ -8,7 +8,7 @@ import { Animated, Image, TouchableOpacity, View } from "react-native";
 import Login from "../screens/auth/Login";
 import SelectLocation from "../screens/auth/SelectLocation";
 import VerifyOtp from "../screens/auth/VerifyOtp";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import OtpSuccess from "../screens/auth/OtpSuccess";
 import DrawerNavigation from "./DrawerNavigation";

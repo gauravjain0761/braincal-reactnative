@@ -26,7 +26,7 @@ export const makeAPIRequest = ({ method, url, data, headers, params }: props) =>
     };
     axios(option)
       .then((response) => {
-        console.log("response-->", url, response.data, params);
+        console.log("response-->", url, response.data, params, data);
         if (response.status === 200) {
           resolve(response);
         } else {

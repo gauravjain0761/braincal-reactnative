@@ -49,3 +49,41 @@ export const searchPosts =
         if (request.onFail) request.onFail(error.response.data.error);
       });
   };
+
+export const getMyPlan =
+  (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
+  async (dispatch) => {
+    return makeAPIRequest({
+      method: GET,
+      url: api.plan_url + request.type,
+      params: request.params,
+    })
+      .then(async (response: any) => {
+        if (response.status === 200) {
+          if (request.onSuccess) request.onSuccess(response.data);
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: PRE_LOADER, payload: false });
+        if (request.onFail) request.onFail(error.response.data.error);
+      });
+  };
+
+export const subscribePlan =
+  (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
+  async (dispatch) => {
+    return makeAPIRequest({
+      method: GET,
+      url: api.plan_url + request.type,
+      params: request.params,
+    })
+      .then(async (response: any) => {
+        if (response.status === 200) {
+          if (request.onSuccess) request.onSuccess(response.data);
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: PRE_LOADER, payload: false });
+        if (request.onFail) request.onFail(error.response.data.error);
+      });
+  };

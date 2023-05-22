@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { hp } from "../helper/Constants";
-import { colors } from "./Utils";
+import { colors } from "./Colors";
 
 export const ApplicationStyles = StyleSheet.create({
   container: {

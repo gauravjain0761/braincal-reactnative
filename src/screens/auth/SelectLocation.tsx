@@ -1,13 +1,13 @@
 import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { UniversalProps } from "../../helper/NavigationTypes";
+import { UniversalProps } from "../../navigation/NavigationTypes";
 import { useAppDispatch, useAppSelector } from "../../redux/Hooks";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { hp } from "../../helper/Constants";
 import { icons } from "../../helper/IconConstant";
 import { commonFont } from "../../theme/Fonts";
-import { colors } from "../../theme/Utils";
+import { colors } from "../../theme/Colors";
 import { Dropdown } from "react-native-element-dropdown";
 import CommonButton from "../../components/CommonButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";

@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { commonFont } from "../theme/Fonts";
 import { hp, wp } from "../helper/Constants";
-import { colors } from "../theme/Utils";
+import { colors } from "../theme/Colors";
 import { setToken } from "../helper/AsyncStorage";
 import { CommonActions } from "@react-navigation/native";
 import { icons } from "../helper/IconConstant";
@@ -121,7 +121,7 @@ function CustomDrawerContent(props: any) {
     >
       <View style={styles.drawerMain}>
         <Text style={styles.titleDrawer}>Welcome</Text>
-        <Text style={styles.nameTextStyle}>{user.firstname}</Text>
+        <Text style={styles.nameTextStyle}>{user?.firstname}</Text>
         {DrawerItemArray.map((item, index) => {
           return (
             <TouchableOpacity
