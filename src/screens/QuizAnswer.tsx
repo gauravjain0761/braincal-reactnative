@@ -93,7 +93,7 @@ ${item.questionText}
                         <View style={styles.clickView} key={i}>
                           <View style={{ flex: 1 }}>
                             <Text style={styles.optionText}>
-                              {i + 1}. {ans.text}
+                              {i + 1}. {ans.text.replace(/\n/g, "")}
                             </Text>
                           </View>
                           <View>

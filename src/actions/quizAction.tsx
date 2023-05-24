@@ -41,7 +41,7 @@ export const getQuestions =
   async (dispatch) => {
     return makeAPIRequest({
       method: GET,
-      url: api.quiz_url + "questions/1",
+      url: api.quiz_url + "questions/" + request.params.id,
       params: {},
     })
       .then(async (response: any) => {

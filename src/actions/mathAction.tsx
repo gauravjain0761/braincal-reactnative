@@ -3,7 +3,12 @@ import { makeAPIRequest } from "../helper/Global";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../redux";
 import { AnyAction } from "@reduxjs/toolkit";
-import { PRE_LOADER, SET_SEARCH_POSTS, SET_TRICKS_DATA } from "./types";
+import {
+  PRE_LOADER,
+  SET_MY_PLAN,
+  SET_SEARCH_POSTS,
+  SET_TRICKS_DATA,
+} from "./types";
 
 export const getMathTricks =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
@@ -53,6 +58,7 @@ export const searchPosts =
 export const getMyPlan =
   (request: any): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch) => {
+    dispatch({ type: PRE_LOADER, payload: true });
     return makeAPIRequest({
       method: GET,
       url: api.plan_url + request.type,
@@ -60,6 +66,7 @@ export const getMyPlan =
     })
       .then(async (response: any) => {
         if (response.status === 200) {
+          dispatch({ type: SET_MY_PLAN, payload: response.data });
           if (request.onSuccess) request.onSuccess(response.data);
         }
       })

@@ -21,18 +21,19 @@ import {
 } from "react-native-iap";
 import CommonButton from "./CommonButton";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
-import { subscribePlan } from "../actions";
+import { getMyPlan, subscribePlan } from "../actions";
 
 interface Props {
   isVisible: boolean;
   onClose: () => void;
+  onSuccess: () => void;
 }
 
 const itemSkus = Platform.select({
   ios: ["com.prod.consumable1"],
   android: ["com.prod.consumable1"],
 });
-const SubscribeModal: FC<Props> = ({ isVisible, onClose }) => {
+const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
   const [products, setProducts] = useState([]);
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.common);
@@ -54,8 +55,8 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose }) => {
       console.log("purchase===>>", purchase);
       const receipt = purchase.transactionReceipt;
       if (receipt) {
-        console.log("receipt==>", receipt);
-        onPurchasePlan(purchase);
+        console.log("receipt==>", receipt, products);
+        onPurchasePlan(purchase, products);
       }
     });
     const subscriptionError = purchaseErrorListener((error: PurchaseError) => {
@@ -73,8 +74,7 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose }) => {
     RNIap.requestPurchase({ skus: [products[0].productId] });
     // }, 3000);
   };
-
-  const onPurchasePlan = (purchase: any) => {
+  const onPurchasePlan = (purchase: any, pro: any) => {
     let obj = {
       signature: purchase.signatureAndroid,
       userid: user.id,
@@ -82,7 +82,7 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose }) => {
       device_type: Platform.OS == "android" ? "ANDROID" : "IOS",
       transaction_id: purchase.transactionId,
       product_id: purchase.productId,
-      amount: products[0].price,
+      amount: pro[0].price,
       receipt: purchase.transactionReceipt,
     };
     let request = {
@@ -91,6 +91,18 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose }) => {
       onSuccess: (res: any) => {
         console.log("res-", res);
         if (res.success == true) {
+          let obj = {
+            userid: user.id,
+            hash: "EB46F14D6E44B1472AA818248116FF65",
+          };
+          let request = {
+            type: "plan/details",
+            params: obj,
+            onSuccess: (res: any) => {},
+            onFail: (err: any) => {},
+          };
+          dispatch(getMyPlan(request));
+          onSuccess();
         }
       },
       onFail: (err: any) => {

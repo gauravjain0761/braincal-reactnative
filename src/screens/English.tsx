@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
 import { hp, wp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import LevelsBlock from "../components/LevelsBlock";
 import { colors } from "../theme/Colors";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import SubscribeModal from "../components/SubscribeModal";
+import { useAppDispatch, useAppSelector } from "../redux/Hooks";
+import { getMyPlan } from "../actions";
 
 const English = ({}: UniversalProps) => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  const { user, myPlan } = useAppSelector((state) => state.common);
+  const [subscribeModal, setSubscribeModal] = useState(false);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isFocused == true) {
+      let obj = {
+        userid: user.id,
+        hash: "EB46F14D6E44B1472AA818248116FF65",
+      };
+      let request = {
+        type: "plan/details",
+        params: obj,
+        onSuccess: (res: any) => {},
+        onFail: (err: any) => {},
+      };
+      dispatch(getMyPlan(request));
+    }
+  }, [isFocused]);
+
   const onPressLevel = (typeValue: number, heading: string) => {
     navigation.navigate("LevelListData", {
       type: "english_11",
@@ -16,6 +40,19 @@ const English = ({}: UniversalProps) => {
       heading: heading,
     });
   };
+
+  const onPressTest = () => {
+    if (myPlan?.data?.is_plan_active) {
+      // setSubscribeModal(true);
+      navigation.navigate("Quiz", {
+        id: 1,
+        quizName: "11+ English Marathon",
+      });
+    } else {
+      setSubscribeModal(true);
+    }
+  };
+
   return (
     <View style={ApplicationStyles.container}>
       <View style={ApplicationStyles.innerContainer}>
@@ -42,10 +79,24 @@ const English = ({}: UniversalProps) => {
         />
         <LevelsBlock
           title={"11+English Marathon Test"}
-          onPressLevel={() => {}}
+          onPressLevel={() => {
+            onPressTest();
+          }}
           bgColor={colors.pink}
         />
       </View>
+      <SubscribeModal
+        isVisible={subscribeModal}
+        onClose={() => {
+          setSubscribeModal(false), console.log("hereeeeee");
+        }}
+        onSuccess={() => {
+          navigation.navigate("Quiz", {
+            id: 1,
+            quizName: "11+ English Marathon",
+          });
+        }}
+      />
     </View>
   );
 };

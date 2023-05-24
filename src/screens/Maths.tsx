@@ -25,8 +25,7 @@ const Maths = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const [isSubscribe, setIsSubscribe] = useState(false);
-  const { user } = useAppSelector((state) => state.common);
+  const { user, myPlan } = useAppSelector((state) => state.common);
   const [subscribeModal, setSubscribeModal] = useState(false);
 
   useEffect(() => {
@@ -38,14 +37,8 @@ const Maths = ({}: UniversalProps) => {
       let request = {
         type: "plan/details",
         params: obj,
-        onSuccess: (res: any) => {
-          if (res?.data?.is_plan_active) {
-            setIsSubscribe(res?.data?.is_plan_active);
-          }
-        },
-        onFail: (err: any) => {
-          console.log(err);
-        },
+        onSuccess: (res: any) => {},
+        onFail: (err: any) => {},
       };
       dispatch(getMyPlan(request));
     }
@@ -60,7 +53,12 @@ const Maths = ({}: UniversalProps) => {
   };
 
   const onPressTest = () => {
-    if (isSubscribe) {
+    if (myPlan?.data?.is_plan_active) {
+      // setSubscribeModal(true);
+      navigation.navigate("Quiz", {
+        id: 2,
+        quizName: "11+ Maths Marathon",
+      });
     } else {
       setSubscribeModal(true);
     }
@@ -99,7 +97,13 @@ const Maths = ({}: UniversalProps) => {
       <SubscribeModal
         isVisible={subscribeModal}
         onClose={() => {
-          setSubscribeModal(false), console.log("hereeeeee");
+          setSubscribeModal(false);
+        }}
+        onSuccess={() => {
+          navigation.navigate("Quiz", {
+            id: 2,
+            quizName: "11+ Maths Marathon",
+          });
         }}
       />
     </View>

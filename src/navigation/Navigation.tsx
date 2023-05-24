@@ -18,6 +18,7 @@ import LevelListData from "../screens/LevelListData";
 import LanguageListData from "../screens/LanguageListData";
 import QuizAnswer from "../screens/QuizAnswer";
 import SplashScreen from "../screens/auth/SplashScreen";
+import GeneralKnowledge from "../screens/GeneralKnowledge";
 
 export type RootStackParamList = {
   SplashScreen: undefined;
@@ -35,6 +36,7 @@ export type RootStackParamList = {
   LevelListData: undefined;
   LanguageListData: undefined;
   QuizAnswer: undefined;
+  Quiz: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -189,6 +191,18 @@ const Navigation: FC = () => {
             headerTitle: "Answer",
           }}
           component={QuizAnswer}
+        />
+        <RootStack.Screen
+          name={"Quiz"}
+          options={{
+            headerShown: true,
+            headerBackTitle: "",
+            headerStyle: { backgroundColor: colors.skyBlue },
+            headerTitleStyle: { color: colors.white },
+            headerTintColor: colors.white,
+            // headerTitle: "Answer",
+          }}
+          component={GeneralKnowledge}
         />
 
         <RootStack.Screen

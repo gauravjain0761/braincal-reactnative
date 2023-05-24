@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
+  useWindowDimensions,
 } from "react-native";
 import RenderHTML from "react-native-render-html";
 import { UniversalProps } from "../navigation/NavigationTypes";
@@ -36,6 +37,8 @@ const ReadMore = ({ navigation }: UniversalProps) => {
   const [Answer, setAnswer] = useState("");
   const [AnswerShow, setAnswerShow] = useState(false);
   const favouritesId = useAppSelector((e) => e.common.favouritesId);
+  const { width } = useWindowDimensions();
+  console.log("READ_MORE_DATA---------", READ_MORE_DATA.content.rendered);
   useEffect(() => {
     // navigation.setOptions({
     //   headerTitle: () => (
@@ -128,7 +131,11 @@ const ReadMore = ({ navigation }: UniversalProps) => {
       setAnswer(eval(firstNumber + READ_MORE_DATA.expression + secondNumber));
     }
   };
-
+  const renderersProps = {
+    img: {
+      enableExperimentalPercentWidth: true,
+    },
+  };
   return (
     <View style={ApplicationStyles.container}>
       <ScrollView>
@@ -196,9 +203,11 @@ const ReadMore = ({ navigation }: UniversalProps) => {
         )}
         <View style={{ paddingHorizontal: hp(2) }}>
           <RenderHTML
+            contentWidth={width}
             tagsStyles={{
               p: {
                 color: colors.black,
+                marginVertical: hp(1),
               },
               h3: {
                 color: colors.black,
@@ -206,10 +215,23 @@ const ReadMore = ({ navigation }: UniversalProps) => {
               strong: { color: colors.black },
               div: {},
               td: { color: colors.black },
+              i: { color: colors.black },
+              li: { color: colors.black },
+              img: {
+                width: width - hp(2),
+                resizeMode: "contain",
+              },
+              figure: {
+                maxWidth: width - hp(4),
+                margin: 0,
+                padding: 0,
+              },
+              figcaption: { color: colors.black },
             }}
             source={{
               html: READ_MORE_DATA.content.rendered,
             }}
+            renderersProps={renderersProps}
           />
         </View>
 

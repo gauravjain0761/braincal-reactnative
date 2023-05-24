@@ -30,6 +30,7 @@ const SearchBar: FC<Props> = ({ value, onChangeText, onPressClose }) => {
           style={styles.inputStyle}
           placeholder={"Search"}
           onChangeText={onChangeText}
+          placeholderTextColor={colors.grey}
         />
         {value?.length ? (
           <TouchableOpacity onPress={onPressClose}>

@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Alert,
-  Button,
   Dimensions,
   Image,
   StyleSheet,
@@ -10,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp, wp } from "../helper/Constants";
+import { hp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
@@ -24,7 +22,7 @@ import { commonFont } from "../theme/Fonts";
 import ReactNativeModal from "react-native-modal";
 import { dispatchErrorAction } from "../helper/Global";
 
-const GeneralKnowledge = ({}: UniversalProps) => {
+const GeneralKnowledge = ({ route }: UniversalProps) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -35,8 +33,6 @@ const GeneralKnowledge = ({}: UniversalProps) => {
   const [selectedQue, setSelectedQue] = React.useState(0);
   const viewPager = useRef(null);
   const [startUpModal, setStartUpModal] = useState(false);
-
-  console.log("question----", question);
 
   useEffect(() => {
     let timerId;
@@ -61,38 +57,25 @@ const GeneralKnowledge = ({}: UniversalProps) => {
   }, [countDown, runTimer]);
   useEffect(() => {
     if (isFocused == true) {
+      if (route.params) {
+        navigation.setOptions({
+          headerTitle: route.params.quizName,
+        });
+      }
+
       setRunTimer(false);
       setCountDown(0);
       setSelectedQue(0);
       dispatch({ type: SET_QUESTIONS, payload: {} });
-
       let obj = {
-        params: {},
+        params: {
+          id: route.params ? route.params.id : 0,
+        },
         onSuccess: (res: any) => {
           setStartUpModal(true);
-          // Alert.alert(
-          //   "Confirmation",
-          //   `Click start button to begin the test.\nThere are ${res.questions.length} questions.\nYou have ${res.q_time} minutes`,
-          //   [
-          //     {
-          //       text: "Cancel",
-          //       onPress: () => console.log("Cancel Pressed"),
-          //       style: "cancel",
-          //     },
-          //     {
-          //       text: "OK",
-          //       onPress: () => {
-          //         togglerTimer();
-          //         setSelectedQue(0);
-          //         viewPager.current.setPage(0);
-          //       },
-          //     },
-          //   ]
-          // );
         },
         onFail: () => {},
       };
-
       dispatch(getQuestions(obj));
     }
   }, [isFocused]);
@@ -102,7 +85,7 @@ const GeneralKnowledge = ({}: UniversalProps) => {
 
   const onPressNext = (ans: any) => {
     if (ans == null) {
-      dispatchErrorAction(dispatch, "Please select any ans");
+      dispatchErrorAction(dispatch, "Please select any answer");
     } else {
       if (selectedQue + 1 == question.questions.length) {
         togglerTimer();
@@ -182,7 +165,7 @@ const GeneralKnowledge = ({}: UniversalProps) => {
                             >
                               <View style={{ flex: 1 }}>
                                 <Text style={styles.optionText}>
-                                  {i + 1}. {ans.text}
+                                  {i + 1}. {ans.text.replace(/\n/g, "")}
                                 </Text>
                               </View>
                               <View>

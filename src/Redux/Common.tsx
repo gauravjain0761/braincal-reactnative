@@ -7,6 +7,7 @@ import {
   SET_FAVOURITES_POSTS,
   SET_LANGUAGE_DATA,
   SET_LEVEL_DATA,
+  SET_MY_PLAN,
   SET_QUESTIONS,
   SET_READ_MORE_DATA,
   SET_SEARCH_POSTS,
@@ -26,6 +27,7 @@ const initialState = {
   favouritesPosts: [],
   questions: {},
   toast: {},
+  myPlan: {},
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {
@@ -142,6 +144,9 @@ export default function (state = initialState, action: any) {
       questions.questions[action.payload.index].selected_answer_index =
         action.payload.optionIndex;
       return { ...state, questions: questions, preLoader: false };
+    }
+    case SET_MY_PLAN: {
+      return { ...state, myPlan: action.payload, preLoader: false };
     }
     default:
       return state;
