@@ -33,6 +33,7 @@ const GeneralKnowledge = ({ route }: UniversalProps) => {
   const [selectedQue, setSelectedQue] = React.useState(0);
   const viewPager = useRef(null);
   const [startUpModal, setStartUpModal] = useState(false);
+  const [withouAnswerModal, setWithouAnswerModal] = useState(false);
 
   useEffect(() => {
     let timerId;
@@ -85,15 +86,32 @@ const GeneralKnowledge = ({ route }: UniversalProps) => {
 
   const onPressNext = (ans: any) => {
     if (ans == null) {
-      dispatchErrorAction(dispatch, "Please select any answer");
+      setWithouAnswerModal(true);
+      // dispatchErrorAction(dispatch, "Please select any answer");
     } else {
       if (selectedQue + 1 == question.questions.length) {
         togglerTimer();
-        navigation.navigate("QuizAnswer");
+        navigation.navigate("QuizAnswer", {
+          heading: route?.params ? route.params.quizName : "General Knowledge",
+        });
       } else {
         viewPager.current.setPage(selectedQue + 1);
       }
     }
+  };
+
+  const onPressOKwithoutAnswer = () => {
+    setWithouAnswerModal(false);
+    setTimeout(() => {
+      if (selectedQue + 1 == question.questions.length) {
+        togglerTimer();
+        navigation.navigate("QuizAnswer", {
+          heading: route?.params ? route.params.quizName : "General Knowledge",
+        });
+      } else {
+        viewPager.current.setPage(selectedQue + 1);
+      }
+    }, 1000);
   };
 
   const onPressOK = () => {
@@ -221,6 +239,30 @@ const GeneralKnowledge = ({ route }: UniversalProps) => {
               <Text style={styles.btnText}>START</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setStartUpModal(false)}>
+              <Text style={styles.btnText}>CANCEL</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ReactNativeModal>
+
+      <ReactNativeModal isVisible={withouAnswerModal}>
+        <View style={styles.modalView}>
+          <Text style={[styles.titleMOdal2, { marginHorizontal: hp(3) }]}>
+            Confirm leaving
+          </Text>
+          <Text
+            style={styles.titleModal}
+          >{`You did not select any answer.Are you sure you want to continue?`}</Text>
+
+          <View style={styles.button}>
+            <TouchableOpacity
+              onPress={() => {
+                onPressOKwithoutAnswer();
+              }}
+            >
+              <Text style={styles.btnText}>OK</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setWithouAnswerModal(false)}>
               <Text style={styles.btnText}>CANCEL</Text>
             </TouchableOpacity>
           </View>

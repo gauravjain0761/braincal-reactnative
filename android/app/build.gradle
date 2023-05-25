@@ -99,8 +99,8 @@ android {
         applicationId "com.braincal.apps"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 20500
+        versionName "2.5"
         missingDimensionStrategy "store", "play"
     }
 

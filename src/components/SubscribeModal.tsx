@@ -35,6 +35,7 @@ const itemSkus = Platform.select({
 });
 const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
   const [products, setProducts] = useState([]);
+  const [productsPrice, setProductsPrice] = useState("");
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.common);
 
@@ -45,6 +46,7 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
         .then((res) => {
           console.log("res--", res);
           setProducts(res);
+          setProductsPrice(res[0].price);
         })
         .catch((err) => {
           console.log("err--", err);
@@ -55,8 +57,8 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
       console.log("purchase===>>", purchase);
       const receipt = purchase.transactionReceipt;
       if (receipt) {
-        console.log("receipt==>", receipt, products);
-        onPurchasePlan(purchase, products);
+        console.log("receipt==>", receipt);
+        onPurchasePlan(purchase);
       }
     });
     const subscriptionError = purchaseErrorListener((error: PurchaseError) => {
@@ -74,7 +76,7 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
     RNIap.requestPurchase({ skus: [products[0].productId] });
     // }, 3000);
   };
-  const onPurchasePlan = (purchase: any, pro: any) => {
+  const onPurchasePlan = (purchase: any) => {
     let obj = {
       signature: purchase.signatureAndroid,
       userid: user.id,
@@ -82,7 +84,7 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
       device_type: Platform.OS == "android" ? "ANDROID" : "IOS",
       transaction_id: purchase.transactionId,
       product_id: purchase.productId,
-      amount: pro[0].price,
+      amount: productsPrice,
       receipt: purchase.transactionReceipt,
     };
     let request = {

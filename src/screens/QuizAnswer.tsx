@@ -23,7 +23,7 @@ import { colors } from "../theme/Colors";
 import RenderHtml from "react-native-render-html";
 import { commonFont } from "../theme/Fonts";
 
-const QuizAnswer = ({}: UniversalProps) => {
+const QuizAnswer = ({ route }: UniversalProps) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -32,6 +32,9 @@ const QuizAnswer = ({}: UniversalProps) => {
   const [score, setscore] = useState(0);
 
   useEffect(() => {
+    navigation.setOptions({
+      headerTitle: route.params.heading,
+    });
     let score = 0;
     question.questions.forEach((element) => {
       let selected_answer = element.selected_answer_index;
@@ -52,9 +55,9 @@ const QuizAnswer = ({}: UniversalProps) => {
         <View style={styles.headerView}>
           <View>
             <Text style={styles.title1}>
-              Congratulation - you have complete{" "}
-              <Text style={styles.title}>General Knowledge</Text>. You scored{" "}
-              <Text style={styles.title}>{score}</Text> point(s) out of{" "}
+              Congratulation - you have completed{" "}
+              <Text style={styles.title}>{route?.params?.heading}</Text>. You
+              scored <Text style={styles.title}>{score}</Text> point(s) out of{" "}
               <Text style={styles.title}>
                 {Object.keys(question).length !== 0
                   ? question.questions.length
@@ -87,74 +90,87 @@ ${item.questionText}
 </p>`,
                     }}
                   />
-                  {item.answers.map((ans, i) => {
-                    return (
+
+                  {item.selected_answer_index == null ? (
+                    <View>
                       <View style={styles.optionView}>
-                        <View style={styles.clickView} key={i}>
-                          <View style={{ flex: 1 }}>
-                            <Text style={styles.optionText}>
-                              {i + 1}. {ans.text.replace(/\n/g, "")}
-                            </Text>
-                          </View>
-                          <View>
-                            {i == item.selected_answer_index &&
-                              !ans.correct && (
-                                <Image
-                                  source={require("../assets/cancel.png")}
-                                  style={[
-                                    styles.radioImage,
-                                    { tintColor: "red" },
-                                  ]}
-                                />
-                              )}
+                        <Text style={styles.optionText}>
+                          No answer selected.
+                        </Text>
+                      </View>
+                    </View>
+                  ) : (
+                    item.answers.map((ans, i) => {
+                      return (
+                        <View style={styles.optionView}>
+                          <View style={styles.clickView} key={i}>
+                            <View style={{ flex: 1 }}>
+                              <Text style={styles.optionText}>
+                                {i + 1}. {ans.text.replace(/\n/g, "")}
+                              </Text>
+                            </View>
+                            <View>
+                              {i == item.selected_answer_index &&
+                                !ans.correct && (
+                                  <Image
+                                    source={require("../assets/cancel.png")}
+                                    style={[
+                                      styles.radioImage,
+                                      { tintColor: "red" },
+                                    ]}
+                                  />
+                                )}
 
-                            {i == item.selected_answer_index && ans.correct && (
-                              <Image
-                                source={require("../assets/correct.png")}
-                                style={[
-                                  styles.radioImage,
-                                  { tintColor: "green" },
-                                ]}
-                              />
-                            )}
-                            {i != item.selected_answer_index && ans.correct && (
-                              <Image
-                                source={require("../assets/correct.png")}
-                                style={[
-                                  styles.radioImage,
-                                  { tintColor: "green" },
-                                ]}
-                              />
-                            )}
+                              {i == item.selected_answer_index &&
+                                ans.correct && (
+                                  <Image
+                                    source={require("../assets/correct.png")}
+                                    style={[
+                                      styles.radioImage,
+                                      { tintColor: "green" },
+                                    ]}
+                                  />
+                                )}
+                              {i != item.selected_answer_index &&
+                                ans.correct && (
+                                  <Image
+                                    source={require("../assets/correct.png")}
+                                    style={[
+                                      styles.radioImage,
+                                      { tintColor: "green" },
+                                    ]}
+                                  />
+                                )}
 
-                            {/* {item.answer == option ? (
-                            <Image
-                              source={require("../../Assets/correct.png")}
-                              style={[
-                                styles.radioImage,
-                                { tintColor: "green" },
-                              ]}
-                            />
-                          ) : item.selected == option &&
-                            item.answer !== option ? (
-                            <Image
-                              source={require("../../Assets/cancel.png")}
-                              style={[styles.radioImage, { tintColor: "red" }]}
-                            />
-                          ) : (
-                            <Image
-                              source={require("../../Assets/cancel.png")}
-                              style={[
-                                styles.radioImage,
-                                { tintColor: "red", opacity: 0 },
-                              ]}
-                            />
-                          )} */}
+                              {/* {item.answer == option ? (
+                          <Image
+                            source={require("../../Assets/correct.png")}
+                            style={[
+                              styles.radioImage,
+                              { tintColor: "green" },
+                            ]}
+                          />
+                        ) : item.selected == option &&
+                          item.answer !== option ? (
+                          <Image
+                            source={require("../../Assets/cancel.png")}
+                            style={[styles.radioImage, { tintColor: "red" }]}
+                          />
+                        ) : (
+                          <Image
+                            source={require("../../Assets/cancel.png")}
+                            style={[
+                              styles.radioImage,
+                              { tintColor: "red", opacity: 0 },
+                            ]}
+                          />
+                        )} */}
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    );
-                  })}
+                      );
+                    })
+                  )}
                 </View>
               );
             })}

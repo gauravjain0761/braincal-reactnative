@@ -53,6 +53,7 @@ const Maths = ({}: UniversalProps) => {
   };
 
   const onPressTest = () => {
+    // setSubscribeModal(true);
     if (myPlan?.data?.is_plan_active) {
       // setSubscribeModal(true);
       navigation.navigate("Quiz", {
