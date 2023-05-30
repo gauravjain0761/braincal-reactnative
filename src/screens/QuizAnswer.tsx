@@ -1,24 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
-  Button,
+  BackHandler,
   Dimensions,
   Image,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp, wp } from "../helper/Constants";
+import { hp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-import { getQuestions } from "../actions/quizAction";
-import { ON_SELECT_ANS, SET_QUESTIONS } from "../actions/types";
 import { useAppSelector } from "../redux/Hooks";
-import PagerView from "react-native-pager-view";
 import { colors } from "../theme/Colors";
 import RenderHtml from "react-native-render-html";
 import { commonFont } from "../theme/Fonts";
@@ -28,7 +24,6 @@ const QuizAnswer = ({ route }: UniversalProps) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const question = useAppSelector((e) => e.common.questions);
-
   const [score, setscore] = useState(0);
 
   useEffect(() => {

@@ -11,6 +11,7 @@ import {
   SET_QUESTIONS,
   SET_READ_MORE_DATA,
   SET_SEARCH_POSTS,
+  SET_TIMER_COUNTDOWN,
   SET_TRICKS_DATA,
   SET_USER,
 } from "../actions/types";
@@ -28,6 +29,8 @@ const initialState = {
   questions: {},
   toast: {},
   myPlan: {},
+  runTimer: false,
+  countDown: 0,
 };
 export default function (state = initialState, action: any) {
   switch (action.type) {
@@ -147,6 +150,15 @@ export default function (state = initialState, action: any) {
     }
     case SET_MY_PLAN: {
       return { ...state, myPlan: action.payload, preLoader: false };
+    }
+    case SET_TIMER_COUNTDOWN: {
+      console.log("here---", action.payload);
+      return {
+        ...state,
+        runTimer: action.payload.runTimer,
+        countDown: action.payload.countDown,
+        preLoader: false,
+      };
     }
     default:
       return state;

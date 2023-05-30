@@ -78,7 +78,7 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
   };
   const onPurchasePlan = (purchase: any) => {
     let obj = {
-      signature: purchase.signatureAndroid,
+      signature: Platform.OS == "android" ? purchase.signatureAndroid : "",
       userid: user.id,
       hash: "EB46F14D6E44B1472AA818248116FF65",
       device_type: Platform.OS == "android" ? "ANDROID" : "IOS",

@@ -28,7 +28,6 @@ target 'Braincal' do
   pod 'GoogleUtilities', :modular_headers => true
   pod 'FirebaseCore', :modular_headers => true
   pod 'react-native-fbsdk-next', :path => '../node_modules/react-native-fbsdk-next'
-
   # Flags change depending on the env values.
   flags = get_default_flags()
 
@@ -61,6 +60,9 @@ target 'Braincal' do
       # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
+    installer.pods_project.build_configurations.each do |config|
+        config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      end
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end

@@ -12,6 +12,8 @@ import {
   View,
   TextInput,
   useWindowDimensions,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import RenderHTML from "react-native-render-html";
 import { UniversalProps } from "../navigation/NavigationTypes";
@@ -28,6 +30,7 @@ import {
 } from "../helper/Global";
 import { setUserInfo, updateUser } from "../actions";
 import { ADD_FAVOURITE, REMOVE_FAVOURITE } from "../actions/types";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const ReadMore = ({ navigation }: UniversalProps) => {
   const dispatch = useAppDispatch();
@@ -45,17 +48,22 @@ const ReadMore = ({ navigation }: UniversalProps) => {
     //     <View>
     //       <RenderHTML
     //         tagsStyles={{
-    //           p: {
+    //           strong: {
     //             ...commonFont(500, 20, colors.white),
     //             // paddingLeft: hp(1),
-    //             // margin: 0,
+    //             margin: 0,
+    //             padding: 0,
+    //             // width: 250,
+    //             backgroundColor: "red",
     //           },
     //         }}
     //         source={{
     //           html: `
-    //   <p>
+    //   <strong'>
     //     ${READ_MORE_DATA.title.rendered}
-    //   </p>`,
+    //   </strong><strong>
+    //     ....
+    //   </strong>`,
     //         }}
     //       />
     //     </View>
@@ -138,7 +146,7 @@ const ReadMore = ({ navigation }: UniversalProps) => {
   };
   return (
     <View style={ApplicationStyles.container}>
-      <ScrollView>
+      <KeyboardAwareScrollView>
         <View style={styles.titleView}>
           <View style={{ flex: 1 }}>
             <RenderHTML
@@ -266,7 +274,7 @@ const ReadMore = ({ navigation }: UniversalProps) => {
             )}
           </View>
         )}
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 };

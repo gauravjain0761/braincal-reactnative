@@ -1,10 +1,10 @@
 import React, { FC } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { CommonActions, NavigationContainer } from "@react-navigation/native";
 import {
   StackCardInterpolationProps,
   createStackNavigator,
 } from "@react-navigation/stack";
-import { Animated, Image, TouchableOpacity, View } from "react-native";
+import { Animated, Image, Text, TouchableOpacity, View } from "react-native";
 import Login from "../screens/auth/Login";
 import SelectLocation from "../screens/auth/SelectLocation";
 import VerifyOtp from "../screens/auth/VerifyOtp";
@@ -19,6 +19,8 @@ import LanguageListData from "../screens/LanguageListData";
 import QuizAnswer from "../screens/QuizAnswer";
 import SplashScreen from "../screens/auth/SplashScreen";
 import GeneralKnowledge from "../screens/GeneralKnowledge";
+import { hp } from "../helper/Constants";
+import { commonFont } from "../theme/Fonts";
 
 export type RootStackParamList = {
   SplashScreen: undefined;
@@ -121,11 +123,7 @@ const Navigation: FC = () => {
                 <View style={ApplicationStyles.backCircleImage}>
                   <Image
                     source={icons.backArrow}
-                    style={{
-                      height: 18,
-                      width: 18,
-                      resizeMode: "contain",
-                    }}
+                    style={ApplicationStyles.backBtn}
                   />
                 </View>
               </TouchableOpacity>
@@ -151,7 +149,7 @@ const Navigation: FC = () => {
           name={"ReadMore"}
           options={{
             headerShown: true,
-            headerBackTitle: "",
+            headerBackTitleVisible: false,
             headerStyle: { backgroundColor: colors.skyBlue },
             headerTitleStyle: { color: colors.white },
             headerTintColor: colors.white,
@@ -162,7 +160,7 @@ const Navigation: FC = () => {
           name={"LevelListData"}
           options={{
             headerShown: true,
-            headerBackTitle: "",
+            headerBackTitleVisible: false,
             headerStyle: { backgroundColor: colors.skyBlue },
             headerTitleStyle: { color: colors.white },
             headerTintColor: colors.white,
@@ -173,7 +171,7 @@ const Navigation: FC = () => {
           name={"LanguageListData"}
           options={{
             headerShown: true,
-            headerBackTitle: "",
+            headerBackTitleVisible: false,
             headerStyle: { backgroundColor: colors.skyBlue },
             headerTitleStyle: { color: colors.white },
             headerTintColor: colors.white,
@@ -182,21 +180,50 @@ const Navigation: FC = () => {
         />
         <RootStack.Screen
           name={"QuizAnswer"}
-          options={{
+          options={({ navigation }) => ({
             headerShown: true,
-            headerBackTitle: "",
+            headerBackTitleVisible: false,
             headerStyle: { backgroundColor: colors.skyBlue },
             headerTitleStyle: { color: colors.white },
             headerTintColor: colors.white,
-            headerTitle: "Answer",
-          }}
+            title: "",
+            headerTitle: "",
+            headerRight: () => (
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                }}
+                onPress={() => {
+                  navigation.dispatch(
+                    CommonActions.reset({
+                      index: 1,
+                      routes: [{ name: "Dashboard" }],
+                    })
+                  );
+                }}
+              >
+                <Text
+                  style={{
+                    paddingHorizontal: hp(2),
+                    ...commonFont(600, 16, colors.white),
+                  }}
+                >
+                  END
+                </Text>
+              </TouchableOpacity>
+            ),
+            headerRightContainerStyle: {
+              flex: 1,
+            },
+          })}
           component={QuizAnswer}
         />
         <RootStack.Screen
           name={"Quiz"}
           options={{
             headerShown: true,
-            headerBackTitle: "",
+            headerBackTitleVisible: false,
             headerStyle: { backgroundColor: colors.skyBlue },
             headerTitleStyle: { color: colors.white },
             headerTintColor: colors.white,

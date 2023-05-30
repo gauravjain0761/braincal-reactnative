@@ -87,7 +87,7 @@ const VerifyOtp = ({ route }: UniversalProps) => {
             navigation.dispatch(
               CommonActions.reset({
                 index: 1,
-                routes: [{ name: "OtpSuccess" }],
+                routes: [{ name: "Dashboard" }],
               })
             );
             // navigate("OtpSuccess");

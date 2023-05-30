@@ -35,4 +35,9 @@ export const ApplicationStyles = StyleSheet.create({
     backgroundColor: colors.white,
     paddingHorizontal: hp(2),
   },
+  backBtn: {
+    height: 18,
+    width: 18,
+    resizeMode: "contain",
+  },
 });

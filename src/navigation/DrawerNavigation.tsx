@@ -174,6 +174,7 @@ const DrawerNavigation: FC = () => {
           borderRadius: 0,
           marginLeft: 0,
         },
+        drawerStyle: { width: "70%" },
         headerStyle: { backgroundColor: colors.skyBlue },
         headerTitleStyle: { color: colors.white },
         headerTintColor: colors.white,
@@ -188,7 +189,10 @@ const DrawerNavigation: FC = () => {
       />
       <Drawer.Screen name={"Languages"} component={Languages} />
       <Drawer.Screen
-        options={{ headerTitle: "General Knowledge" }}
+        options={{
+          headerTitle: "General Knowledge",
+          // headerLeft: () => <View></View>,
+        }}
         name={"GeneralKnowledge"}
         component={GeneralKnowledge}
       />

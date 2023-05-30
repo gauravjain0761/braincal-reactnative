@@ -424,6 +424,8 @@ PODS:
   - React-jsinspector (0.71.6)
   - React-logger (0.71.6):
     - glog
+  - react-native-background-timer (2.4.1):
+    - React-Core
   - react-native-fbsdk-next (11.2.1):
     - React-Core
     - react-native-fbsdk-next/Core (= 11.2.1)
@@ -634,6 +636,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-fbsdk-next (from `../node_modules/react-native-fbsdk-next`)
   - react-native-otp-verify (from `../node_modules/react-native-otp-verify`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
@@ -743,6 +746,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-background-timer:
+    :path: "../node_modules/react-native-background-timer"
   react-native-fbsdk-next:
     :path: "../node_modules/react-native-fbsdk-next"
   react-native-otp-verify:
@@ -856,6 +861,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: fbbbda979d16e09825cced680f799108bec2ab58
   React-jsinspector: d5ce2ef3eb8fd30c28389d0bc577918c70821bd6
   React-logger: 9332c3e7b4ef007a0211c0a9868253aac3e1da82
+  react-native-background-timer: 117fffdc9b0d6f144444bb49029f94275a45fdb5
   react-native-fbsdk-next: 5291a5d67aab4e649d072c50988033ff0d05b915
   react-native-otp-verify: 7993f49574998816464a375569810c3529dac145
   react-native-pager-view: 64a540ca9d09bca730626c4714e56a303620c25f
@@ -888,6 +894,6 @@ SPEC CHECKSUMS:
   Yoga: ba09b6b11e6139e3df8229238aa794205ca6a02a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 7f94cd046455556b3e0f75371df92b4b6d704aa9
+PODFILE CHECKSUM: a92393f6d19873f0baf1bb57ff1c6034da1edd73
 
 COCOAPODS: 1.11.3
