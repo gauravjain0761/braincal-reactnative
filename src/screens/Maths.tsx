@@ -54,16 +54,16 @@ const Maths = ({}: UniversalProps) => {
   };
 
   const onPressTest = () => {
-    // setSubscribeModal(true);
-    if (myPlan?.data?.is_plan_active) {
-      // setSubscribeModal(true);
-      navigation.navigate("Quiz", {
-        id: 2,
-        quizName: "11+ Maths Marathon",
-      });
-    } else {
-      setSubscribeModal(true);
-    }
+    setSubscribeModal(true);
+    // if (myPlan?.data?.is_plan_active) {
+    //   // setSubscribeModal(true);
+    //   navigation.navigate("Quiz", {
+    //     id: 2,
+    //     quizName: "11+ Maths Marathon",
+    //   });
+    // } else {
+    //   setSubscribeModal(true);
+    // }
   };
 
   return (

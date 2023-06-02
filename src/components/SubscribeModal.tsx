@@ -73,11 +73,12 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
     onClose();
     // setTimeout(() => {
 
-    let skus =
-      Platform.OS == "ios"
-        ? { sku: ["com.prod.consumable1"] }
-        : { skus: [products[0].productId] };
-    RNIap.requestPurchase(skus);
+    if (Platform.OS == "ios") {
+      RNIap.requestPurchase({ sku: "com.prod.consumable1" });
+    } else {
+      RNIap.requestPurchase({ skus: [products[0].productId] });
+    }
+
     // }, 3000);
   };
   const onPurchasePlan = (purchase: any) => {
