@@ -45,7 +45,10 @@ const Feedback = ({ navigation }: UniversalProps) => {
   };
 
   return (
-    <KeyboardAwareScrollView style={ApplicationStyles.container}>
+    <KeyboardAwareScrollView
+      keyboardShouldPersistTaps="handled"
+      style={ApplicationStyles.container}
+    >
       <View style={ApplicationStyles.innerContainer}>
         <View style={styles.inputBoxStyle}>
           <Input

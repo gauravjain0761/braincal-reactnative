@@ -26,7 +26,6 @@ export const makeAPIRequest = ({ method, url, data, headers, params }: props) =>
     };
     axios(option)
       .then((response) => {
-        console.log("response-->", url, response.data, params, data);
         if (response.status === 200) {
           resolve(response);
         } else {
@@ -34,7 +33,6 @@ export const makeAPIRequest = ({ method, url, data, headers, params }: props) =>
         }
       })
       .catch((error) => {
-        console.log("error?.response?", error?.response);
         if (error?.response?.status === 401) {
           //   clearAsync();
           //   navigationRef.current.reset({

@@ -55,6 +55,7 @@ import {
 } from "react-native-fbsdk-next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { country } from "../../helper/CountryData";
+import { api } from "../../helper/ApiConstants";
 
 interface container {
   title: String;
@@ -145,12 +146,11 @@ const Login = ({}: UniversalProps) => {
       email: email,
       first_name: name,
       username: username,
-      hash: "EB46F14D6E44B1472AA818248116FF65",
+      hash: api.hash,
     };
     let obj = {
       params: login_data,
       onSuccess: (res: any) => {
-        console.log("here res--->>", res);
         if (res.success === true) {
           setToken(res?.data.cookie);
           setUserInfoAsync(res?.data);
@@ -162,12 +162,10 @@ const Login = ({}: UniversalProps) => {
             })
           );
         } else {
-          console.log("error1--", res.error);
           dispatchErrorAction(dispatch, res?.error);
         }
       },
       onFail: (error: string) => {
-        console.log("error--", error);
         dispatchErrorAction(dispatch, error);
       },
     };
@@ -177,7 +175,6 @@ const Login = ({}: UniversalProps) => {
   const onGoogleLogin = async () => {
     try {
       await GoogleSignin.configure({ webClientId: WEB_CLIENT_ID });
-      console.log(await GoogleSignin.getCurrentUser());
       const result = await GoogleSignin.getCurrentUser();
       if (result) {
         await GoogleSignin.revokeAccess();
@@ -190,10 +187,8 @@ const Login = ({}: UniversalProps) => {
         userInfo?.user.givenName,
         userInfo?.user?.name
       );
-      console.log("userInfo", userInfo);
       // dispatch(googleSignIn(data));
     } catch (error) {
-      console.log(error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -220,13 +215,18 @@ const Login = ({}: UniversalProps) => {
         const currentProfile1 = Profile.getCurrentProfile().then(function (
           currentProfile
         ) {
-          console.log("currentProfile--", currentProfile);
-          if (currentProfile?.email) {
-            onRegisterUser(
-              currentProfile.email,
-              currentProfile.firstName,
-              currentProfile.name
-            );
+          if (currentProfile) {
+            if (currentProfile?.email) {
+              onRegisterUser(
+                currentProfile.email,
+                currentProfile.firstName,
+                currentProfile.name
+              );
+            } else {
+              onRegisterUser("", currentProfile.firstName, currentProfile.name);
+            }
+          } else {
+            dispatchErrorAction(dispatch, "Please try again");
           }
         });
       } else {
@@ -247,20 +247,14 @@ const Login = ({}: UniversalProps) => {
       (error, result) => {
         if (error) {
         } else {
-          if (result.isCancelled) {
-          }
-          if (result.email === undefined) {
-            Alert.alert(
-              strings("validationString.error"),
-              strings("validationString.to_continuw_myapp_please_allow_email"),
-              strings("validationString.ok")
-            );
-          } else {
-            console.log("currentProfile--", result);
+          if (result) {
             if (result?.email) {
               onRegisterUser(result.email, result.first_name, result.name);
+            } else {
+              onRegisterUser("", result?.first_name, result?.name);
             }
-            // onFacebookLogin(result.name, result.email, result.id);
+          } else {
+            dispatchErrorAction(dispatch, "Please try again");
           }
         }
       }
@@ -290,17 +284,17 @@ const Login = ({}: UniversalProps) => {
       const { email, email_verified, is_private_email, sub } = jwt_decode(
         appleAuthRequestResponse.identityToken
       );
-      console.log(email, email_verified, is_private_email, sub);
       var str = email;
       str = str.split("@");
       onRegisterUser(email, email, str[0]);
-
-      console.log("appleCredential--", identityToken);
     }
   };
   if (preLoader == false) {
     return (
-      <KeyboardAwareScrollView style={ApplicationStyles.container}>
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="handled"
+        style={ApplicationStyles.container}
+      >
         <View style={ApplicationStyles.innerContainer}>
           <Image style={styles.image} source={icons.brainCalImage} />
           <View>

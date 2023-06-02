@@ -142,7 +142,6 @@ export default function (state = initialState, action: any) {
       return { ...state, questions: action.payload, preLoader: false };
     }
     case ON_SELECT_ANS: {
-      console.log(action.payload);
       let questions = Object.assign({}, state.questions);
       questions.questions[action.payload.index].selected_answer_index =
         action.payload.optionIndex;
@@ -152,7 +151,6 @@ export default function (state = initialState, action: any) {
       return { ...state, myPlan: action.payload, preLoader: false };
     }
     case SET_TIMER_COUNTDOWN: {
-      console.log("here---", action.payload);
       return {
         ...state,
         runTimer: action.payload.runTimer,

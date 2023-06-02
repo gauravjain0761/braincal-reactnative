@@ -22,6 +22,7 @@ import {
 import CommonButton from "./CommonButton";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { getMyPlan, subscribePlan } from "../actions";
+import { api } from "../helper/ApiConstants";
 
 interface Props {
   isVisible: boolean;
@@ -40,7 +41,6 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
   const { user } = useAppSelector((state) => state.common);
 
   React.useEffect(() => {
-    console.log("hereee");
     RNIap.initConnection().then(() => {
       RNIap.getProducts({ skus: itemSkus })
         .then((res) => {
@@ -57,7 +57,6 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
       console.log("purchase===>>", purchase);
       const receipt = purchase.transactionReceipt;
       if (receipt) {
-        console.log("receipt==>", receipt);
         onPurchasePlan(purchase);
       }
     });
@@ -73,14 +72,19 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
   const onPressBuy = () => {
     onClose();
     // setTimeout(() => {
-    RNIap.requestPurchase({ skus: [products[0].productId] });
+
+    let skus =
+      Platform.OS == "ios"
+        ? { sku: ["com.prod.consumable1"] }
+        : { skus: [products[0].productId] };
+    RNIap.requestPurchase(skus);
     // }, 3000);
   };
   const onPurchasePlan = (purchase: any) => {
     let obj = {
       signature: Platform.OS == "android" ? purchase.signatureAndroid : "",
       userid: user.id,
-      hash: "EB46F14D6E44B1472AA818248116FF65",
+      hash: api.hash,
       device_type: Platform.OS == "android" ? "ANDROID" : "IOS",
       transaction_id: purchase.transactionId,
       product_id: purchase.productId,
@@ -91,11 +95,10 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
       type: "subscribe/plan",
       params: obj,
       onSuccess: (res: any) => {
-        console.log("res-", res);
         if (res.success == true) {
           let obj = {
             userid: user.id,
-            hash: "EB46F14D6E44B1472AA818248116FF65",
+            hash: api.hash,
           };
           let request = {
             type: "plan/details",
@@ -177,5 +180,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.skyBlue1,
     width: "80%",
     alignSelf: "center",
+    marginBottom: hp(3),
   },
 });

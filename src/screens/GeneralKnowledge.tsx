@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Alert,
+  AppState,
   BackHandler,
   Dimensions,
   Image,
@@ -21,12 +21,9 @@ import PagerView from "react-native-pager-view";
 import { colors } from "../theme/Colors";
 import RenderHtml from "react-native-render-html";
 import { commonFont } from "../theme/Fonts";
-import ReactNativeModal from "react-native-modal";
-import { dispatchErrorAction } from "../helper/Global";
 import { icons } from "../helper/IconConstant";
-import BackgroundTimer from "react-native-background-timer";
 import CommonAlert from "../components/CommonAlert";
-
+var time = new Date();
 const GeneralKnowledge = ({ route }: UniversalProps) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -35,41 +32,75 @@ const GeneralKnowledge = ({ route }: UniversalProps) => {
   const [runTimer, setRunTimer] = React.useState(false);
   const question = useAppSelector((e) => e.common.questions);
   const togglerTimer = () => setRunTimer((t) => !t);
-  const [selectedQue, setSelectedQue] = React.useState(29);
-  const [initialPage, setInitialPage] = React.useState(29);
+  const [selectedQue, setSelectedQue] = React.useState(0);
+  const [initialPage, setInitialPage] = React.useState(0);
   const viewPager = useRef(null);
   const [startUpModal, setStartUpModal] = useState(false);
   const [leavingModal, setleavingModal] = useState(false);
   const [expireModal, setExpireModal] = useState(false);
   const [withouAnswerModal, setWithouAnswerModal] = useState(false);
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [backSec, setbackSec] = useState(new Date());
 
   useEffect(() => {
-    if (runTimer) {
-      setCountDown(60 * 0.1), startTimer();
-    } else BackgroundTimer.stopBackgroundTimer();
-    return () => {
-      BackgroundTimer.stopBackgroundTimer();
-    };
-  }, [runTimer]);
-
-  const startTimer = () => {
-    BackgroundTimer.runBackgroundTimer(() => {
-      setCountDown((secs) => {
-        if (secs > 0) return secs - 1;
-        else return 0;
-      });
-    }, 1000);
-  };
-
-  useEffect(() => {
-    if (countDown === 0) {
-      if (runTimer == true) {
-        setExpireModal(true);
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        if (runTimer == true && countDown !== 0) {
+          setCountDown(
+            countDown - Math.round(Math.abs(time - new Date()) / 1000)
+          );
+        }
       }
-      setRunTimer(false);
-      BackgroundTimer.stopBackgroundTimer();
-    }
+
+      if (nextAppState == "background") {
+        time = new Date();
+      }
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
   }, [countDown]);
+
+  // console.log(
+  //   countDown,
+  //   String(Math.floor(countDown / 60)).padStart(1, 0) +
+  //     "m " +
+  //     String(countDown % 60).padStart(2, 0) +
+  //     "s"
+  // );
+
+  // useEffect(() => {
+  //   if (runTimer) {
+  //     setCountDown(60 * Number(question.q_time)), startTimer();
+  //   } else BackgroundTimer.stopBackgroundTimer();
+  //   return () => {
+  //     BackgroundTimer.stopBackgroundTimer();
+  //   };
+  // }, [runTimer]);
+  // const startTimer = () => {
+  //   BackgroundTimer.runBackgroundTimer(() => {
+  //     setCountDown((secs) => {
+  //       if (secs > 0) return secs - 1;
+  //       else return 0;
+  //     });
+  //   }, 1000);
+  // };
+  // useEffect(() => {
+  //   if (countDown === 0) {
+  //     if (runTimer == true) {
+  //       setExpireModal(true);
+  //     }
+  //     setRunTimer(false);
+  //     BackgroundTimer.stopBackgroundTimer();
+  //   }
+  // }, [countDown]);
 
   useEffect(() => {
     const backAction = () => {
@@ -83,26 +114,25 @@ const GeneralKnowledge = ({ route }: UniversalProps) => {
     return () => backHandler.remove();
   }, [navigation, runTimer]);
 
-  // useEffect(() => {
-  //   let timerId;
-  //   if (runTimer) {
-  //     setCountDown(60 * Number(question.q_time));
-  //     timerId = setInterval(() => {
-  //       setCountDown((countDown) => countDown - 1);
-  //     }, 1000);
-  //   } else {
-  //     clearInterval(timerId);
-  //   }
-  //   return () => clearInterval(timerId);
-  // }, [runTimer]);
-
-  // useEffect(() => {
-  //   if (countDown < 0 && runTimer) {
-  //     console.log("expired");
-  //     setRunTimer(false);
-  //     setCountDown(0);
-  //   }
-  // }, [countDown, runTimer]);
+  useEffect(() => {
+    let timerId;
+    if (runTimer) {
+      setCountDown(60 * Number(question.q_time));
+      timerId = setInterval(() => {
+        setCountDown((countDown) => countDown - 1);
+      }, 1000);
+    } else {
+      clearInterval(timerId);
+    }
+    return () => clearInterval(timerId);
+  }, [runTimer]);
+  useEffect(() => {
+    if (countDown < 0 && runTimer) {
+      setExpireModal(true);
+      setRunTimer(false);
+      setCountDown(0);
+    }
+  }, [countDown, runTimer]);
 
   const backPress = () => {
     if (runTimer == true) {

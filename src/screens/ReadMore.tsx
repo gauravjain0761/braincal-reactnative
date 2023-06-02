@@ -41,7 +41,6 @@ const ReadMore = ({ navigation }: UniversalProps) => {
   const [AnswerShow, setAnswerShow] = useState(false);
   const favouritesId = useAppSelector((e) => e.common.favouritesId);
   const { width } = useWindowDimensions();
-  console.log("READ_MORE_DATA---------", READ_MORE_DATA.content.rendered);
   useEffect(() => {
     // navigation.setOptions({
     //   headerTitle: () => (

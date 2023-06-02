@@ -60,7 +60,6 @@ const VerifyOtp = ({ route }: UniversalProps) => {
     startOtpListener((message) => {
       // extract the otp using regex e.g. the below regex extracts 4 digit otp from message
       const otp = /(\d{6})/g.exec(message)[1];
-      console.log(otp);
     });
     return () => removeListener();
   }, []);

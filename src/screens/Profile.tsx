@@ -34,7 +34,7 @@ const Profile = ({ navigation }: UniversalProps) => {
   }, [isFocused]);
 
   const onPressUpdate = async () => {
-    if (mobile.trim().length !== 0 && mobile.trim().length == 10) {
+    if (mobile.trim().length !== 0) {
       dispatch({ type: PRE_LOADER, payload: true });
       const cookie = await getToken();
       let data = {
@@ -62,7 +62,10 @@ const Profile = ({ navigation }: UniversalProps) => {
   };
 
   return (
-    <KeyboardAwareScrollView style={ApplicationStyles.container}>
+    <KeyboardAwareScrollView
+      keyboardShouldPersistTaps="handled"
+      style={ApplicationStyles.container}
+    >
       <View style={ApplicationStyles.innerContainer}>
         <View style={{ height: hp(2) }} />
         <Input

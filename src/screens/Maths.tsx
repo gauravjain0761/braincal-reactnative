@@ -20,6 +20,7 @@ import {
 } from "@react-navigation/native";
 import { getMyPlan } from "../actions";
 import SubscribeModal from "../components/SubscribeModal";
+import { api } from "../helper/ApiConstants";
 
 const Maths = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();
@@ -32,7 +33,7 @@ const Maths = ({}: UniversalProps) => {
     if (isFocused == true) {
       let obj = {
         userid: user.id,
-        hash: "EB46F14D6E44B1472AA818248116FF65",
+        hash: api.hash,
       };
       let request = {
         type: "plan/details",

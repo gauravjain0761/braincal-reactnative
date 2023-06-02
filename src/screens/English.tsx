@@ -9,6 +9,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import SubscribeModal from "../components/SubscribeModal";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { getMyPlan } from "../actions";
+import { api } from "../helper/ApiConstants";
 
 const English = ({}: UniversalProps) => {
   const navigation = useNavigation();
@@ -21,7 +22,7 @@ const English = ({}: UniversalProps) => {
     if (isFocused == true) {
       let obj = {
         userid: user.id,
-        hash: "EB46F14D6E44B1472AA818248116FF65",
+        hash: api.hash,
       };
       let request = {
         type: "plan/details",

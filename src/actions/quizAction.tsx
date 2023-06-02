@@ -20,13 +20,7 @@ export const getQuiz =
     })
       .then(async (response: any) => {
         if (response.status === 200) {
-          console.log(response);
           dispatch({ type: PRE_LOADER, payload: false });
-          //   let obj = {
-          //     data: response.data,
-          //     page: request.params.page,
-          //   };
-          //   dispatch({ type: SET_LEVEL_DATA, payload: obj });
           if (request.onSuccess) request.onSuccess(response.data);
         }
       })
@@ -46,8 +40,6 @@ export const getQuestions =
     })
       .then(async (response: any) => {
         if (response.status === 200) {
-          console.log(response);
-
           dispatch({ type: SET_QUESTIONS, payload: response.data });
           if (request.onSuccess) request.onSuccess(response.data);
         }
