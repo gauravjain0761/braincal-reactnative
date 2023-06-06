@@ -1,6 +1,7 @@
 import {
   ADD_FAVOURITE,
   FAVOURITES_ID,
+  LOGOUT,
   ON_SELECT_ANS,
   PRE_LOADER,
   REMOVE_FAVOURITE,
@@ -157,6 +158,9 @@ export default function (state = initialState, action: any) {
         countDown: action.payload.countDown,
         preLoader: false,
       };
+    }
+    case LOGOUT: {
+      return initialState;
     }
     default:
       return state;

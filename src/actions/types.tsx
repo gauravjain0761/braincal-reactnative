@@ -14,3 +14,4 @@ export const SET_QUESTIONS = "SET_QUESTIONS";
 export const ON_SELECT_ANS = "ON_SELECT_ANS";
 export const SET_MY_PLAN = "SET_MY_PLAN";
 export const SET_TIMER_COUNTDOWN = "SET_TIMER_COUNTDOWN";
+export const LOGOUT = "LOGOUT";

@@ -53,7 +53,9 @@ const Profile = ({ navigation }: UniversalProps) => {
             dispatchErrorAction(dispatch, res?.error);
           }
         },
-        onFail: () => {},
+        onFail: (err: any) => {
+          console.log("here--", err);
+        },
       };
       dispatch(updateUser(request));
     } else {

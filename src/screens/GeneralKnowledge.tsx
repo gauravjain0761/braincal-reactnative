@@ -397,6 +397,7 @@ const styles = StyleSheet.create({
   },
   titleText2: {
     ...commonFont(400, 18, colors.black),
+    marginTop: hp(2),
   },
   titleMOdal2: {
     ...commonFont(700, 20, colors.black),

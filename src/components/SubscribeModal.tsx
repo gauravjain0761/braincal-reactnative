@@ -83,7 +83,11 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
   };
   const onPurchasePlan = (purchase: any) => {
     let obj = {
-      signature: Platform.OS == "android" ? purchase.signatureAndroid : "",
+      // signature: Platform.OS == "android" ? purchase.signatureAndroid : "",
+      signature:
+        Platform.OS == "android"
+          ? purchase.signatureAndroid
+          : `ath2oLxCxo42MHlXPYEynFTvNGUqCTGyYNLCdq7HcTZY3qY+4xNUzymRrGRxSATyhfKh7WIKsj3WIMEEUMTm7S+dUw2/kj/FILV7nkJir/9C2ImqMRd+KAP4Pk+jqHVvNv01NiTxTOW/vc6sZNKte9Dnv/sE8+8ceAUqSbrhWxWM0UJbXtNYFYNAusz5Tt9WuEP5HkOENWE4ZPEq+t4/SzWxqoq1JeXLiktbBNEYbnzzmwyTe/4VO7SVOnJhe9zl45vcostw2Kp0tHEiPmriSF1Lqzj15np2i1WgD3gPG3ArjlQwYKoPDUM//b/BoBRULOX0ujTPsdYrDIHqAVPGzg==`,
       userid: user.id,
       hash: api.hash,
       device_type: Platform.OS == "android" ? "ANDROID" : "IOS",

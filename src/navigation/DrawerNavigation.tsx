@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import {
   DrawerContentScrollView,
   createDrawerNavigator,
@@ -22,6 +22,7 @@ import Feedback from "../screens/Feedback";
 import { clearAsync } from "../helper/Global";
 import Profile from "../screens/Profile";
 import Favourites from "../screens/Favourites";
+import { LOGOUT } from "../actions/types";
 
 export type RootDrawerParamList = {
   Home: undefined;
@@ -99,9 +100,11 @@ let DrawerItemArray = [
 function CustomDrawerContent(props: any) {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.common);
+  const _TOAST = useAppSelector((e) => e.common.toast);
 
   const onLogout = async () => {
     clearAsync();
+    dispatch({ type: LOGOUT, payload: {} });
     props.navigation.dispatch(
       CommonActions.reset({
         index: 1,
@@ -109,6 +112,14 @@ function CustomDrawerContent(props: any) {
       })
     );
   };
+
+  useEffect(() => {
+    if (
+      _TOAST.message == "Seems your session is expired. Please login again."
+    ) {
+      onLogout();
+    }
+  }, [_TOAST]);
 
   return (
     <DrawerContentScrollView
@@ -121,7 +132,9 @@ function CustomDrawerContent(props: any) {
     >
       <View style={styles.drawerMain}>
         <Text style={styles.titleDrawer}>Welcome</Text>
-        <Text style={styles.nameTextStyle}>{user?.firstname}</Text>
+        <Text style={styles.nameTextStyle}>
+          {user?.firstname + " " + user?.lastname}
+        </Text>
         {DrawerItemArray.map((item, index) => {
           return (
             <TouchableOpacity

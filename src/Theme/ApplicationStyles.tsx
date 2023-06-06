@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { hp } from "../helper/Constants";
 import { colors } from "./Colors";
+import { commonFont } from "./Fonts";
 
 export const ApplicationStyles = StyleSheet.create({
   container: {
@@ -39,5 +40,15 @@ export const ApplicationStyles = StyleSheet.create({
     height: 18,
     width: 18,
     resizeMode: "contain",
+  },
+  noDataText: {
+    ...commonFont(500, 20, colors.darkBlue),
+    textAlign: "center",
+    // marginTop: hp(10),
+  },
+  nodataView: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

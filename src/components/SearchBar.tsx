@@ -44,9 +44,10 @@ const SearchBar: FC<Props> = ({ value, onChangeText, onPressClose }) => {
 
 const styles = StyleSheet.create({
   con: {
-    padding: hp(1),
+    padding: hp(1.2),
     borderBottomWidth: 1,
     borderBottomColor: colors.grey,
+    // backgroundColor: "red",
   },
   container: {
     flexDirection: "row",
@@ -58,11 +59,14 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
 
-    elevation: 2,
-    // borderWidth: 1,
+    elevation: 9,
+    // bordesrWidth: 10,
+    // borderColor: colors.red,
+    backgroundColor: colors.white,
+    borderRadius: 10,
   },
   iconStyle: {
     height: wp(5),

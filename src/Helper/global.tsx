@@ -26,6 +26,7 @@ export const makeAPIRequest = ({ method, url, data, headers, params }: props) =>
     };
     axios(option)
       .then((response) => {
+        console.log("response--", response);
         if (response.status === 200) {
           resolve(response);
         } else {
@@ -33,13 +34,6 @@ export const makeAPIRequest = ({ method, url, data, headers, params }: props) =>
         }
       })
       .catch((error) => {
-        if (error?.response?.status === 401) {
-          //   clearAsync();
-          //   navigationRef.current.reset({
-          //     index: 1,
-          //     routes: [{ name: "Login" }],
-          //   });
-        }
         reject(error);
       });
   });
@@ -50,9 +44,7 @@ export const clearAsync = async () => {
 
 export const dispatchErrorAction = (dispatch: any, message: string) => {
   dispatch({ type: PRE_LOADER, payload: false });
-  // Alert.alert("Error", message, [
-  //   { text: "OK", onPress: () => console.log("OK Pressed") },
-  // ]);
+
   dispatch({
     type: "TOAST",
     payload: {
@@ -64,9 +56,7 @@ export const dispatchErrorAction = (dispatch: any, message: string) => {
 
 export const dispatchSuccessAction = (dispatch: any, message: string) => {
   dispatch({ type: PRE_LOADER, payload: false });
-  // Alert.alert("Success", message, [
-  //   { text: "OK", onPress: () => console.log("OK Pressed") },
-  // ]);
+
   dispatch({
     type: "TOAST",
     payload: {
@@ -100,4 +90,18 @@ export const getUserInfo = async () => {
   } else {
     return null;
   }
+};
+
+export const checkSession = (dispatch: any, error: any, onFail: any) => {
+  dispatch({ type: PRE_LOADER, payload: false });
+  if (error?.response?.data?.error == "session_expired") {
+    dispatchErrorAction(
+      dispatch,
+      "Seems your session is expired. Please login again."
+    );
+    console.log("session_expired");
+  } else if (error?.response?.data?.code == "rest_post_invalid_page_number") {
+    console.log("rest_post_invalid_page_number");
+  }
+  if (onFail) onFail(error.response.data.error);
 };

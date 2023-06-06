@@ -109,7 +109,7 @@ const Favourites = ({ navigation }: UniversalProps) => {
       style={[
         ApplicationStyles.container,
         ApplicationStyles.container2,
-        { marginTop: hp(3) },
+        { paddingTop: hp(3) },
       ]}
     >
       <FlatList
@@ -128,6 +128,13 @@ const Favourites = ({ navigation }: UniversalProps) => {
             return null;
           }
         }}
+        ListEmptyComponent={() => (
+          <View style={ApplicationStyles.nodataView}>
+            <Text style={[ApplicationStyles.noDataText, { marginTop: -hp(3) }]}>
+              No favourites yet!
+            </Text>
+          </View>
+        )}
         keyExtractor={(item, index) => index.toString()}
       />
     </View>
