@@ -188,31 +188,31 @@ const Navigation: FC = () => {
             headerTintColor: colors.white,
             title: "",
             headerTitle: "",
-            headerRight: () => (
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                }}
-                onPress={() => {
-                  navigation.dispatch(
-                    CommonActions.reset({
-                      index: 1,
-                      routes: [{ name: "Dashboard" }],
-                    })
-                  );
-                }}
-              >
-                <Text
-                  style={{
-                    paddingHorizontal: hp(2),
-                    ...commonFont(600, 16, colors.white),
-                  }}
-                >
-                  END
-                </Text>
-              </TouchableOpacity>
-            ),
+            // headerRight: () => (
+            //   <TouchableOpacity
+            //     style={{
+            //       flex: 1,
+            //       justifyContent: "center",
+            //     }}
+            //     onPress={() => {
+            //       navigation.dispatch(
+            //         CommonActions.reset({
+            //           index: 1,
+            //           routes: [{ name: "Dashboard" }],
+            //         })
+            //       );
+            //     }}
+            //   >
+            //     <Text
+            //       style={{
+            //         paddingHorizontal: hp(2),
+            //         ...commonFont(600, 16, colors.white),
+            //       }}
+            //     >
+            //       END
+            //     </Text>
+            //   </TouchableOpacity>
+            // ),
             headerRightContainerStyle: {
               flex: 1,
             },

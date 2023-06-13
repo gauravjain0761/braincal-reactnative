@@ -7,12 +7,17 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
 import { hp } from "../helper/Constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import {
+  CommonActions,
+  useIsFocused,
+  useNavigation,
+} from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../redux/Hooks";
 import { colors } from "../theme/Colors";
@@ -29,6 +34,35 @@ const QuizAnswer = ({ route }: UniversalProps) => {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: route.params.heading,
+      headerRight: () => (
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            justifyContent: "center",
+          }}
+          onPress={() => {
+            if (route.params.heading == "General Knowledge") {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{ name: "Dashboard" }],
+                })
+              );
+            } else {
+              navigation.pop(2);
+            }
+          }}
+        >
+          <Text
+            style={{
+              paddingHorizontal: hp(2),
+              ...commonFont(600, 16, colors.white),
+            }}
+          >
+            END
+          </Text>
+        </TouchableOpacity>
+      ),
     });
     let score = 0;
     question.questions.forEach((element) => {

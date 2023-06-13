@@ -14,7 +14,11 @@ import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { getMathTricks, searchPosts, serachPosts } from "../actions";
 import TricksRow from "../components/TricksRow";
-import { PRE_LOADER, SET_SEARCH_POSTS } from "../actions/types";
+import {
+  PRE_LOADER,
+  SET_SEARCH_POSTS,
+  SET_TRICKS_DATA,
+} from "../actions/types";
 import { colors } from "../theme/Colors";
 import SearchBar from "../components/SearchBar";
 import SearchItemView from "../components/SearchItemView";
@@ -34,10 +38,16 @@ const MathTricks = ({ navigation }: UniversalProps) => {
   useEffect(() => {
     // dispatch({ type: PRE_LOADER, payload: true });
     if (isFocused == true) {
-      dispatch({ type: PRE_LOADER, payload: true });
       dispatch({ type: SET_SEARCH_POSTS, payload: [] });
+      let obj1 = {
+        data: [],
+        page: 1,
+      };
+      dispatch({ type: SET_TRICKS_DATA, payload: obj1 });
+      dispatch({ type: PRE_LOADER, payload: true });
+
       let obj = {
-        params: { page: page },
+        params: { page: 1 },
         onSuccess: () => {
           setPage(page + 1);
         },

@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { sendFeedback } from "../actions";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import CommonButton from "../components/CommonButton";
+import { dispatchErrorAction, dispatchSuccessAction } from "../helper/Global";
 
 const Feedback = ({ navigation }: UniversalProps) => {
   const dispatch = useAppDispatch();
@@ -26,22 +27,37 @@ const Feedback = ({ navigation }: UniversalProps) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      setName("");
       setMessage("");
     }, [])
   );
 
   const onPressSend = () => {
-    let obj = {
-      name: name,
-      message: message,
-      mobile: user?.mobile,
-    };
-    let request = {
-      data: obj,
-      onSuccess: () => goBack(),
-      onFail: () => {},
-    };
-    dispatch(sendFeedback(request));
+    if (name.trim().length !== 0) {
+      if (message.trim().length !== 0) {
+        let obj = {
+          name: name,
+          message: message,
+          mobile: user?.mobile,
+        };
+        let request = {
+          data: obj,
+          onSuccess: () => {
+            dispatchSuccessAction(
+              dispatch,
+              "Thank you for your valuable feedback."
+            );
+            goBack();
+          },
+          onFail: () => {},
+        };
+        dispatch(sendFeedback(request));
+      } else {
+        dispatchErrorAction(dispatch, "Please enter message.");
+      }
+    } else {
+      dispatchErrorAction(dispatch, "Please enter name.");
+    }
   };
 
   return (
@@ -65,7 +81,7 @@ const Feedback = ({ navigation }: UniversalProps) => {
           />
         </View>
         <CommonButton
-          disabled={name?.length && message.length ? false : true}
+          // disabled={name?.length && message.length ? false : true}
           title={"SEND"}
           onPress={onPressSend}
           style={{
