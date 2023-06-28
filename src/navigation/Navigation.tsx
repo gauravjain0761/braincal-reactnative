@@ -1,12 +1,11 @@
 import React, { FC } from "react";
-import { CommonActions, NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   StackCardInterpolationProps,
   createStackNavigator,
 } from "@react-navigation/stack";
-import { Animated, Image, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Image, TouchableOpacity, View } from "react-native";
 import Login from "../screens/auth/Login";
-import SelectLocation from "../screens/auth/SelectLocation";
 import VerifyOtp from "../screens/auth/VerifyOtp";
 import { colors } from "../theme/Colors";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
@@ -19,8 +18,6 @@ import LanguageListData from "../screens/LanguageListData";
 import QuizAnswer from "../screens/QuizAnswer";
 import SplashScreen from "../screens/auth/SplashScreen";
 import GeneralKnowledge from "../screens/GeneralKnowledge";
-import { hp } from "../helper/Constants";
-import { commonFont } from "../theme/Fonts";
 
 export type RootStackParamList = {
   SplashScreen: undefined;
@@ -188,31 +185,6 @@ const Navigation: FC = () => {
             headerTintColor: colors.white,
             title: "",
             headerTitle: "",
-            // headerRight: () => (
-            //   <TouchableOpacity
-            //     style={{
-            //       flex: 1,
-            //       justifyContent: "center",
-            //     }}
-            //     onPress={() => {
-            //       navigation.dispatch(
-            //         CommonActions.reset({
-            //           index: 1,
-            //           routes: [{ name: "Dashboard" }],
-            //         })
-            //       );
-            //     }}
-            //   >
-            //     <Text
-            //       style={{
-            //         paddingHorizontal: hp(2),
-            //         ...commonFont(600, 16, colors.white),
-            //       }}
-            //     >
-            //       END
-            //     </Text>
-            //   </TouchableOpacity>
-            // ),
             headerRightContainerStyle: {
               flex: 1,
             },

@@ -68,40 +68,6 @@ const GeneralKnowledge = ({ route }: UniversalProps) => {
     };
   }, [countDown]);
 
-  // console.log(
-  //   countDown,
-  //   String(Math.floor(countDown / 60)).padStart(1, 0) +
-  //     "m " +
-  //     String(countDown % 60).padStart(2, 0) +
-  //     "s"
-  // );
-
-  // useEffect(() => {
-  //   if (runTimer) {
-  //     setCountDown(60 * Number(question.q_time)), startTimer();
-  //   } else BackgroundTimer.stopBackgroundTimer();
-  //   return () => {
-  //     BackgroundTimer.stopBackgroundTimer();
-  //   };
-  // }, [runTimer]);
-  // const startTimer = () => {
-  //   BackgroundTimer.runBackgroundTimer(() => {
-  //     setCountDown((secs) => {
-  //       if (secs > 0) return secs - 1;
-  //       else return 0;
-  //     });
-  //   }, 1000);
-  // };
-  // useEffect(() => {
-  //   if (countDown === 0) {
-  //     if (runTimer == true) {
-  //       setExpireModal(true);
-  //     }
-  //     setRunTimer(false);
-  //     BackgroundTimer.stopBackgroundTimer();
-  //   }
-  // }, [countDown]);
-
   useEffect(() => {
     const backAction = () => {
       backPress();
@@ -138,7 +104,11 @@ const GeneralKnowledge = ({ route }: UniversalProps) => {
     if (runTimer == true) {
       setleavingModal(true);
     } else {
-      navigation.navigate("Home");
+      if (route?.params) {
+        navigation.goBack();
+      } else {
+        navigation.navigate("Home");
+      }
     }
   };
 
@@ -363,7 +333,13 @@ const GeneralKnowledge = ({ route }: UniversalProps) => {
       <CommonAlert
         isVisible={leavingModal}
         onSuccess={() => {
-          navigation.navigate("Home"), setRunTimer(false);
+          if (route?.params) {
+            navigation.goBack();
+          } else {
+            navigation.navigate("Home");
+          }
+
+          setRunTimer(false);
           setleavingModal(false);
         }}
         onCancel={() => setleavingModal(false)}

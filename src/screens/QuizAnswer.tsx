@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Alert,
-  BackHandler,
   Dimensions,
   Image,
   ScrollView,
@@ -23,6 +21,7 @@ import { useAppSelector } from "../redux/Hooks";
 import { colors } from "../theme/Colors";
 import RenderHtml from "react-native-render-html";
 import { commonFont } from "../theme/Fonts";
+import { icons } from "../helper/IconConstant";
 
 const QuizAnswer = ({ route }: UniversalProps) => {
   const navigation = useNavigation();
@@ -61,6 +60,28 @@ const QuizAnswer = ({ route }: UniversalProps) => {
           >
             END
           </Text>
+        </TouchableOpacity>
+      ),
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => {
+            if (route.params.heading == "General Knowledge") {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 1,
+                  routes: [{ name: "Dashboard" }],
+                })
+              );
+            } else {
+              navigation.pop(2);
+            }
+          }}
+          style={ApplicationStyles.headerLeftView}
+        >
+          <Image
+            source={icons.backArrow}
+            style={[ApplicationStyles.backBtn, { tintColor: colors.white }]}
+          />
         </TouchableOpacity>
       ),
     });
