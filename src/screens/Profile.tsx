@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import Input from "../components/Input";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -11,7 +11,7 @@ import {
   dispatchErrorAction,
   getToken,
   setUserInfoAsync,
-} from "../helper/Global";
+} from "../helper/global";
 import { setUserInfo, updateUser } from "../actions";
 import { PRE_LOADER } from "../actions/types";
 import { useIsFocused } from "@react-navigation/native";

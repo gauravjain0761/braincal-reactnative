@@ -4,7 +4,7 @@ import Carousel from "react-native-snap-carousel";
 
 import { colors } from "../theme/Colors";
 import { commonFont } from "../theme/Fonts";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { UniversalProps } from "../navigation/NavigationTypes";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 

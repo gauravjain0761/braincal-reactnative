@@ -11,7 +11,7 @@ import {
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { SCREEN_WIDTH, commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Colors";
-import { hp } from "../../helper/Constants";
+import { hp } from "../../helper/constants";
 import {
   CodeField,
   Cursor,
@@ -24,7 +24,7 @@ import {
   dispatchSuccessAction,
   setToken,
   setUserInfoAsync,
-} from "../../helper/Global";
+} from "../../helper/global";
 import { setUserInfo, userLogin } from "../../actions";
 import { RootStackParamList } from "../../navigation/Navigation";
 import { StackNavigationProp } from "@react-navigation/stack";

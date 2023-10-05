@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import { colors } from "../theme/Colors";
-import { wp } from "../helper/Constants";
+import { wp } from "../helper/constants";
 
 interface Props {
   title?: String;

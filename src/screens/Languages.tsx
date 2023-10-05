@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import LevelsBlock from "../components/LevelsBlock";
 import { colors } from "../theme/Colors";

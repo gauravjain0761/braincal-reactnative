@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { colors } from "../theme/Colors";
 import { commonFont } from "../theme/Fonts";
@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { sendFeedback } from "../actions";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import CommonButton from "../components/CommonButton";
-import { dispatchErrorAction, dispatchSuccessAction } from "../helper/Global";
+import { dispatchErrorAction, dispatchSuccessAction } from "../helper/global";
 
 const Feedback = ({ navigation }: UniversalProps) => {
   const dispatch = useAppDispatch();

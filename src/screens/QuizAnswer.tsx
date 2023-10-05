@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp } from "../helper/Constants";
+import { hp } from "../helper/constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import {
   CommonActions,
@@ -21,7 +21,7 @@ import { useAppSelector } from "../redux/Hooks";
 import { colors } from "../theme/Colors";
 import RenderHtml from "react-native-render-html";
 import { commonFont } from "../theme/Fonts";
-import { icons } from "../helper/IconConstant";
+import { icons } from "../helper/iconConstant";
 
 const QuizAnswer = ({ route }: UniversalProps) => {
   const navigation = useNavigation();

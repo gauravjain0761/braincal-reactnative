@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { PRE_LOADER, SET_FAVOURITES_POSTS } from "../actions/types";

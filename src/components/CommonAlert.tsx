@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { UniversalProps } from "../navigation/NavigationTypes";
 import { colors } from "../theme/Colors";
 import { commonFont } from "../theme/Fonts";
-import { hp } from "../helper/Constants";
+import { hp } from "../helper/constants";
 import ReactNativeModal from "react-native-modal";
 interface Props {
   isVisible?: boolean;

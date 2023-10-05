@@ -14,7 +14,7 @@ function Main() {
     <Provider store={store}>
       <App />
     </Provider>
-  );
+  )
 }
 
 AppRegistry.registerComponent(appName, () => Main);

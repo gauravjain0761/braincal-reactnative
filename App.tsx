@@ -11,7 +11,7 @@ import Navigation from "./src/navigation/Navigation";
 import { colors } from "./src/theme/Colors";
 import SplashScreen from "react-native-splash-screen";
 import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
-import { hp } from "./src/helper/Constants";
+import { hp } from "./src/helper/constants";
 import { commonFont } from "./src/theme/Fonts";
 
 const App = () => {

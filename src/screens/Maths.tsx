@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import LevelsBlock from "../components/LevelsBlock";
 import { colors } from "../theme/Colors";
@@ -20,7 +20,7 @@ import {
 } from "@react-navigation/native";
 import { getMyPlan } from "../actions";
 import SubscribeModal from "../components/SubscribeModal";
-import { api } from "../helper/ApiConstants";
+import { api } from "../helper/apiConstants";
 
 const Maths = ({}: UniversalProps) => {
   const dispatch = useAppDispatch();

@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import React, { FC } from "react";
 import { Alert } from "react-native";
-import { api } from "./ApiConstants";
+import { api } from "./apiConstants";
 import { PRE_LOADER } from "../actions/types";
 export const navigationRef = React.createRef();
 

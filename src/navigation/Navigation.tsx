@@ -11,7 +11,7 @@ import { colors } from "../theme/Colors";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import OtpSuccess from "../screens/auth/OtpSuccess";
 import DrawerNavigation from "./DrawerNavigation";
-import { icons } from "../helper/IconConstant";
+import { icons } from "../helper/iconConstant";
 import ReadMore from "../screens/ReadMore";
 import LevelListData from "../screens/LevelListData";
 import LanguageListData from "../screens/LanguageListData";

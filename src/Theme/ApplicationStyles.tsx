@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { hp } from "../helper/Constants";
+import { hp } from "../helper/constants";
 import { colors } from "./Colors";
 import { commonFont } from "./Fonts";
 

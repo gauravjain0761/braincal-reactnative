@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { colors } from "../theme/Colors";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { commonFont } from "../theme/Fonts";
 
 interface Props {

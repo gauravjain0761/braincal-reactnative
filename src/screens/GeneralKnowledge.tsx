@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp } from "../helper/Constants";
+import { hp } from "../helper/constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
@@ -21,7 +21,7 @@ import PagerView from "react-native-pager-view";
 import { colors } from "../theme/Colors";
 import RenderHtml from "react-native-render-html";
 import { commonFont } from "../theme/Fonts";
-import { icons } from "../helper/IconConstant";
+import { icons } from "../helper/iconConstant";
 import CommonAlert from "../components/CommonAlert";
 var time = new Date();
 const GeneralKnowledge = ({ route }: UniversalProps) => {

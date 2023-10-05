@@ -20,14 +20,14 @@ import { UniversalProps } from "../navigation/NavigationTypes";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import { commonFont } from "../theme/Fonts";
-import { hp } from "../helper/Constants";
+import { hp } from "../helper/constants";
 import { colors } from "../theme/Colors";
-import { icons } from "../helper/IconConstant";
+import { icons } from "../helper/iconConstant";
 import {
   dispatchErrorAction,
   getToken,
   setUserInfoAsync,
-} from "../helper/Global";
+} from "../helper/global";
 import { setUserInfo, updateUser } from "../actions";
 import { ADD_FAVOURITE, REMOVE_FAVOURITE } from "../actions/types";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";

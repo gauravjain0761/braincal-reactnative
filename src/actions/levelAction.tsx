@@ -1,5 +1,5 @@
-import { api, GET, POST } from "../helper/ApiConstants";
-import { checkSession, makeAPIRequest } from "../helper/Global";
+import { api, GET, POST } from "../helper/apiConstants";
+import { checkSession, makeAPIRequest } from "../helper/global";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../redux";
 import { AnyAction } from "@reduxjs/toolkit";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { UniversalProps } from "../navigation/NavigationTypes";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
 import LevelsBlock from "../components/LevelsBlock";
 import { colors } from "../theme/Colors";
@@ -9,7 +9,7 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import SubscribeModal from "../components/SubscribeModal";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { getMyPlan } from "../actions";
-import { api } from "../helper/ApiConstants";
+import { api } from "../helper/apiConstants";
 
 const English = ({}: UniversalProps) => {
   const navigation = useNavigation();

@@ -18,15 +18,15 @@ import {
   SET_READ_MORE_DATA,
 } from "../actions/types";
 import { ApplicationStyles } from "../theme/ApplicationStyles";
-import { icons } from "../helper/IconConstant";
+import { icons } from "../helper/iconConstant";
 import { commonFont } from "../theme/Fonts";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { colors } from "../theme/Colors";
 import {
   dispatchErrorAction,
   getToken,
   setUserInfoAsync,
-} from "../helper/Global";
+} from "../helper/global";
 import { setUserInfo, updateUser } from "../actions";
 
 interface Props {

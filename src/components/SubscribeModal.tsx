@@ -10,9 +10,9 @@ import React, { FC, useState } from "react";
 import { UniversalProps } from "../navigation/NavigationTypes";
 import { colors } from "../theme/Colors";
 import { commonFont } from "../theme/Fonts";
-import { hp } from "../helper/Constants";
+import { hp } from "../helper/constants";
 import Modal from "react-native-modal";
-import { icons } from "../helper/IconConstant";
+import { icons } from "../helper/iconConstant";
 import * as RNIap from "react-native-iap";
 import {
   purchaseErrorListener,
@@ -22,7 +22,7 @@ import {
 import CommonButton from "./CommonButton";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { getMyPlan, subscribePlan } from "../actions";
-import { api } from "../helper/ApiConstants";
+import { api } from "../helper/apiConstants";
 
 interface Props {
   isVisible: boolean;

@@ -13,7 +13,7 @@ import { UniversalProps } from "../../navigation/NavigationTypes";
 import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { useAppDispatch, useAppSelector } from "../../redux/Hooks";
 import { CommonActions, useNavigation } from "@react-navigation/native";
-import { WEB_CLIENT_ID, hp } from "../../helper/Constants";
+import { WEB_CLIENT_ID, hp } from "../../helper/constants";
 import { commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Colors";
 import CountryPicker from "rn-country-picker";
@@ -29,9 +29,9 @@ import {
   getUserInfo,
   setToken,
   setUserInfoAsync,
-} from "../../helper/Global";
+} from "../../helper/global";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { icons } from "../../helper/IconConstant";
+import { icons } from "../../helper/iconConstant";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../navigation/Navigation";
 import jwt_decode from "jwt-decode";
@@ -55,7 +55,7 @@ import {
 } from "react-native-fbsdk-next";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { country } from "../../helper/CountryData";
-import { api } from "../../helper/ApiConstants";
+import { api } from "../../helper/apiConstants";
 
 interface container {
   title: String;

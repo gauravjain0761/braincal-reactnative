@@ -5,7 +5,7 @@ import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import CommonButton from "../../components/CommonButton";
 import { commonFont } from "../../theme/Fonts";
 import { colors } from "../../theme/Colors";
-import { hp } from "../../helper/Constants";
+import { hp } from "../../helper/constants";
 import Lottie from "lottie-react-native";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 

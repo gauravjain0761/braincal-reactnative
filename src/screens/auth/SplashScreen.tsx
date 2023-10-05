@@ -5,7 +5,7 @@ import { ApplicationStyles } from "../../theme/ApplicationStyles";
 import { useAppDispatch } from "../../redux/Hooks";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { setUserInfo } from "../../actions";
-import { getUserInfo } from "../../helper/Global";
+import { getUserInfo } from "../../helper/global";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SplashScreen = ({}: UniversalProps) => {

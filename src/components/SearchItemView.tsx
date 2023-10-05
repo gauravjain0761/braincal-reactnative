@@ -10,12 +10,12 @@ import {
 } from "react-native";
 
 import { colors } from "../theme/Colors";
-import { hp, wp } from "../helper/Constants";
+import { hp, wp } from "../helper/constants";
 import { commonFont } from "../theme/Fonts";
 import { SET_READ_MORE_DATA } from "../actions/types";
 import { useAppDispatch } from "../redux/Hooks";
 import { useNavigation } from "@react-navigation/native";
-import { icons } from "../helper/IconConstant";
+import { icons } from "../helper/iconConstant";
 import RenderHTML from "react-native-render-html";
 
 interface Props {

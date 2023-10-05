@@ -22,7 +22,7 @@ import {
 import { colors } from "../theme/Colors";
 import SearchBar from "../components/SearchBar";
 import SearchItemView from "../components/SearchItemView";
-import { hp } from "../helper/Constants";
+import { hp } from "../helper/constants";
 import { useIsFocused } from "@react-navigation/native";
 
 const MathTricks = ({ navigation }: UniversalProps) => {
