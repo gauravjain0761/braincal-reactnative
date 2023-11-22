@@ -64,7 +64,7 @@ interface container {
 }
 
 type LoginProp = StackNavigationProp<RootStackParamList, "Login">;
-const Login = ({}: UniversalProps) => {
+const Login = ({ }: UniversalProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<LoginProp>();
   const [mobileno, setMobileno] = useState("");
@@ -97,18 +97,25 @@ const Login = ({}: UniversalProps) => {
   };
 
   const loginApiCallback = (nonce: string) => {
+    let mobileTemp = ''
+    if (mobileno.charAt(0) == '0') {
+      mobileTemp = mobileno.substring(1)
+    } else {
+      mobileTemp = mobileno
+    }
     let login_data = {
-      mobile: mobileno,
+      mobile: mobileTemp,
       countryCode: "+" + countryCode,
       nonce: nonce,
     };
+
     let obj = {
       params: login_data,
       onSuccess: (res: any) => {
         if (res.status === "ok") {
           navigation.navigate("VerifyOtp", {
             otp_session: res?.otp_session,
-            mobileno: mobileno,
+            mobileno: mobileTemp,
             countryCode: "+" + countryCode,
             nonce: nonce,
           });
@@ -233,7 +240,7 @@ const Login = ({}: UniversalProps) => {
         const result1 = await AccessToken.getCurrentAccessToken();
         getInfoFromToken(result1.accessToken);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   const getInfoFromToken = (token: any) => {
     const PROFILE_REQUEST_PARAMS = {
