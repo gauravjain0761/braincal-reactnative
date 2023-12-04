@@ -9,6 +9,7 @@ export const icons = {
   gk: require("../assets/icons/gk.png"),
   maths: require("../assets/icons/maths.png"),
   profile: require("../assets/icons/profile.png"),
+  privacy: require('../assets/icons/privacy.png'),
   science: require("../assets/icons/science.png"),
   home: require("../assets/icons/home.png"),
   favouriteFilled: require("../assets/icons/favouriteFilled.png"),

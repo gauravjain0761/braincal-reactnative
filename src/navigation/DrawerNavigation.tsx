@@ -23,6 +23,7 @@ import { clearAsync } from "../helper/global";
 import Profile from "../screens/Profile";
 import Favourites from "../screens/Favourites";
 import { LOGOUT } from "../actions/types";
+import Privacy from "../screens/Privacy";
 
 export type RootDrawerParamList = {
   Home: undefined;
@@ -89,6 +90,11 @@ let DrawerItemArray = [
     label: "Feedback",
     image: icons.profile,
     screen: "Feedback",
+  },
+  {
+    label: "Privacy & Policy",
+    image: icons.privacy,
+    screen: "Privacy",
   },
   {
     label: "Logout",
@@ -231,6 +237,7 @@ const DrawerNavigation: FC = () => {
       />
       <Drawer.Screen name={"Favourites"} component={Favourites} />
       <Drawer.Screen name={"Feedback"} component={Feedback} />
+      <Drawer.Screen options={{ headerTitle: "Privacy & Policy" }} name={"Privacy"} component={Privacy} />
     </Drawer.Navigator>
   );
 };

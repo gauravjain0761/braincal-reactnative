@@ -22,7 +22,7 @@ import { getMyPlan } from "../actions";
 import SubscribeModal from "../components/SubscribeModal";
 import { api } from "../helper/apiConstants";
 
-const Maths = ({}: UniversalProps) => {
+const Maths = ({ }: UniversalProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
@@ -38,8 +38,8 @@ const Maths = ({}: UniversalProps) => {
       let request = {
         type: "plan/details",
         params: obj,
-        onSuccess: (res: any) => {},
-        onFail: (err: any) => {},
+        onSuccess: (res: any) => { },
+        onFail: (err: any) => { },
       };
       dispatch(getMyPlan(request));
     }
@@ -54,9 +54,15 @@ const Maths = ({}: UniversalProps) => {
   };
 
   const onPressTest = () => {
-    // setSubscribeModal(true);
+
+
+    // navigation.navigate("Quiz", {
+    //   id: 2,
+    //   quizName: "11+ Maths Marathon",
+    // });
+
+
     if (myPlan?.data?.is_plan_active) {
-      // setSubscribeModal(true);
       navigation.navigate("Quiz", {
         id: 2,
         quizName: "11+ Maths Marathon",

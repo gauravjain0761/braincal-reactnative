@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "../redux/Hooks";
 import { getMyPlan } from "../actions";
 import { api } from "../helper/apiConstants";
 
-const English = ({}: UniversalProps) => {
+const English = ({ }: UniversalProps) => {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const { user, myPlan } = useAppSelector((state) => state.common);
@@ -27,8 +27,8 @@ const English = ({}: UniversalProps) => {
       let request = {
         type: "plan/details",
         params: obj,
-        onSuccess: (res: any) => {},
-        onFail: (err: any) => {},
+        onSuccess: (res: any) => { },
+        onFail: (err: any) => { },
       };
       dispatch(getMyPlan(request));
     }
@@ -43,6 +43,12 @@ const English = ({}: UniversalProps) => {
   };
 
   const onPressTest = () => {
+
+    // navigation.navigate("Quiz", {
+    //   id: 1,
+    //   quizName: "11+ English Marathon",
+    // });
+
     if (myPlan?.data?.is_plan_active) {
       // setSubscribeModal(true);
       navigation.navigate("Quiz", {

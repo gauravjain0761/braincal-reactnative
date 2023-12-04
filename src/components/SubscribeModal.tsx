@@ -39,7 +39,7 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
   const [productsPrice, setProductsPrice] = useState("");
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.common);
-
+  console.log('products-----', products)
   React.useEffect(() => {
     RNIap.initConnection().then(() => {
       RNIap.getProducts({ skus: itemSkus })
@@ -108,8 +108,8 @@ const SubscribeModal: FC<Props> = ({ isVisible, onClose, onSuccess }) => {
           let request = {
             type: "plan/details",
             params: obj,
-            onSuccess: (res: any) => {},
-            onFail: (err: any) => {},
+            onSuccess: (res: any) => { },
+            onFail: (err: any) => { },
           };
           dispatch(getMyPlan(request));
           onSuccess();
