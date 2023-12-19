@@ -18,6 +18,7 @@ import LanguageListData from "../screens/LanguageListData";
 import QuizAnswer from "../screens/QuizAnswer";
 import SplashScreen from "../screens/auth/SplashScreen";
 import GeneralKnowledge from "../screens/GeneralKnowledge";
+import Privacy from "../screens/Privacy";
 
 export type RootStackParamList = {
   SplashScreen: undefined;
@@ -36,6 +37,7 @@ export type RootStackParamList = {
   LanguageListData: undefined;
   QuizAnswer: undefined;
   Quiz: undefined;
+  PrivacyPolicy: undefined
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -54,10 +56,10 @@ const cardStyleInterpolator: FC<StackCardInterpolationProps> = ({
     }),
     next
       ? next.progress.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0, 1],
-          extrapolate: "clamp",
-        })
+        inputRange: [0, 1],
+        outputRange: [0, 1],
+        extrapolate: "clamp",
+      })
       : 0
   );
 
@@ -209,6 +211,13 @@ const Navigation: FC = () => {
           name={"Dashboard"}
           component={DrawerNavigation}
         />
+        <RootStack.Screen options={{
+          headerShown: true, headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: colors.skyBlue },
+          headerTitleStyle: { color: colors.white },
+          headerTintColor: colors.white, headerTitle: "Privacy & Policy"
+        }} name={"PrivacyPolicy"} component={Privacy} />
+
       </RootStack.Navigator>
     </NavigationContainer>
   );

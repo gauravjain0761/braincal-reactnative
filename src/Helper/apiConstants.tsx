@@ -12,6 +12,7 @@ export const api = {
   user_register: "wp-json/users/create_new_user",
   plan_url: "/wp-json/",
   hash: "EB46F14D6E44B1472AA818248116FF65",
+  deleteUser: "api/user/delete",
 };
 
 export const POST = "POST";

@@ -11,7 +11,7 @@ import Maths from "../screens/Maths";
 import English from "../screens/English";
 import Science from "../screens/Science";
 import { useAppDispatch, useAppSelector } from "../redux/Hooks";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { commonFont } from "../theme/Fonts";
 import { hp, wp } from "../helper/constants";
 import { colors } from "../theme/Colors";
@@ -19,11 +19,12 @@ import { setToken } from "../helper/AsyncStorage";
 import { CommonActions } from "@react-navigation/native";
 import { icons } from "../helper/iconConstant";
 import Feedback from "../screens/Feedback";
-import { clearAsync } from "../helper/global";
+import { clearAsync, dispatchErrorAction, dispatchSuccessAction } from "../helper/global";
 import Profile from "../screens/Profile";
 import Favourites from "../screens/Favourites";
 import { LOGOUT } from "../actions/types";
 import Privacy from "../screens/Privacy";
+import { deleteUser } from "../actions";
 
 export type RootDrawerParamList = {
   Home: undefined;
@@ -97,6 +98,11 @@ let DrawerItemArray = [
     screen: "Privacy",
   },
   {
+    label: "Delete Account",
+    image: icons.trash,
+    screen: "Delete",
+  },
+  {
     label: "Logout",
     image: icons.logout,
     screen: "Logout",
@@ -118,6 +124,37 @@ function CustomDrawerContent(props: any) {
       })
     );
   };
+
+  console.log(user)
+
+  const onDeleteAccount = () => {
+    Alert.alert('Are you sure?', 'You want to delete your account.', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK', onPress: () => {
+          let obj = {
+            params: { user_id: user.id },
+            onSuccess: (res: any) => {
+              if (res.status === "ok") {
+                dispatchSuccessAction(dispatch, res?.message);
+                onLogout()
+              } else {
+                dispatchErrorAction(dispatch, res?.error);
+              }
+            },
+            onFail: (error: string) => {
+              dispatchErrorAction(dispatch, error);
+            },
+          };
+          dispatch(deleteUser(obj));
+        }
+      },
+    ]);
+  }
 
   useEffect(() => {
     if (
@@ -147,17 +184,9 @@ function CustomDrawerContent(props: any) {
               key={index}
               onPress={() => {
                 if (item.label == "Logout") {
-                  // dispatch({
-                  //   type: "DELETE_MODAL",
-                  //   payload: {
-                  //     isVisible: true,
-                  //     isDeleteAccount: true,
-                  //     onDelete: () => {
-                  //       onDelete();
-                  //     },
-                  //   },
-                  // });
                   onLogout();
+                } else if (item.label == 'Delete Account') {
+                  onDeleteAccount()
                 } else {
                   props.navigation.navigate(item.screen);
                 }
@@ -237,7 +266,8 @@ const DrawerNavigation: FC = () => {
       />
       <Drawer.Screen name={"Favourites"} component={Favourites} />
       <Drawer.Screen name={"Feedback"} component={Feedback} />
-      <Drawer.Screen options={{ headerTitle: "Privacy & Policy" }} name={"Privacy"} component={Privacy} />
+      <Drawer.Screen options={{ headerTitle: "Privacy & Policy" }}
+        name={"Privacy"} component={Privacy} />
     </Drawer.Navigator>
   );
 };

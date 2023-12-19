@@ -70,6 +70,7 @@ const Login = ({ }: UniversalProps) => {
   const [mobileno, setMobileno] = useState("");
   const [countryCode, setCountryCode] = useState<string>("91");
   const preLoader = useAppSelector((e) => e.common.preLoader);
+  const [checkBox, setCheckBox] = useState<boolean>(false);
 
   useEffect(() => {
     let locals = getLocales();
@@ -132,17 +133,21 @@ const Login = ({ }: UniversalProps) => {
 
   const onPressSignIn = () => {
     if (mobileno.trim().length !== 0) {
-      let nonce_data = {
-        controller: "user",
-        method: "register",
-      };
-      let obj = {
-        params: nonce_data,
-        onSuccess: (res: any) => {
-          loginApiCallback(res?.nonce);
-        },
-      };
-      dispatch(getNonce(obj));
+      if (checkBox) {
+        let nonce_data = {
+          controller: "user",
+          method: "register",
+        };
+        let obj = {
+          params: nonce_data,
+          onSuccess: (res: any) => {
+            loginApiCallback(res?.nonce);
+          },
+        };
+        dispatch(getNonce(obj));
+      } else {
+        dispatchErrorAction(dispatch, "Please agree to privacy policy");
+      }
     } else {
       dispatchErrorAction(dispatch, "Please enter valid mobile number");
     }
@@ -345,6 +350,12 @@ const Login = ({ }: UniversalProps) => {
                 )}
               </View>
             </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: hp(2), }}>
+              <TouchableOpacity onPress={() => setCheckBox(!checkBox)} style={{ borderWidth: 1.5, borderColor: checkBox ? colors.darkBlue : colors.grey, height: 20, width: 20, borderRadius: 3, alignItems: "center", justifyContent: 'center', marginRight: 10 }}>
+                {checkBox && <Image source={require('../../assets/check.png')} style={{ height: 11, width: 11, resizeMode: 'contain', tintColor: colors.darkBlue }} />}
+              </TouchableOpacity>
+              <Text onPress={() => navigation.navigate('PrivacyPolicy')} style={{ ...commonFont(400, 14, colors.grey), }}>I agree to <Text style={{ color: colors.skyBlue1 }}>privacy policy</Text></Text>
+            </View>
             <CommonButton onPress={onPressSignIn} title={"Sign In"} />
             <View style={styles.strokeView}></View>
             <RenderSocialButton
@@ -400,7 +411,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     marginTop: hp(1.5),
-    marginBottom: hp(3),
+    marginBottom: hp(2),
   },
   pickerStyle: {
     height: hp(7),
