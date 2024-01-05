@@ -276,21 +276,21 @@ export default DrawerNavigation;
 
 const styles = StyleSheet.create({
   titleDrawer: {
-    ...commonFont(700, hp(3), colors.black),
+    ...commonFont(700, 20, colors.black),
     marginTop: hp(3),
   },
   nameTextStyle: {
-    ...commonFont(500, wp(4), colors.black),
+    ...commonFont(500, 16, colors.black),
     marginBottom: hp(3),
   },
   labelStyle: {
-    ...commonFont(500, wp(4.5), colors.black),
+    ...commonFont(500, 16, colors.black),
     marginLeft: 25,
   },
   drawerItemIcon: {
     resizeMode: "contain",
-    height: hp(2.5),
-    width: hp(2.5),
+    height: 23,
+    width: 23,
     tintColor: colors.grey,
   },
   logoutButton: {

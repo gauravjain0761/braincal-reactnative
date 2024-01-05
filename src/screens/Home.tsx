@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View, ScrollView } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
 import { colors } from "../theme/Colors";
@@ -51,7 +51,7 @@ const Home = ({ navigation }: UniversalProps) => {
 
   return (
     <View style={ApplicationStyles.container}>
-      <View
+      <ScrollView
         style={{ ...ApplicationStyles.innerContainer, paddingHorizontal: 0 }}
       >
         <View>
@@ -76,7 +76,7 @@ const Home = ({ navigation }: UniversalProps) => {
           parents and children. Our approach is to help your child understand
           how to improve in all dimensions with time.
         </Text>
-      </View>
+      </ScrollView>
     </View>
   );
 };

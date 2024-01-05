@@ -69,13 +69,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   iconStyle: {
-    height: wp(5),
-    width: wp(5),
+    height: hp(2.5),
+    width: hp(2.5),
     tintColor: colors.grey,
   },
   inputStyle: {
     marginHorizontal: wp(4),
-    ...commonFont(400, wp(4), colors.black),
+    ...commonFont(400, 16, colors.black),
     paddingVertical: 0,
     flex: 1,
     height: hp(6),

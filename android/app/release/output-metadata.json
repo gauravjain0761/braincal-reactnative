@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.braincal.apps",
+  "applicationId": "com.app.braincal",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 21004,
-      "versionName": "2.11",
+      "versionCode": 1,
+      "versionName": "1.0.0",
       "outputFile": "app-release.apk"
     }
   ],

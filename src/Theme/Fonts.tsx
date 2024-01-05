@@ -22,7 +22,7 @@ export function commonFont(
 ): TextStyle {
   return {
     fontFamily: getFontType(fontWeight),
-    fontSize: actuatedNormalize(fontSize - 2.5),
+    fontSize: fontSize,
     color: color,
     includeFontPadding: false,
   };
